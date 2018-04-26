@@ -325,4 +325,3 @@ if __name__ == '__main__':
     csent = 'Pittsburg is a city of Camp County in the LOCATION@4 .'
     rsents = ['pittsburg is a city located in camp county , texas .', 'pittsburg is a city in camp county , texas .', 'pittsburg is a city located in camp county , texas .', 'pittsburg is located in camp county , texas .', 'pittsburg is a city located in camp county , texas .', 'pittsburg is a city located in camp county , texas', 'pittsburg is a city in camp county , texas .', 'pittsburg is a city located in camp county , texas .']
     print(SARIsent(ssent, csent, rsents))
-

@@ -2,7 +2,6 @@ from data_generator.vocab import Vocab
 from nltk import word_tokenize
 from util import constant
 from util.map_util import load_mappers
-from model.ppdb import PPDB
 from data_generator.rule import Rule
 
 import copy as cp
@@ -55,11 +54,11 @@ class ValData:
               % (self.model_config.val_dataset_simple_folder + self.model_config.val_dataset_simple_file,
                  self.model_config.val_dataset_complex, len(self.data)))
 
-        if self.model_config.memory == 'rule':
+        if 'rule' in self.model_config.memory:
             self.vocab_rule = Rule(model_config, self.model_config.vocab_rules)
             self.rules = self.populate_rules(
                 self.model_config.val_dataset_complex_ppdb, self.vocab_rule)
-            assert len(self.rules) == self.size
+            print('Populate Rule with size:%s' % self.vocab_rule.get_rule_size())
 
     def populate_rules(self, rule_path, vocab_rule):
         data = []
@@ -143,26 +142,6 @@ class ValData:
                 obj['words_raw_comp'] = words_raw_comp
                 obj['words_raw_simp'] = words_raw_simp
 
-            oov = {}
-            if self.model_config.pointer_mode == 'ptr':
-                oov['w2i'] = {}
-                oov['i2w'] = []
-
-                for idx, wid in enumerate(words_comp):
-                    if wid == vocab_comp.encode(constant.SYMBOL_UNK):
-                        word_raw = words_raw_comp[idx]
-                        if word_raw not in oov['w2i']:
-                            oov['w2i'][word_raw] = len(oov['i2w'])
-                            oov['i2w'].append(word_raw)
-
-                # for idx, wid in enumerate(words_simp):
-                #     if wid == vocab_simp.encode(constant.SYMBOL_UNK):
-                #         word_raw = words_raw_simp[idx]
-                #         if word_raw not in oov['w2i']:
-                #             oov['w2i'][word_raw] = len(oov['i2w'])
-                #             oov['i2w'].append(word_raw)
-            obj['oov'] = oov
-
             data.append(obj)
             # len_report.update([len(words)])
             # if len(words) > max_len:
@@ -177,7 +156,7 @@ class ValData:
             ref_rawlines_batch = [self.data_references_raw_lines[j][i]
                                   for j in range(self.model_config.num_refs)]
             supplement = {}
-            if self.model_config.memory == 'rule':
+            if 'rule' in self.model_config.memory:
                 supplement['mem'] = self.rules[i]
 
             obj = {
@@ -189,7 +168,6 @@ class ValData:
                 'mapper': self.mapper[i],
                 'ref_raw_lines': ref_rawlines_batch,
                 'sup': supplement,
-                'oov': self.data[i]['oov']
             }
 
             yield obj

@@ -4,10 +4,11 @@ import random as rd
 import numpy as np
 from nltk import word_tokenize
 from copy import deepcopy
+import time
+import random as rd
 
 from data_generator.vocab import Vocab
 from data_generator.rule import Rule
-from model.ppdb import PPDB
 from util import constant
 
 
@@ -43,29 +44,21 @@ class TrainData:
             self.data = self.populate_data(data_complex_path, data_simple_path,
                                            self.vocab_complex, self.vocab_simple, True)
         else:
-            raise NotImplemented
-            # self.data_it = self.get_data_sample_it(data_simple_path, data_complex_path)
+            self.data_it = self.get_data_sample_it(data_simple_path, data_complex_path)
 
         print('Use Train Dataset: \n Simple\t %s. \n Complex\t %s. \n Size\t %d.'
               % (data_simple_path, data_complex_path, self.size))
 
-        if self.model_config.memory == 'rule':
-            raise NotImplemented
+        if 'rule' in self.model_config.memory:
             self.vocab_rule = Rule(model_config, self.model_config.vocab_rules)
             self.rules = self.populate_rules(
                 self.model_config.train_dataset_complex_ppdb, self.vocab_rule)
             assert len(self.rules) == self.size
-            if self.model_config.use_dataset2:
-                self.rules2 = self.populate_rules(
-                    self.model_config.train_dataset_complex_ppdb2, self.vocab_rule)
-                assert len(self.rules2) == self.size2
-
-    def populate_ppdb(self, data_path):
-        rules = []
-        for line in open(data_path, encoding='utf-8'):
-            rule = [r.split('=>') for r in line.strip().split('\t') if len(r) > 0]
-            rules.append(rule)
-        return rules
+            print('Populate Rule with size:%s' % self.vocab_rule.get_rule_size())
+            # if self.model_config.use_dataset2:
+            #     self.rules2 = self.populate_rules(
+            #         self.model_config.train_dataset_complex_ppdb2, self.vocab_rule)
+            #     assert len(self.rules2) == self.size2
 
     def process_line(self, line, vocab, max_len, need_raw=False):
         if self.model_config.tokenizer == 'split':
@@ -109,44 +102,58 @@ class TrainData:
     def get_data_sample_it(self, data_simple_path, data_complex_path):
         f_simple = open(data_simple_path, encoding='utf-8')
         f_complex = open(data_complex_path, encoding='utf-8')
-        if self.model_config.use_dataset2:
-            f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
-            f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
-            j = 0
+        # if self.model_config.use_dataset2:
+        #     f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
+        #     f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
+        #     j = 0
         i = 0
         while True:
-            if i == self.size:
+            if i >= self.size:
                 f_simple = open(data_simple_path, encoding='utf-8')
                 f_complex = open(data_complex_path, encoding='utf-8')
                 i = 0
             line_complex = f_complex.readline()
             line_simple = f_simple.readline()
-            words_complex, _ = self.process_line(line_complex, self.vocab_complex, self.max)
-            words_simple, _ = self.process_line(line_simple, self.vocab_simple)
+            if rd.random() < 0.5 or i >= self.size:
+                i += 1
+                continue
+
+            words_complex, words_raw_comp = self.process_line(
+                line_complex, self.vocab_complex, self.model_config.max_complex_sentence, True)
+            words_simple, words_raw_simp = self.process_line(
+                line_simple, self.vocab_simple, self.model_config.max_simple_sentence, True)
 
             supplement = {}
-            if self.model_config.memory == 'rule':
+            if 'rule' in self.model_config.memory:
                 supplement['mem'] = self.rules[i]
 
-            yield i, words_simple, words_complex, cp.deepcopy([1.0] * len(words_simple)), cp.deepcopy([1.0] * len(words_complex)), supplement
+            obj = {}
+            obj['words_comp'] = words_complex
+            obj['words_simp'] = words_simple
+            obj['words_raw_comp'] = words_raw_comp
+            obj['words_raw_simp'] = words_raw_simp
+
+            yield i, obj, supplement
+
             i += 1
 
-            if self.model_config.use_dataset2:
-                if j == self.size2:
-                    f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
-                    f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
-                    j = 0
-                line_complex2 = f_complex2.readline()
-                line_simple2 = f_simple2.readline()
-                words_complex2, _ = self.process_line(line_complex2, self.vocab_complex)
-                words_simple2, _ = self.process_line(line_simple2, self.vocab_simple)
 
-                supplement2 = {}
-                if self.model_config.memory == 'rule':
-                    supplement2['mem'] = self.rules2[j]
-
-                yield j, words_simple2, words_complex2, cp.deepcopy([1.0] * len(words_simple2)), cp.deepcopy([1.0] * len(words_complex2)), supplement2
-                j += 1
+            # if self.model_config.use_dataset2:
+            #     if j == self.size2:
+            #         f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
+            #         f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
+            #         j = 0
+            #     line_complex2 = f_complex2.readline()
+            #     line_simple2 = f_simple2.readline()
+            #     words_complex2, _ = self.process_line(line_complex2, self.vocab_complex)
+            #     words_simple2, _ = self.process_line(line_simple2, self.vocab_simple)
+            #
+            #     supplement2 = {}
+            #     if self.model_config.memory == 'rule':
+            #         supplement2['mem'] = self.rules2[j]
+            #
+            #     yield j, words_simple2, words_complex2, cp.deepcopy([1.0] * len(words_simple2)), cp.deepcopy([1.0] * len(words_complex2)), supplement2
+            #     j += 1
 
     def populate_rules(self, rule_path, vocab_rule):
         data = []
@@ -168,7 +175,7 @@ class TrainData:
         # len_report = Counter()
         lines_comp = open(data_path_comp, encoding='utf-8').readlines()
         lines_simp = open(data_path_simp, encoding='utf-8').readlines()
-        assert  len(lines_comp) == len(lines_simp)
+        assert len(lines_comp) == len(lines_simp)
         for line_id in range(len(lines_comp)):
             obj = {}
             line_comp = lines_comp[line_id]
@@ -183,39 +190,16 @@ class TrainData:
                 obj['words_raw_comp'] = words_raw_comp
                 obj['words_raw_simp'] = words_raw_simp
 
-            oov = {}
-            if self.model_config.pointer_mode == 'ptr':
-                oov['w2i'] = {}
-                oov['i2w'] = []
-
-                for idx, wid in enumerate(words_comp):
-                    if wid == vocab_comp.encode(constant.SYMBOL_UNK):
-                        word_raw = words_raw_comp[idx]
-                        if word_raw not in oov['w2i']:
-                            oov['w2i'][word_raw] = len(oov['i2w'])
-                            oov['i2w'].append(word_raw)
-
-                # for idx, wid in enumerate(words_simp):
-                #     if wid == vocab_simp.encode(constant.SYMBOL_UNK):
-                #         word_raw = words_raw_simp[idx]
-                #         if word_raw not in oov['w2i']:
-                #             oov['w2i'][word_raw] = len(oov['i2w'])
-                #             oov['i2w'].append(word_raw)
-            obj['oov'] = oov
-
             data.append(obj)
-            # len_report.update([len(words)])
-            # if len(words) > max_len:
-            #     max_len = len(words)
-        # print('Max length for data %s is %s.' % (data_path, max_len))
-        # print('counter:%s' % len_report)
         return data
 
     def get_data_sample(self):
         i = rd.sample(range(self.size), 1)[0]
         supplement = {}
-        if self.model_config.memory == 'rule':
+        if 'rule' in self.model_config.memory:
             supplement['mem'] = self.rules[i]
 
-        return i, self.data[i]
+        return i, self.data[i], supplement
+
+
 

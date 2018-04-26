@@ -48,7 +48,7 @@ def decode_to_output(target, sentence_simple, sentence_complex, effective_batch_
     return output
 
 
-def decode(target, voc, use_subword=False, oov=None):
+def decode(target, voc, use_subword=False):
     target = list(target)
     batch_size = len(target)
     decode_results = []
@@ -56,15 +56,7 @@ def decode(target, voc, use_subword=False, oov=None):
         if use_subword:
             decode_result = voc.describe(target[i]).split(' ')
         else:
-            if oov is not None and oov:
-                decode_result = []
-                for wid in target[i]:
-                    wd = voc.describe(wid)
-                    if wd is None:
-                        wd = oov['i2w'][wid-voc.vocab_size()]
-                    decode_result.append(wd)
-            else:
-                decode_result = list(map(voc.describe, target[i]))
+            decode_result = list(map(voc.describe, target[i]))
 
         # decode_result = truncate_sent(decode_result)
         decode_results.append(decode_result)

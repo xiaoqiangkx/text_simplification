@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2017 The Tensor2Tensor Authors.
+# Copyright 2018 The Tensor2Tensor Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,6 +51,8 @@ import re
 
 import six
 
+from tensorflow.python.eager import context
+
 _MODELS = {}
 _HPARAMS = {}
 _RANGED_HPARAMS = {}
@@ -61,6 +63,7 @@ class Modalities(object):
   SYMBOL = "symbol"
   IMAGE = "image"
   AUDIO = "audio"
+  VIDEO = "video"
   CLASS_LABEL = "class_label"
   GENERIC = "generic"
   REAL = "real"
@@ -70,6 +73,7 @@ _MODALITIES = {
     Modalities.SYMBOL: {},
     Modalities.IMAGE: {},
     Modalities.AUDIO: {},
+    Modalities.VIDEO: {},
     Modalities.CLASS_LABEL: {},
     Modalities.GENERIC: {},
     Modalities.REAL: {},
@@ -120,7 +124,7 @@ def register_model(name=None):
   def decorator(model_cls, registration_name=None):
     """Registers & returns model_cls with registration_name or default name."""
     model_name = registration_name or default_name(model_cls)
-    if model_name in _MODELS:
+    if model_name in _MODELS and not context.in_eager_mode():
       raise LookupError("Model %s already registered." % model_name)
     model_cls.REGISTERED_NAME = model_name
     _MODELS[model_name] = model_cls
@@ -136,12 +140,14 @@ def register_model(name=None):
 
 def model(name):
   if name not in _MODELS:
-    raise LookupError("Model %s never registered." % name)
+    raise LookupError("Model %s never registered.  Available models:\n %s" % (
+        name, "\n".join(list_models())))
+
   return _MODELS[name]
 
 
 def list_models():
-  return list(_MODELS)
+  return list(sorted(_MODELS))
 
 
 def register_hparams(name=None):
@@ -150,7 +156,7 @@ def register_hparams(name=None):
   def decorator(hp_fn, registration_name=None):
     """Registers & returns hp_fn with registration_name or default name."""
     hp_name = registration_name or default_name(hp_fn)
-    if hp_name in _HPARAMS:
+    if hp_name in _HPARAMS and not context.in_eager_mode():
       raise LookupError("HParams set %s already registered." % hp_name)
     _HPARAMS[hp_name] = hp_fn
     return hp_fn
@@ -217,7 +223,7 @@ def register_problem(name=None):
   def decorator(p_cls, registration_name=None):
     """Registers & returns p_cls with registration_name or default name."""
     p_name = registration_name or default_name(p_cls)
-    if p_name in _PROBLEMS:
+    if p_name in _PROBLEMS and not context.in_eager_mode():
       raise LookupError("Problem %s already registered." % p_name)
 
     _PROBLEMS[p_name] = p_cls
@@ -239,8 +245,7 @@ def problem(name):
     """Determines if problem_name specifies a copy and/or reversal.
 
     Args:
-      problem_name: A string containing a single problem name from
-        FLAGS.problems.
+      problem_name: str, problem name, possibly with suffixes.
 
     Returns:
       base_name: A string with the base problem name.
@@ -260,7 +265,11 @@ def problem(name):
   base_name, was_reversed, was_copy = parse_problem_name(name)
 
   if base_name not in _PROBLEMS:
-    raise LookupError("Problem %s never registered." % name)
+    all_problem_names = sorted(list_problems())
+    error_lines = ["%s not in the set of supported problems:" % base_name
+                  ] + all_problem_names
+    error_msg = "\n  * ".join(error_lines)
+    raise LookupError(error_msg)
   return _PROBLEMS[base_name](was_reversed, was_copy)
 
 
@@ -285,6 +294,11 @@ def symbol_modality(name=None):
 def generic_modality(name=None):
   return _internal_get_modality(name, _MODALITIES[Modalities.GENERIC],
                                 Modalities.GENERIC.capitalize())
+
+
+def video_modality(name=None):
+  return _internal_get_modality(name, _MODALITIES[Modalities.VIDEO],
+                                Modalities.VIDEO.capitalize())
 
 
 def audio_modality(name=None):
@@ -313,7 +327,7 @@ def _internal_register_modality(name, mod_collection, collection_str):
   def decorator(mod_cls, registration_name=None):
     """Registers & returns mod_cls with registration_name or default name."""
     mod_name = registration_name or default_name(mod_cls)
-    if mod_name in mod_collection:
+    if mod_name in mod_collection and not context.in_eager_mode():
       raise LookupError("%s modality %s already registered." % (collection_str,
                                                                 mod_name))
     mod_collection[mod_name] = mod_cls
@@ -357,6 +371,12 @@ def register_image_modality(name=None):
                                      Modalities.IMAGE.capitalize())
 
 
+def register_video_modality(name=None):
+  """Register a video modality. name defaults to class name snake-cased."""
+  return _internal_register_modality(name, _MODALITIES[Modalities.VIDEO],
+                                     Modalities.VIDEO.capitalize())
+
+
 def register_class_label_modality(name=None):
   """Register an image modality. name defaults to class name snake-cased."""
   return _internal_register_modality(name, _MODALITIES[Modalities.CLASS_LABEL],
@@ -398,8 +418,9 @@ def create_modality(modality_spec, model_hparams):
   """
   retrieval_fns = {
       Modalities.SYMBOL: symbol_modality,
-      Modalities.AUDIO: audio_modality,
       Modalities.IMAGE: image_modality,
+      Modalities.AUDIO: audio_modality,
+      Modalities.VIDEO: video_modality,
       Modalities.CLASS_LABEL: class_label_modality,
       Modalities.GENERIC: generic_modality,
       Modalities.REAL: real_modality,

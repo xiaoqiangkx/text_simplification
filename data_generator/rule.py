@@ -23,6 +23,9 @@ class Rule:
         print('Rule Populated with size %d for path %s.'
               % (len(self.i2r), self.rule_path))
 
+    def get_rule_size(self):
+        return len(self.i2r)
+
     def encode(self, rule):
         rule_items = rule.split('=>')
         if len(rule_items) == 4:
@@ -30,3 +33,11 @@ class Rule:
             if rule_pair in self.r2i:
                 return self.r2i[rule_pair], rule_items[2].split()
         return None, None
+
+    def contain(self, rule):
+        rule_items = rule.split('=>')
+        if len(rule_items) == 4:
+            rule_pair = rule_items[1] + '=>' + rule_items[2]
+            if rule_pair in self.r2i:
+                return True
+        return False

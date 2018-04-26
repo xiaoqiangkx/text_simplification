@@ -60,22 +60,6 @@ def copy_ckpt_to_modeldir(modeldir, logdir):
     return modeldir + ckpt_prefix + str(max_step)
 
 
-def backup_log(logdir):
-    """Back up the log and remove the current log, so that he train can use init_fn()"""
-    files = listdir(logdir)
-    back_logdir = logdir + '../log_bk'
-    if not exists(back_logdir):
-        makedirs(back_logdir)
-    for file in files:
-        copy2(logdir + file, back_logdir)
-    for file in files:
-        remove(logdir + file)
-
-def find_train_ckptpaths(outdir):
-    _, step = find_train_ckptfiles(outdir, False)
-    return outdir + ckpt_prefix + str(step)
-
-
 if __name__ == '__main__':
     ckpt = copy_ckpt_to_modeldir(DefaultConfig())
     print(ckpt)

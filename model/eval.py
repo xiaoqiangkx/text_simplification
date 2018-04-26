@@ -3,11 +3,12 @@ import sys
 # sys.path.insert(0, '/ihome/hdaqing/saz31/sanqiang/text_simplification')
 # sys.path.insert(0,'/home/hed/text_simp_proj/text_simplification')
 sys.path.insert(0,'/ihome/cs2770_s2018/maz54/ts/text_simplification')
+sys.path.insert(0,'/home/zhaos5/ts/text_simplification')
 
 
 from data_generator.val_data import ValData
 from model.transformer import TransformerGraph
-from model.model_config import DefaultConfig, DefaultTestConfig, DefaultTestConfig2, list_config
+from model.model_config import DefaultConfig, DefaultTestConfig, list_config
 from data_generator.vocab import Vocab
 from util import constant
 from util import session
@@ -22,8 +23,7 @@ from nltk.translate.bleu_score import sentence_bleu
 from util.mteval_bleu import MtEval_BLEU
 import tensorflow as tf
 from os.path import exists
-from os import makedirs
-from os import remove
+from os import remove,listdir,makedirs
 import math
 import numpy as np
 import time
@@ -49,13 +49,9 @@ def get_graph_val_data(objs,
     output_tmp_sentence_simple, output_tmp_sentence_complex, \
     output_tmp_sentence_complex_raw, output_tmp_sentence_complex_raw_lines, \
     output_tmp_mapper, output_tmp_ref_raw_lines = [], [], [], [], [], []
-    output_effective_batch_size, output_is_end, output_oov = [], [], []
+    output_effective_batch_size, output_is_end = [], []
 
     for obj in objs:
-        batch_oov = {}
-        if model_config.pointer_mode == 'ptr':
-            batch_oov['w2i'] = {}
-            batch_oov['i2w'] = []
 
         (tmp_sentence_simple, tmp_sentence_complex,
          tmp_sentence_complex_raw, tmp_sentence_complex_raw_lines, tmp_sups, tmp_sentence_simple_raw) = [], [], [], [], {}, []
@@ -84,14 +80,7 @@ def get_graph_val_data(objs,
                 tmp_sentence_simple_raw.append(obj_data['sentence_simple_raw'])
                 tmp_sentence_complex_raw_lines.append(obj_data['sentence_complex_raw_lines'])
 
-                if model_config.pointer_mode == 'ptr':
-                    oov = obj_data['oov']
-                    for wd in oov['i2w']:
-                        if wd not in batch_oov['w2i']:
-                            batch_oov['w2i'][wd] = len(batch_oov['i2w']) + data.vocab_simple.vocab_size()
-                            batch_oov['i2w'].append(wd)
-
-                if model_config.memory == 'rule':
+                if 'rule' in model_config.memory:
                     if 'rule_id_input_placeholder' not in tmp_sups:
                         tmp_sups['rule_id_input_placeholder'] = []
                     if 'rule_target_input_placeholder' not in tmp_sups:
@@ -99,7 +88,8 @@ def get_graph_val_data(objs,
 
                     cur_rule_id_input_placeholder = []
                     cur_rule_target_input_placeholder = []
-                    if sup is not None:
+                    sup = obj_data['sup']
+                    if sup:
                         for rule_tuple in sup['mem']:
                             rule_id = rule_tuple[0]
                             rule_targets = rule_tuple[1]
@@ -122,36 +112,15 @@ def get_graph_val_data(objs,
                     [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_simple_sentence)
                 tmp_sentence_complex.append(
                     [data.vocab_complex.encode(constant.SYMBOL_PAD)] * model_config.max_complex_sentence)
-
-
-        if model_config.pointer_mode == 'ptr':
-            tmp_sentence_complex_ext = deepcopy(tmp_sentence_complex)
-            for batch_idx in range(len(tmp_sentence_complex_ext)):
-                for wid, word_comp in enumerate(tmp_sentence_complex_ext[batch_idx]):
-                    if data.vocab_complex.encode(constant.SYMBOL_UNK) == word_comp:
-                        tmp_sentence_complex_ext[
-                            batch_idx][wid] = batch_oov['w2i'][tmp_sentence_complex_raw[batch_idx][wid]]
-
-            tmp_sentence_simple_ext = deepcopy(tmp_sentence_simple)
-            for batch_idx in range(len(tmp_sentence_simple_ext)):
-                for wid, word_simp in enumerate(tmp_sentence_simple_ext[batch_idx]):
-                    if data.vocab_simple.encode(constant.SYMBOL_UNK) == word_simp and tmp_sentence_simple_raw[batch_idx][wid] in batch_oov['w2i']:
-                        tmp_sentence_simple_ext[
-                            batch_idx][wid] = batch_oov['w2i'][tmp_sentence_simple_raw[batch_idx][wid]]
-
-            input_feed[obj['max_oov'].name] = len(batch_oov['i2w'])
-
-            for step in range(model_config.max_complex_sentence):
-                input_feed[obj['sentence_complex_input_ext_placeholder'][step].name] = [
-                    tmp_sentence_complex_ext[batch_idx][step]
-                    for batch_idx in range(model_config.batch_size)]
-
-            for step in range(model_config.max_simple_sentence):
-                input_feed[obj['sentence_simple_input_ext_placeholder'][step].name] = [
-                    tmp_sentence_simple_ext[batch_idx][step]
-                    for batch_idx in range(model_config.batch_size)]
-
-            input_feed[obj['max_oov'].name] = len(batch_oov['i2w'])
+                if 'rule' in model_config.memory:
+                    if 'rule_id_input_placeholder' not in tmp_sups:
+                        tmp_sups['rule_id_input_placeholder'] = []
+                    if 'rule_target_input_placeholder' not in tmp_sups:
+                        tmp_sups['rule_target_input_placeholder'] = []
+                    tmp_sups['rule_id_input_placeholder'].append(
+                        [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_cand_rules)
+                    tmp_sups['rule_target_input_placeholder'].append(
+                        [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_cand_rules)
 
         for step in range(model_config.max_simple_sentence):
             input_feed[obj['sentence_simple_input_placeholder'][step].name] = [tmp_sentence_simple[batch_idx][step]
@@ -160,7 +129,7 @@ def get_graph_val_data(objs,
             input_feed[obj['sentence_complex_input_placeholder'][step].name] = [tmp_sentence_complex[batch_idx][step]
                                                              for batch_idx in range(model_config.batch_size)]
 
-        if model_config.memory == 'rule':
+        if 'rule' in model_config.memory:
             for step in range(model_config.max_cand_rules):
                 input_feed[obj['rule_id_input_placeholder'][step].name] = [
                     tmp_sups['rule_id_input_placeholder'][batch_idx][step]
@@ -177,14 +146,13 @@ def get_graph_val_data(objs,
         output_tmp_ref_raw_lines.append(tmp_ref_raw_lines)
         output_effective_batch_size.append(effective_batch_size)
         output_is_end.append(is_end)
-        output_oov.append(batch_oov)
 
     return (input_feed, output_tmp_sentence_simple,
             output_tmp_sentence_complex, output_tmp_sentence_complex_raw, output_tmp_sentence_complex_raw_lines,
             output_tmp_mapper,
             output_tmp_ref_raw_lines,
             output_effective_batch_size,
-            output_is_end, output_oov)
+            output_is_end)
 
 
 def eval(model_config=None, ckpt=None):
@@ -225,7 +193,7 @@ def eval(model_config=None, ckpt=None):
          output_sentence_complex, output_sentence_complex_raw, output_sentence_complex_raw_lines,
          output_mapper,
          output_ref_raw_lines,
-         out_effective_batch_size, output_is_end, output_oov) = get_graph_val_data(graph.objs,
+         out_effective_batch_size, output_is_end) = get_graph_val_data(graph.objs,
             model_config, it, val_data)
 
         postprocess = PostProcess(model_config, val_data)
@@ -253,7 +221,6 @@ def eval(model_config=None, ckpt=None):
             sentence_complex_raw_lines = output_sentence_complex_raw_lines[i]
             mapper = output_mapper[i]
             ref_raw_lines = output_ref_raw_lines[i]
-            oov = output_oov[i]
 
             target = output_target[i]
             if model_config.replace_unk_by_emb:
@@ -277,7 +244,7 @@ def eval(model_config=None, ckpt=None):
                 for ref_i in range(model_config.num_refs):
                     ref_raw_lines[ref_i] = exclude_list(ref_raw_lines[ref_i], exclude_idxs)
 
-            target = decode(target, val_data.vocab_simple, model_config.subword_vocab_size>0, oov=oov)
+            target = decode(target, val_data.vocab_simple, model_config.subword_vocab_size>0)
             target_raw = target
             if model_config.replace_unk_by_attn:
                 target_raw = postprocess.replace_unk_by_attn(sentence_complex_raw, None, target_raw)
@@ -481,8 +448,20 @@ def get_ckpt(modeldir, logdir, wait_second=60):
             else:
                 return None
 
+
+def get_best_sari(resultdir):
+    best_sari = 0.0
+    if exists(resultdir):
+        results = listdir(resultdir)
+        for result in results:
+            if result.startswith('step') and result.endswith('.result'):
+                sari = float(result[(result.index('sari')+len('sari')):result.rindex('-fkgl')])
+                best_sari = max(sari, best_sari)
+    return best_sari
+
 if __name__ == '__main__':
     config = None
+
     if args.mode == 'dummy':
         while True:
             model_config = DefaultTestConfig()
@@ -490,50 +469,41 @@ if __name__ == '__main__':
             if ckpt:
                 eval(DefaultTestConfig(), ckpt)
                 # eval(DefaultTestConfig2(), ckpt)
-    elif args.mode == 'dressnew':
-        from model.model_config import WikiDressLargeNewEvalDefault,WikiDressLargeNewTestDefault, WikiDressLargeNewDefault
+    elif args.mode == 'dressnew' or args.mode == 'wikihuge':
+        from model.model_config import WikiDressLargeNewEvalDefault,WikiDressLargeNewTestDefault, WikiDressLargeNewDefault, WikiDressLargeNewEvalForBatchSize
+        best_sari = None
         while True:
             model_config = WikiDressLargeNewDefault()
             ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
 
             if ckpt:
-                eval(WikiDressLargeNewEvalDefault(), ckpt)
+                vconfig = WikiDressLargeNewEvalDefault()
+                if best_sari is None:
+                    best_sari = get_best_sari(vconfig.resultdir)
+
+                sari_point = eval(vconfig, ckpt)
+
+                # Try different max_cand_rules
+                if args.memory is not None and 'rule' in args.memory:
+                    for rcand in [15, 30, 50]:
+                        vconfig.max_cand_rules = rcand
+                        vconfig.resultdir = get_path(
+                            '../' + vconfig.output_folder + '/result/eightref_val_cand' + str(rcand),
+                            vconfig.environment)
+                        eval(vconfig, ckpt)
+
                 eval(WikiDressLargeNewTestDefault(), ckpt)
-    elif args.mode == 'all' or args.mode == 'dress':
-        from model.model_config import WikiDressLargeDefault
-        from model.model_config import SubValWikiEightRefConfig, SubTestWikiEightRefConfig
-        from model.model_config import SubValWikiEightRefConfigBeam4, SubTestWikiEightRefConfigBeam4
-        while True:
-            model_config = WikiDressLargeDefault()
-            ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
-
-            if ckpt:
-                eval(SubValWikiEightRefConfig(), ckpt)
-                eval(SubTestWikiEightRefConfig(), ckpt)
-
-                # eval(SubValWikiEightRefConfigBeam4(), ckpt)
-                # eval(SubTestWikiEightRefConfigBeam4(), ckpt)
-
-                # if model_config.exp_penalty_alpha:
-                #     config = SubTestWikiEightRefConfig()
-                #     for i in range(10):
-                #         alpha = i/10
-                #         config.penalty_alpha = alpha
-                #         config.output_folder = args.output_folder
-                #         config.resultdir = get_path('../' + config.output_folder + '/result/eightref_test_alpha%s' % alpha)
-                #         eval(config, ckpt)
-    elif args.mode == 'wiki':
-        while True:
-            from model.model_config import SubValWikiEightRefConfig, SubTestWikiEightRefConfig, WikiTransBaseCfg
-            from model.model_config import WikiTransValCfg, WikiTransTestCfg
-            model_config = WikiTransBaseCfg()
-            ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
-            if ckpt:
-                # eval(SubValWikiEightRefConfig(), ckpt)
-                # eval(SubTestWikiEightRefConfig(), ckpt)
-                eval(WikiTransValCfg(), ckpt)
-                sari_point = eval(WikiTransTestCfg(), ckpt)
-                if sari_point < 0.39:
+                print('=====================Current Best SARI:%s=====================' % best_sari)
+                if float(sari_point) < best_sari:
                     remove(ckpt + '.index')
                     remove(ckpt + '.meta')
                     remove(ckpt + '.data-00000-of-00001')
+                    print('remove ckpt:%s' % ckpt)
+                else:
+                    for file in listdir(model_config.modeldir):
+                        step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
+                        if step not in file:
+                            remove(model_config.modeldir + file)
+                    print('Get Best Model, remove ckpt except:%s.' % ckpt)
+                    best_sari = float(sari_point)
+

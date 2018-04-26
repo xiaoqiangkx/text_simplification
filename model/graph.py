@@ -13,13 +13,6 @@ class Graph():
         self.model_config = model_config
         self.data = data
         self.is_train = is_train
-        # model_fn defines core computational graph
-        # decoder_outputs, logits, target_outputs
-        # decoder_outputs is [batch * length * dimension]
-        # logits is [batch * length * vocab_size]
-        # target_outputs is [batch * length * vocab_size]
-        # in training, target_outputs is gt target
-        # in eval, target_outputs is output target
         self.model_fn = None
         print('Batch Size:\t%d.' % self.model_config.batch_size)
         self.rand_unif_init = tf.random_uniform_initializer(-0,.08, 0.08)
@@ -43,23 +36,24 @@ class Graph():
         self.objs = []
         optim = self.get_optim()
 
-        self.global_step = tf.get_variable(
-            'global_step', initializer=tf.constant(0, dtype=tf.int64), trainable=False)
+        with tf.device('/cpu:0'):
+            self.global_step = tf.get_variable(
+                'global_step', initializer=tf.constant(0, dtype=tf.int64), trainable=False)
 
         with tf.variable_scope(tf.get_variable_scope()) as scope:
             for gpu_id in range(self.model_config.num_gpus):
-                        with tf.device('/gpu:%d' % gpu_id):
-                            loss, obj = self.create_model()
-                            grad = optim.compute_gradients(loss)
-                            losses.append(loss)
-                            grads.append(grad)
-                            if self.model_config.memory == 'rule' and self.is_train:
-                                ops.append(obj['mem_contexts'])
-                                ops.append(obj['mem_outputs'])
-                                ops.append(obj['mem_counter'])
-                            self.objs.append(obj)
-
-                            tf.get_variable_scope().reuse_variables()
+                with tf.device('/device:GPU:%d' % gpu_id):
+                    with tf.name_scope('%s_%d' % ('gpu_scope', gpu_id)):
+                        loss, obj = self.create_model()
+                        grad = optim.compute_gradients(loss)
+                        tf.get_variable_scope().reuse_variables()
+                        losses.append(loss)
+                        grads.append(grad)
+                        if 'rule' in self.model_config.memory and self.is_train:
+                            ops.append(obj['mem_contexts'])
+                            ops.append(obj['mem_outputs'])
+                            ops.append(obj['mem_counter'])
+                        self.objs.append(obj)
 
         with tf.variable_scope('optimization'):
             self.loss = tf.divide(tf.add_n(losses), self.model_config.num_gpus)
@@ -88,20 +82,6 @@ class Graph():
                 sentence_complex_input_placeholder.append(
                     tf.zeros(self.model_config.batch_size, tf.int32, name='complex_input'))
 
-            sentence_complex_input_ext_placeholder, sentence_simple_input_ext_placeholder, max_oov = None, None, None
-            if self.model_config.pointer_mode == 'ptr':
-                sentence_complex_input_ext_placeholder = []
-                for step in range(self.model_config.max_complex_sentence):
-                    sentence_complex_input_ext_placeholder.append(
-                        tf.zeros(self.model_config.batch_size, tf.int32, name='complex_input_ext'))
-
-                sentence_simple_input_ext_placeholder = []
-                for step in range(self.model_config.max_simple_sentence):
-                    sentence_simple_input_ext_placeholder.append(
-                        tf.zeros(self.model_config.batch_size, tf.int32, name='simple_input_ext'))
-
-                max_oov = tf.placeholder(tf.int32, [], name='max_oov')
-
             sentence_idxs = tf.zeros(self.model_config.batch_size, tf.int32, name='sent_idx')
 
             embedding = Embedding(self.data.vocab_complex, self.data.vocab_simple, self.model_config)
@@ -113,19 +93,20 @@ class Graph():
 
             mem_contexts, mem_outputs, mem_counter = None, None, None
             rule_id_input_placeholder, rule_target_input_placeholder = [], []
-            if self.model_config.memory == 'rule':
+            if 'rule' in self.model_config.memory:
                 with tf.device('/cpu:0'):
                     mem_contexts = tf.get_variable(
                         'mem_contexts',
-                        initializer=tf.constant(0, dtype=tf.float32, shape=(self.model_config.rule_size, self.model_config.dimension)),
+                        initializer=tf.constant(0, dtype=tf.float32, shape=
+                        (self.data.vocab_rule.get_rule_size(), self.model_config.dimension * self.model_config.num_decoder_layers)),
                         trainable=False, dtype=tf.float32)
                     mem_outputs = tf.get_variable(
                         'mem_outputs',
-                        initializer=tf.constant(0, dtype=tf.float32, shape=(self.model_config.rule_size, self.model_config.dimension)),
+                        initializer=tf.constant(0, dtype=tf.float32, shape=(self.data.vocab_rule.get_rule_size(), self.model_config.dimension)),
                         trainable=False, dtype=tf.float32)
                     mem_counter = tf.get_variable(
                         'mem_counter',
-                        initializer=tf.constant(0, dtype=tf.int32, shape=(self.model_config.rule_size, 1)),
+                        initializer=tf.constant(0, dtype=tf.int32, shape=(self.data.vocab_rule.get_rule_size(), 1)),
                         trainable=False, dtype=tf.int32)
 
                 for step in range(self.model_config.max_cand_rules):
@@ -137,8 +118,7 @@ class Graph():
             output = self.model_fn(sentence_complex_input_placeholder, emb_complex,
                                    sentence_simple_input_placeholder, emb_simple,
                                    w, b, rule_id_input_placeholder, mem_contexts, mem_outputs,
-                                   self.global_step,
-                                   sentence_complex_input_ext_placeholder=sentence_complex_input_ext_placeholder, max_oov=max_oov)
+                                   self.global_step)
 
             encoder_embs = tf.stack(output.encoder_embed_inputs_list, axis=1)
             # self.encoder_embs = output.encoder_outputs
@@ -157,16 +137,7 @@ class Graph():
             if not self.is_train:
                 # in beam search, it directly provide decoder target list
                 decoder_target = tf.stack(output.decoder_target_list, axis=1)
-                if self.model_config.rnn_decoder:
-                    decode_word_weight_list = [
-                        tf.to_float(tf.not_equal(d, self.data.vocab_simple.encode(constant.SYMBOL_PAD)))
-                        for d in output.gt_target_list]
-                    decode_word_weight = tf.stack(decode_word_weight_list, axis=1)
-                    loss = sequence_loss(logits=tf.stack(output.decoder_logit_list, axis=1),
-                                         targets=tf.stack(output.gt_target_list, axis=1),
-                                         weights=decode_word_weight)
-                else:
-                    loss = tf.reduce_mean(output.decoder_score)
+                loss = tf.reduce_mean(output.decoder_score)
                 obj = {
                     'sentence_idxs': sentence_idxs,
                     'sentence_simple_input_placeholder': sentence_simple_input_placeholder,
@@ -175,17 +146,13 @@ class Graph():
                     'final_outputs':final_outputs,
                     'encoder_embs':encoder_embs,
                 }
-                if self.model_config.pointer_mode == 'ptr':
-                    obj['sentence_complex_input_ext_placeholder'] = sentence_complex_input_ext_placeholder
-                    obj['sentence_simple_input_ext_placeholder'] = sentence_simple_input_ext_placeholder
-                    obj['max_oov'] = max_oov
-                if self.model_config.memory == 'rule':
+                if 'rule' in self.model_config.memory:
                     obj['rule_id_input_placeholder'] = rule_id_input_placeholder
                     obj['rule_target_input_placeholder'] = rule_target_input_placeholder
                 return loss, obj
             else:
                 # Memory Populate
-                if self.model_config.memory == 'rule':
+                if 'rule' in self.model_config.memory:
                     # Update Memory through python injection
                     def update_memory(
                             mem_contexts_tmp, mem_outputs_tmp, mem_counter_tmp,
@@ -206,21 +173,42 @@ class Graph():
                             cur_rule_target_input_placeholder = rule_target_input_placeholder[batch_id, :]
                             cur_rule_id_input_placeholder = rule_id_input_placeholder[batch_id, :]
 
+                            rule_mapper = {}
                             for step in range(max_rules):
-                                decoder_target = cur_rule_target_input_placeholder[step]
-                                if decoder_target in cur_decoder_targets:
-                                    decoder_target_orders = np.where(cur_decoder_targets==decoder_target)[0]
-                                    for decoder_target_order in decoder_target_orders:
-                                        cur_context = cur_contexts[decoder_target_order,:]
-                                        rule_id = cur_rule_id_input_placeholder[step]
-                                        mem_counter_tmp[rule_id, 0] += 1
-                                        # decoder_target_emb = emb_simple[decoder_target]
-                                        if mem_counter_tmp[rule_id][0] == 0:
-                                            mem_contexts_tmp[rule_id, :] = cur_context
-                                            mem_outputs_tmp[rule_id, :] = cur_decoder_outputs[decoder_target_order, :]
+                                rule_id = cur_rule_id_input_placeholder[step]
+                                if rule_id != 0:
+                                    decoder_target = cur_rule_target_input_placeholder[step]
+                                    if rule_id not in rule_mapper:
+                                        rule_mapper[rule_id] = []
+                                    rule_mapper[rule_id].append(decoder_target)
+
+                            for rule_id in rule_mapper:
+                                rule_targets = rule_mapper[rule_id]
+                                decoder_target_orders = np.where(cur_decoder_targets == rule_targets[0])[0]
+                                for decoder_target_order in decoder_target_orders:
+                                    if len(rule_targets) > 1:
+                                        if decoder_target_order+1 >= len(cur_decoder_targets) or rule_targets[1] != cur_decoder_targets[decoder_target_order+1]:
+                                            continue
+                                    if len(rule_targets) > 2:
+                                        if decoder_target_order+2 >= len(cur_decoder_targets) or rule_targets[2] != cur_decoder_targets[decoder_target_order+2]:
+                                            continue
+                                    cur_context, cur_outputs = None, None
+                                    for step, _ in enumerate(rule_targets):
+                                        if step == 0:
+                                            cur_context = cur_contexts[decoder_target_order, :]
+                                            cur_outputs = cur_decoder_outputs[decoder_target_order, :]
                                         else:
-                                            mem_contexts_tmp[rule_id, :] = (cur_context + mem_contexts_tmp[rule_id, :]) / 2
-                                            mem_outputs_tmp[rule_id, :] = (cur_decoder_outputs[decoder_target_order, :] + mem_outputs_tmp[rule_id, :])/2
+                                            cur_context += cur_contexts[step+decoder_target_order, :]
+                                            cur_outputs += cur_decoder_outputs[step+decoder_target_order, :]
+                                    cur_context /= len(rule_targets)
+                                    cur_outputs /= len(rule_targets)
+                                    if mem_counter_tmp[rule_id][0] == 0:
+                                        mem_contexts_tmp[rule_id, :] = cur_context
+                                        mem_outputs_tmp[rule_id, :] = cur_outputs
+                                    else:
+                                        mem_contexts_tmp[rule_id, :] = (cur_context + mem_contexts_tmp[rule_id, :]) / 2
+                                        mem_outputs_tmp[rule_id, :] = (cur_outputs + mem_outputs_tmp[rule_id, :]) / 2
+                                    mem_counter_tmp[rule_id, 0] += 1
 
                         return mem_contexts_tmp, mem_outputs_tmp, mem_counter_tmp
 
@@ -256,8 +244,8 @@ class Graph():
                 def self_critical_loss():
                     # For minimize the negative log of probabilities
                     rewards = tf.py_func(self.metric.self_crititcal_reward,
-                                         [tf.stack(output.decoder_target_list, axis=-1),
-                                          tf.stack(output.sample_target_list, axis=-1),
+                                         [tf.stack(output.sample_target_list, axis=-1),
+                                          tf.stack(output.decoder_target_list, axis=-1),
                                           tf.stack(sentence_simple_input_placeholder, axis=-1),
                                           tf.stack(sentence_complex_input_placeholder, axis=-1),
                                           tf.ones((1,1)),
@@ -267,11 +255,11 @@ class Graph():
                     rewards.set_shape((self.model_config.batch_size, self.model_config.max_simple_sentence))
                     rewards = tf.unstack(rewards, axis=1)
 
-                    weighted_probs = [rewards[i] * decode_word_weight_list[i] * -tf.log(output.sample_logit_list[i])
+                    weighted_probs_list = [rewards[i] * decode_word_weight_list[i] * -output.sample_logit_list[i]
                                       for i in range(len(decode_word_weight_list))]
                     total_size = tf.reduce_sum(decode_word_weight_list)
                     total_size += 1e-12
-                    weighted_probs = tf.reduce_sum(weighted_probs) / total_size
+                    weighted_probs = tf.reduce_sum(weighted_probs_list) / total_size
                     loss = weighted_probs
                     return loss
 
@@ -290,48 +278,15 @@ class Graph():
                                          number_samples=self.model_config.number_samples)
                     return loss
 
-                def maximize_loglikelihood():
-                    final_word_dist_list = output.final_word_dist_list
-                    losses = []
-                    batch_nums = tf.range(0, limit=self.model_config.batch_size)
-                    for step, final_word_dist in enumerate(final_word_dist_list):
-                        gt_target = sentence_simple_input_ext_placeholder[step]
-                        indices = tf.stack((batch_nums, gt_target), axis=1)
-                        gold_probs = tf.gather_nd(final_word_dist, indices)
-                        loss = -tf.log(tf.nn.relu(gold_probs))
-                        losses.append(loss)
-
-                    def _mask_and_avg(values, padding_mask):
-                        """Applies mask to values then returns overall average (a scalar)
-
-                        Args:
-                          values: a list length max_dec_steps containing arrays shape (batch_size).
-                          padding_mask: tensor shape (batch_size, max_dec_steps) containing 1s and 0s.
-
-                        Returns:
-                          a scalar
-                        """
-
-                        dec_lens = tf.reduce_sum(padding_mask, axis=1)  # shape batch_size. float32
-                        values_per_step = [v * padding_mask[:, dec_step] for dec_step, v in enumerate(values)]
-                        values_per_ex = sum(
-                            values_per_step) / dec_lens  # shape (batch_size); normalized value for each batch member
-                        return tf.reduce_mean(values_per_ex)  # overall average
-
-                    return _mask_and_avg(losses, decode_word_weight)
-
-
-                if self.model_config.train_mode == 'dynamic_self-critical' or self.model_config.train_mode == 'static_self-critical':
-                    loss = tf.cond(
-                        tf.greater(self.global_step, 1000),
-                        # tf.logical_and(tf.greater(self.global_step, 100000), tf.equal(tf.mod(self.global_step, 2), 0)),
-                        lambda : self_critical_loss(),
-                        lambda : teacherforce_loss())
+                if self.model_config.train_mode == 'dynamic_self-critical':
+                    loss = self_critical_loss()
+                    # loss = tf.cond(
+                    #     tf.greater(self.global_step, 50000),
+                    #     # tf.logical_and(tf.greater(self.global_step, 100000), tf.equal(tf.mod(self.global_step, 2), 0)),
+                    #     lambda : self_critical_loss(),
+                    #     lambda : teacherforce_loss())
                 else:
-                    if self.model_config.pointer_mode == 'ptr':
-                        loss = maximize_loglikelihood()
-                    else:
-                        loss = teacherforce_loss()
+                    loss = teacherforce_loss()
 
                 obj = {
                     'sentence_idxs': sentence_idxs,
@@ -339,12 +294,7 @@ class Graph():
                     'sentence_complex_input_placeholder': sentence_complex_input_placeholder,
                 }
 
-                if self.model_config.pointer_mode == 'ptr':
-                    obj['sentence_complex_input_ext_placeholder'] = sentence_complex_input_ext_placeholder
-                    obj['sentence_simple_input_ext_placeholder'] = sentence_simple_input_ext_placeholder
-                    obj['max_oov'] = max_oov
-
-                if self.model_config.memory == 'rule':
+                if 'rule' in self.model_config.memory:
                     obj['rule_id_input_placeholder'] = rule_id_input_placeholder
                     obj['rule_target_input_placeholder'] = rule_target_input_placeholder
                     obj['mem_contexts'] = mem_contexts
@@ -419,8 +369,7 @@ class Graph():
 class ModelOutput:
     def __init__(self, decoder_outputs_list=None, decoder_logit_list=None, decoder_target_list=None,
                  decoder_score=None, gt_target_list=None, encoder_embed_inputs_list=None, encoder_outputs=None,
-                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None,
-                 final_word_dist_list=None):
+                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None):
         self._decoder_outputs_list = decoder_outputs_list
         self._decoder_logit_list = decoder_logit_list
         self._decoder_target_list = decoder_target_list
@@ -432,7 +381,6 @@ class ModelOutput:
         self._final_outputs_list = final_outputs_list
         self._sample_target_list = sample_target_list
         self._sample_logit_list = sample_logit_list
-        self._final_word_dist_list = final_word_dist_list
 
     @property
     def encoder_outputs(self):
@@ -478,7 +426,3 @@ class ModelOutput:
     @property
     def sample_logit_list(self):
         return self._sample_logit_list
-
-    @property
-    def final_word_dist_list(self):
-        return self._final_word_dist_list
