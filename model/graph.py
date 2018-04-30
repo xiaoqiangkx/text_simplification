@@ -14,7 +14,6 @@ class Graph():
         self.data = data
         self.is_train = is_train
         self.model_fn = None
-        print('Batch Size:\t%d.' % self.model_config.batch_size)
         self.rand_unif_init = tf.random_uniform_initializer(-0,.08, 0.08)
         self.metric = Metric(self.model_config, self.data)
 
@@ -26,6 +25,10 @@ class Graph():
                 return [tf.nn.embedding_lookup(embedding, inp) for inp in inputs]
         else:
             return tf.nn.embedding_lookup(embedding, inputs)
+
+    def output_to_logit(self, prev_out, w, b):
+        prev_logit = tf.add(tf.matmul(prev_out, tf.transpose(w)), b)
+        return prev_logit
 
     def create_model_multigpu(self):
         # with tf.Graph().as_default():
@@ -67,7 +70,6 @@ class Graph():
                 self.increment_global_step = tf.assign_add(self.global_step, 1)
 
             self.saver = tf.train.Saver(write_version=tf.train.SaverDef.V2)
-
             self.ops = tf.tuple(ops)
 
     def create_model(self):
@@ -93,12 +95,18 @@ class Graph():
 
             mem_contexts, mem_outputs, mem_counter = None, None, None
             rule_id_input_placeholder, rule_target_input_placeholder = [], []
+            rule_pair_input_placeholder = []
             if 'rule' in self.model_config.memory:
                 with tf.device('/cpu:0'):
+                    context_size = 0
+                    if self.model_config.framework == 'transformer':
+                        context_size = self.model_config.num_decoder_layers
+                    elif self.model_config.framework == 'seq2seq':
+                        context_size = 2
                     mem_contexts = tf.get_variable(
                         'mem_contexts',
                         initializer=tf.constant(0, dtype=tf.float32, shape=
-                        (self.data.vocab_rule.get_rule_size(), self.model_config.dimension * self.model_config.num_decoder_layers)),
+                        (self.data.vocab_rule.get_rule_size(), self.model_config.dimension * context_size)),
                         trainable=False, dtype=tf.float32)
                     mem_outputs = tf.get_variable(
                         'mem_outputs',
@@ -110,9 +118,16 @@ class Graph():
                         trainable=False, dtype=tf.int32)
 
                 for step in range(self.model_config.max_cand_rules):
-                    rule_id_input_placeholder.append(tf.zeros(self.model_config.batch_size, tf.int32, name='rule_id_input'))
+                    rule_id_input_placeholder.append(
+                        tf.zeros(self.model_config.batch_size, tf.int32, name='rule_id_input'))
+
                 for step in range(self.model_config.max_cand_rules):
-                    rule_target_input_placeholder.append(tf.zeros(self.model_config.batch_size, tf.int32, name='rule_target_input'))
+                    rule_target_input_placeholder.append(
+                        tf.zeros(self.model_config.batch_size, tf.int32, name='rule_target_input'))
+
+                for step in range(self.model_config.max_cand_rules):
+                    rule_pair_input_placeholder.append(
+                        tf.zeros([self.model_config.batch_size, 2], tf.int32, name='rule_pair_input'))
 
         with tf.variable_scope('model'):
             output = self.model_fn(sentence_complex_input_placeholder, emb_complex,
@@ -120,19 +135,27 @@ class Graph():
                                    w, b, rule_id_input_placeholder, mem_contexts, mem_outputs,
                                    self.global_step)
 
-            encoder_embs = tf.stack(output.encoder_embed_inputs_list, axis=1)
-            # self.encoder_embs = output.encoder_outputs
-            if type(output.decoder_outputs_list) == list:
-                decoder_outputs_list = output.decoder_outputs_list
-                decoder_outputs = tf.stack(decoder_outputs_list, axis=1)
-            else:
-                decoder_outputs = output.decoder_outputs_list
+            encoder_embs, final_outputs = None, None
+            if self.model_config.replace_unk_by_emb:
+                encoder_embs = tf.stack(output.encoder_embed_inputs_list, axis=1)
 
-            if type(output.final_outputs_list) == list:
-                final_outputs_list = output.final_outputs_list
-                final_outputs = tf.stack(final_outputs_list, axis=1)
-            else:
-                final_outputs = output.final_outputs_list
+            if output.decoder_outputs_list is not None:
+                if type(output.decoder_outputs_list) == list:
+                    decoder_outputs_list = output.decoder_outputs_list
+                    decoder_outputs = tf.stack(decoder_outputs_list, axis=1)
+                else:
+                    decoder_outputs = output.decoder_outputs_list
+
+            if output.final_outputs_list is not None:
+                if type(output.final_outputs_list) == list:
+                    final_outputs_list = output.final_outputs_list
+                    final_outputs = tf.stack(final_outputs_list, axis=1)
+                else:
+                    final_outputs = output.final_outputs_list
+
+            attn_distr = None
+            if self.model_config.replace_unk_by_attn:
+                attn_distr = output.attn_distr_list
 
             if not self.is_train:
                 # in beam search, it directly provide decoder target list
@@ -145,6 +168,7 @@ class Graph():
                     'decoder_target_list': decoder_target,
                     'final_outputs':final_outputs,
                     'encoder_embs':encoder_embs,
+                    'attn_distr':attn_distr
                 }
                 if 'rule' in self.model_config.memory:
                     obj['rule_id_input_placeholder'] = rule_id_input_placeholder
@@ -161,9 +185,7 @@ class Graph():
                             global_step, emb_simple, encoder_outputs):
                         if global_step <= self.model_config.memory_prepare_step:
                             return mem_contexts_tmp, mem_outputs_tmp, mem_counter_tmp
-                        # print(mem_counter_tmp)
-                        # print(mem_contexts_tmp)
-                        # print(mem_outputs_tmp)
+
                         batch_size = np.shape(rule_target_input_placeholder)[0]
                         max_rules = np.shape(rule_target_input_placeholder)[1]
                         for batch_id in range(batch_size):
@@ -202,7 +224,7 @@ class Graph():
                                             cur_outputs += cur_decoder_outputs[step+decoder_target_order, :]
                                     cur_context /= len(rule_targets)
                                     cur_outputs /= len(rule_targets)
-                                    if mem_counter_tmp[rule_id][0] == 0:
+                                    if mem_counter_tmp[rule_id, 0] == 0:
                                         mem_contexts_tmp[rule_id, :] = cur_context
                                         mem_outputs_tmp[rule_id, :] = cur_outputs
                                     else:
@@ -215,12 +237,12 @@ class Graph():
                     mem_output_input = None
                     if 'mofinal' in self.model_config.memory_config:
                         mem_output_input = final_outputs
-                    elif 'modecode' in self.model_config.memory_config:
-                        mem_output_input = decoder_outputs
-                    elif 'moemb' in self.model_config.memory_config:
-                        mem_output_input = tf.stack(
-                            self.embedding_fn(sentence_simple_input_placeholder, emb_simple),
-                            axis=1)
+                    # elif 'modecode' in self.model_config.memory_config:
+                    #     mem_output_input = decoder_outputs
+                    # elif 'moemb' in self.model_config.memory_config:
+                    #     mem_output_input = tf.stack(
+                    #         self.embedding_fn(sentence_simple_input_placeholder, emb_simple),
+                    #         axis=1)
 
                     mem_contexts, mem_outputs, mem_counter = tf.py_func(update_memory,
                                                                         [mem_contexts, mem_outputs, mem_counter,
@@ -244,14 +266,15 @@ class Graph():
                 def self_critical_loss():
                     # For minimize the negative log of probabilities
                     rewards = tf.py_func(self.metric.self_crititcal_reward,
-                                         [tf.stack(output.sample_target_list, axis=-1),
+                                         [sentence_idxs,
+                                          tf.stack(output.sample_target_list, axis=-1),
                                           tf.stack(output.decoder_target_list, axis=-1),
                                           tf.stack(sentence_simple_input_placeholder, axis=-1),
                                           tf.stack(sentence_complex_input_placeholder, axis=-1),
                                           tf.ones((1,1)),
                                           # tf.stack(rule_target_input_placeholder, axis=1)
                                           ],
-                                         tf.float32, stateful=False, name='update_memory')
+                                         tf.float32, stateful=False, name='reward')
                     rewards.set_shape((self.model_config.batch_size, self.model_config.max_simple_sentence))
                     rewards = tf.unstack(rewards, axis=1)
 
@@ -263,6 +286,42 @@ class Graph():
                     loss = weighted_probs
                     return loss
 
+                def teacherforce_critical_loss():
+                    losses = []
+                    for step in range(self.model_config.max_simple_sentence):
+                        logit = output.decoder_logit_list[step]
+                        greedy_target_unit = tf.stop_gradient(tf.argmax(logit, axis=1))
+                        if self.model_config.train_mode == 'teachercriticalv2':
+                            sampled_target_unit, reward = tf.py_func(self.metric.self_crititcal_reward_unitv2,
+                                                [sentence_idxs, step,
+                                                 greedy_target_unit,
+                                                 tf.stack(sentence_simple_input_placeholder, axis=-1),
+                                                 tf.stack(sentence_complex_input_placeholder, axis=-1),
+                                                 ],
+                                                [tf.int32, tf.float32], stateful=False, name='reward')
+                            reward.set_shape((self.model_config.batch_size,))
+                            sampled_target_unit.set_shape((self.model_config.batch_size,))
+                        elif self.model_config.train_mode == 'teachercritical':
+                            sampled_target_unit = tf.cast(tf.squeeze(tf.multinomial(logit, 1), axis=1), tf.int32)
+                            reward = tf.py_func(self.metric.self_crititcal_reward_unit,
+                                                 [sentence_idxs, step,
+                                                  sampled_target_unit, greedy_target_unit,
+                                                  tf.stack(sentence_simple_input_placeholder, axis=-1),
+                                                  tf.stack(sentence_complex_input_placeholder, axis=-1),
+                                                  tf.ones((1, 1)),
+                                                  ],
+                                                 tf.float32, stateful=False, name='reward')
+                            reward.set_shape((self.model_config.batch_size, ))
+                        indices = tf.stack(
+                            [tf.range(0, self.model_config.batch_size, dtype=tf.int32),
+                             tf.squeeze(sampled_target_unit)],
+                            axis=-1)
+                        logit_unit = tf.gather_nd(tf.nn.softmax(logit, axis=1), indices)
+                        decode_word_weight = decode_word_weight_list[step]
+                        losses.append(-logit_unit * reward * decode_word_weight)
+                    loss = tf.add_n(losses)
+                    return loss
+
                 def teacherforce_loss():
                     if self.model_config.number_samples > 0:
                         loss_fn = tf.nn.sampled_softmax_loss
@@ -271,11 +330,12 @@ class Graph():
                     loss = sequence_loss(logits=tf.stack(output.decoder_logit_list, axis=1),
                                          targets=gt_target,
                                          weights=decode_word_weight,
-                                         softmax_loss_function=loss_fn,
-                                         w=w,
-                                         b=b,
-                                         decoder_outputs=decoder_outputs,
-                                         number_samples=self.model_config.number_samples)
+                                         # softmax_loss_function=loss_fn,
+                                         # w=w,
+                                         # b=b,
+                                         # decoder_outputs=decoder_outputs,
+                                         # number_samples=self.model_config.number_samples
+                                         )
                     return loss
 
                 if self.model_config.train_mode == 'dynamic_self-critical':
@@ -285,18 +345,41 @@ class Graph():
                     #     # tf.logical_and(tf.greater(self.global_step, 100000), tf.equal(tf.mod(self.global_step, 2), 0)),
                     #     lambda : self_critical_loss(),
                     #     lambda : teacherforce_loss())
+                elif self.model_config.train_mode == 'teachercritical' or self.model_config.train_mode == 'teachercriticalv2':
+                    loss = tf.cond(
+                        tf.equal(tf.mod(self.global_step, 3), 0),
+                        lambda : teacherforce_loss(),
+                        lambda : teacherforce_critical_loss())
+
+                    # loss = teacherforce_critical_loss()
                 else:
                     loss = teacherforce_loss()
+
+                # if 'ruleattn' in self.model_config.external_loss:
+                #     batch_pos = tf.range(
+                #         self.model_config.batch_size * self.model_config.max_cand_rules) // self.model_config.max_cand_rules
+                #     batch_pos = tf.reshape(
+                #         batch_pos, [self.model_config.batch_size, self.model_config.max_cand_rules])
+                #     batch_pos = tf.expand_dims(batch_pos, axis=2)
+                #     ids = tf.stack(rule_pair_input_placeholder, axis=1)
+                #     bias = 1.0 - tf.to_float(
+                #         tf.logical_and(tf.equal(ids[:, :, 0], 0), tf.equal(ids[:, :, 1], 0)))
+                #     ids = tf.concat([batch_pos, ids], axis=2)
+                #     distrs = tf.stack(output.attn_distr_list, axis=1)
+                #     ruleattn_loss = -tf.gather_nd(distrs, ids)*bias
+                #     loss += ruleattn_loss
+                #     self.pairs = tf.stack(rule_pair_input_placeholder, axis=1)
 
                 obj = {
                     'sentence_idxs': sentence_idxs,
                     'sentence_simple_input_placeholder': sentence_simple_input_placeholder,
                     'sentence_complex_input_placeholder': sentence_complex_input_placeholder,
                 }
-
+                self.logits = output.decoder_logit_list
                 if 'rule' in self.model_config.memory:
                     obj['rule_id_input_placeholder'] = rule_id_input_placeholder
                     obj['rule_target_input_placeholder'] = rule_target_input_placeholder
+                    obj['rule_pair_input_placeholder'] = rule_pair_input_placeholder
                     obj['mem_contexts'] = mem_contexts
                     obj['mem_outputs'] = mem_outputs
                     obj['mem_counter'] = mem_counter
@@ -369,7 +452,7 @@ class Graph():
 class ModelOutput:
     def __init__(self, decoder_outputs_list=None, decoder_logit_list=None, decoder_target_list=None,
                  decoder_score=None, gt_target_list=None, encoder_embed_inputs_list=None, encoder_outputs=None,
-                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None):
+                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None, attn_distr_list=None):
         self._decoder_outputs_list = decoder_outputs_list
         self._decoder_logit_list = decoder_logit_list
         self._decoder_target_list = decoder_target_list
@@ -381,6 +464,7 @@ class ModelOutput:
         self._final_outputs_list = final_outputs_list
         self._sample_target_list = sample_target_list
         self._sample_logit_list = sample_logit_list
+        self._attn_distr_list = attn_distr_list
 
     @property
     def encoder_outputs(self):
@@ -426,3 +510,7 @@ class ModelOutput:
     @property
     def sample_logit_list(self):
         return self._sample_logit_list
+
+    @property
+    def attn_distr_list(self):
+        return self._attn_distr_list

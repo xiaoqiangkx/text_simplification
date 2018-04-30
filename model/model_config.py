@@ -21,14 +21,14 @@ class DefaultConfig():
     framework = args.framework
     warm_start = args.warm_start
     use_partial_restore = args.use_partial_restore
-    batch_size = 5
-    dimension = 150
+    batch_size = 3
+    dimension = 50
     max_complex_sentence = 10
     max_simple_sentence = 8
     model_eval_freq = args.model_eval_freq
     it_train = args.it_train
     model_print_freq = 10
-    save_model_secs = 30 #600
+    save_model_secs = 10 #600
     number_samples = args.number_samples
     dmode = args.dmode
 
@@ -55,9 +55,17 @@ class DefaultConfig():
 
     # post process
     replace_unk_by_attn = False
-    replace_unk_by_emb = True
+    replace_unk_by_emb = False
     replace_unk_by_cnt = False
     replace_ner = True
+    if framework == 'transformer':
+        replace_unk_by_emb = True
+    elif framework == 'seq2seq':
+        replace_unk_by_attn = False
+
+    external_loss = args.external_loss
+    external_loss = external_loss.split(':')
+
 
     # deprecated: std of trunc norm init, used for initializing embedding / w
     # trunc_norm_init_std = 1e-4
@@ -71,17 +79,22 @@ class DefaultConfig():
     tie_embedding = args.tied_embedding
     pretrained_embedding = None
 
-    train_dataset_simple = get_path('data/train_dummy_simple_dataset', 'sys')
-    train_dataset_simple2 = get_path('data/train_dummy_simple_dataset2', 'sys')
+    attention_type = args.attention_type
 
-    train_dataset_complex = get_path('data/train_dummy_complex_dataset', 'sys')
-    train_dataset_complex2 = get_path('data/train_dummy_complex_dataset2', 'sys')
-    train_dataset_complex_ppdb = get_path('data/train_dummy_complex_dataset.rules', 'sys')
-    val_dataset_complex_ppdb = get_path('data/eval_dummy_complex_dataset.rules', 'sys')
-    vocab_simple = get_path('data/dummy_simple_vocab', 'sys')
-    vocab_complex = get_path('data/dummy_complex_vocab', 'sys')
-    vocab_all = get_path('data/dummy_vocab', 'sys')
-    vocab_rules = get_path('data/dummy_rules_vocab', 'sys')
+    data_base = 'data_miss'
+    train_dataset_simple = get_path('data/%s/train_dummy_simple_dataset'%data_base, 'sys')
+    train_dataset_simple_ext = get_path('data/%s/train_dummy_simple_dataset_ext' % data_base, 'sys')
+    train_dataset_simple2 = get_path('data/%s/train_dummy_simple_dataset2'%data_base, 'sys')
+
+    train_dataset_complex = get_path('data/%s/train_dummy_complex_dataset'%data_base, 'sys')
+    train_dataset_complex2 = get_path('data/%s/train_dummy_complex_dataset2%data_base', 'sys')
+    train_dataset_complex_ppdb = get_path('data/%s/train_dummy_complex_dataset.rules'%data_base, 'sys')
+    train_dataset_complex_ppdb_cand = get_path('data/%s/train_dummy_complex_dataset_cand.rules'%data_base, 'sys')
+    val_dataset_complex_ppdb = get_path('data/%s/eval_dummy_complex_dataset.rules'%data_base, 'sys')
+    vocab_simple = get_path('data/%s/dummy_simple_vocab'%data_base, 'sys')
+    vocab_complex = get_path('data/%s/dummy_complex_vocab'%data_base, 'sys')
+    vocab_all = get_path('data/%s/dummy_vocab'%data_base, 'sys')
+    vocab_rules = get_path('data/%s/dummy_rules_vocab'%data_base, 'sys')
     # if args.lower_case:
     #     vocab_simple = vocab_simple + '.lower'
     #     vocab_complex = vocab_complex + '.lower'
@@ -90,16 +103,16 @@ class DefaultConfig():
     subword_vocab_size = args.subword_vocab_size
 
     if subword_vocab_size > 0:
-        subword_vocab_simple = get_path('data/dummy_subvocab', 'sys')
-        subword_vocab_complex = get_path('data/dummy_subvocab', 'sys')
-        subword_vocab_all = get_path('data/dummy_subvocab', 'sys')
+        subword_vocab_simple = get_path('data/%s/dummy_subvocab'%data_base, 'sys')
+        subword_vocab_complex = get_path('data/%s/dummy_subvocab'%data_base, 'sys')
+        subword_vocab_all = get_path('data/%s/dummy_subvocab'%data_base, 'sys')
         max_complex_sentence = 100
         max_simple_sentence = 90
 
-    val_dataset_simple_folder = get_path('data/', 'sys')
+    val_dataset_simple_folder = get_path('data/%s/'%data_base, 'sys')
     val_dataset_simple_file = 'valid_dummy_simple_dataset'
-    val_dataset_complex = get_path('data/valid_dummy_complex_dataset', 'sys')
-    val_mapper = get_path('data/valid_dummy_mapper', 'sys')
+    val_dataset_complex = get_path('data/%s/valid_dummy_complex_dataset'%data_base, 'sys')
+    val_mapper = get_path('data/%s/valid_dummy_mapper'%data_base, 'sys')
     val_dataset_complex_rawlines_file = val_dataset_complex
     val_dataset_simple_rawlines_file_references = 'valid_dummy_simple_dataset.raw.'
     val_dataset_simple_rawlines_file = val_dataset_simple_file
@@ -160,8 +173,20 @@ class DefaultConfig():
             rl_configs['sari_weight'] = float(kv[1])
         if kv[0] == 'rule':
             rl_configs['rule'] = True
+            if len(kv) > 1:
+                if kv[1] == 'large':
+                    train_dataset_complex_ppdb_cand = get_path(
+                        '../text_simplification_data/train/dress/wikilargenew/train/rule_cand.txt', 'sys')
+                elif kv[1] == 'huge':
+                    train_dataset_complex_ppdb_cand = get_path(
+                        '../text_simplification_data/train/dress/wikihugenew/train/rule_cand.txt', 'sys')
+
         if kv[0] == 'rule_weight':
             rl_configs['rule_weight'] = float(kv[1])
+        if kv[0] == 'ext_simple':
+            rl_configs['ext_simple'] = True
+        if kv[0] == 'rule_global':
+            rl_configs['rule_global'] = True
 
     rule_base = args.rule_base
     use_dataset2 = args.use_dataset2
@@ -209,7 +234,6 @@ class WikiDressLargeNewDefault(DefaultConfig):
         vocab_rules = get_path('../text_simplification_data/train/dress/wikilargenew/train/rule_voc.txt', 'sys')
         train_dataset_complex_ppdb = get_path(
             '../text_simplification_data/train/dress/wikilargenew/train/rule_mapper2.txt', 'sys')
-
     val_dataset_simple_folder = get_path('../text_simplification_data/train/dress/wikilargenew/val/', 'sys')
     val_dataset_simple_file = 'dst.txt'
     val_dataset_complex = get_path('../text_simplification_data/train/dress/wikilargenew/val/src.txt', 'sys')

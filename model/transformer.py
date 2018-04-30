@@ -42,7 +42,8 @@ class TransformerGraph(Graph):
         encoder_embed_inputs_list = tf.unstack(encoder_embed_inputs, axis=1)
         with tf.variable_scope('transformer_decoder'):
             train_mode = self.model_config.train_mode
-            if self.is_train and train_mode == 'teacher':
+            if self.is_train and (train_mode == 'teacher' or
+                                  train_mode == 'teachercritical'or train_mode ==  'teachercriticalv2'):
                 # General train
                 print('Use Generally Process.')
                 decoder_embed_inputs_list = self.embedding_fn(
@@ -54,83 +55,81 @@ class TransformerGraph(Graph):
                 decoder_target_list = [tf.argmax(o, output_type=tf.int32, axis=-1)
                                        for o in decoder_logit_list]
             elif self.is_train and train_mode == 'dynamic_self-critical':
-                beam_size = 1
-                encoder_beam_outputs = tf.concat(
-                    [tf.tile(tf.expand_dims(encoder_outputs[o, :, :], axis=0),
-                             [beam_size, 1, 1])
-                     for o in range(self.model_config.batch_size)], axis=0)
+                decoder_target_tensor = tf.TensorArray(tf.int32, size=0, dynamic_size=True,
+                                                       clear_after_read=False,
+                                                       element_shape=[self.model_config.batch_size, ])
+                sampled_target_tensor = tf.TensorArray(tf.int32, size=0, dynamic_size=True,
+                                                      clear_after_read=False,
+                                                      element_shape=[self.model_config.batch_size, ])
+                sampled_logit_tensor = tf.TensorArray(tf.float32, size=0, dynamic_size=True,
+                                                     clear_after_read=False,
+                                                     element_shape=[self.model_config.batch_size, ])
 
-                encoder_attn_beam_bias = tf.concat(
-                    [tf.tile(tf.expand_dims(encoder_attn_bias[o, :, :, :], axis=0),
-                             [beam_size, 1, 1, 1])
-                     for o in range(self.model_config.batch_size)], axis=0)
+                def _is_finished(step, decoder_target_tensor, sampled_target_tensor, sampled_logit_tensor):
+                    return tf.less(step, self.model_config.max_simple_sentence)
 
-                def symbol_to_logits_fn(ids):
-                    cur_ids = ids[:, 1:]
-                    embs = tf.nn.embedding_lookup(emb_simple, cur_ids)
-                    embs = tf.pad(embs, [[0, 0], [1, 0], [0, 0]])
-                    final_outputs, _, _ = self.decode_inputs_to_outputs(embs, encoder_beam_outputs,
-                                                                        encoder_attn_beam_bias,
-                                                                        rule_id_input_placeholder, mem_contexts,
-                                                                        mem_outputs,
-                                                                        global_step)
+                def _recursive(step, decoder_target_tensor, sampled_target_tensor, sampled_logit_tensor):
+                    decoder_target_stack = tf.transpose(decoder_target_tensor.stack(), perm=[1, 0])
 
-                    decoder_logit_list = self.output_to_logit(final_outputs[:, -1, :], w, b)
-                    return decoder_logit_list, final_outputs[:, -1, :]
+                    def get_empty_emb():
+                        decoder_emb_inputs = tf.zeros(
+                            [self.model_config.batch_size, 1, self.model_config.dimension])
+                        return decoder_emb_inputs
+                    def get_emb():
+                        batch_go = tf.zeros(
+                            [self.model_config.batch_size, 1, self.model_config.dimension])
+                        decoder_emb_inputs = tf.concat([
+                            batch_go, tf.gather(emb_simple, decoder_target_stack)], axis=1)
+                        return decoder_emb_inputs
 
-                beam_ids, beam_score, final_outputs = beam_search_backprop_greedy.beam_search(
-                    symbol_to_logits_fn, tf.zeros([self.model_config.batch_size], tf.int32),
-                    beam_size, self.model_config.max_simple_sentence,
-                    self.data.vocab_simple.vocab_size(), self.model_config.penalty_alpha,
-                    model_config=self.model_config)
-                top_beam_ids = beam_ids[:, 0, 1:]
-                top_beam_ids = tf.pad(top_beam_ids,
-                                      [[0, 0],
-                                       [0, self.model_config.max_simple_sentence - tf.shape(top_beam_ids)[1]]],
-                                      constant_values=self.data.vocab_simple.encode(constant.SYMBOL_PAD))
+                    decoder_emb_inputs = tf.cond(tf.equal(step, 0), lambda :get_empty_emb(), lambda :get_emb())
+
+                    final_outputs, _, _ = self.decode_inputs_to_outputs(
+                        decoder_emb_inputs, encoder_outputs, encoder_attn_bias,
+                        rule_id_input_placeholder, mem_contexts, mem_outputs, global_step)
+                    final_output = final_outputs[:, -1, :]
+                    decoder_logit = tf.add(tf.matmul(final_output, tf.transpose(w)), b)
+                    decoder_target = tf.stop_gradient(tf.argmax(decoder_logit, output_type=tf.int32, axis=-1))
+                    sampled_target = tf.cast(tf.squeeze(tf.multinomial(decoder_logit, 1), axis=1), tf.int32)
+
+                    indices = tf.stack(
+                        [tf.range(0, self.model_config.batch_size, dtype=tf.int32),
+                         tf.squeeze(sampled_target)],
+                        axis=-1)
+                    logit_unit = tf.gather_nd(tf.nn.softmax(decoder_logit, axis=1), indices)
+
+                    decoder_target_tensor = decoder_target_tensor.write(step, decoder_target)
+                    sampled_target_tensor = sampled_target_tensor.write(step, sampled_target)
+                    sampled_logit_tensor = sampled_logit_tensor.write(step, logit_unit)
+
+                    return step+1, decoder_target_tensor, sampled_target_tensor, sampled_logit_tensor
 
 
-                top_final_outputs = final_outputs[:, 0, 1:]
-                top_final_outputs = tf.pad(top_final_outputs,
-                                            [[0, 0],
-                                             [0, self.model_config.max_simple_sentence - tf.shape(top_final_outputs)[1]],
-                                             [0, 0]],
-                                            constant_values=0)
-                top_final_outputs.set_shape(
-                    [self.model_config.batch_size, self.model_config.max_simple_sentence,
-                     self.model_config.dimension])
+                step = tf.constant(0)
+                (_, decoder_target_tensor, sampled_target_tensor, sampled_logit_tensor) = tf.while_loop(
+                    _is_finished, _recursive,
+                    [step, decoder_target_tensor, sampled_target_tensor, sampled_logit_tensor],
+                    back_prop=True, parallel_iterations=1, swap_memory=False)
 
-                decoder_target_list = [tf.squeeze(d, 1)
-                                       for d in tf.split(top_beam_ids, self.model_config.max_simple_sentence, axis=1)]
+                decoder_target_tensor = decoder_target_tensor.stack()
+                decoder_target_tensor.set_shape([self.model_config.max_simple_sentence,
+                                                 self.model_config.batch_size])
+                decoder_target_tensor = tf.transpose(decoder_target_tensor, perm=[1, 0])
+                decoder_target_list = tf.unstack(decoder_target_tensor, axis=1)
 
-                final_output_list = tf.unstack(top_final_outputs, axis=1)
-                decoder_output_list = final_output_list
 
-                tf.get_variable_scope().reuse_variables()
-                beam_ids, beam_score, decoder_logits = beam_search_backprop_sampled.beam_search(
-                    symbol_to_logits_fn, tf.zeros([self.model_config.batch_size], tf.int32),
-                    beam_size, self.model_config.max_simple_sentence,
-                    self.data.vocab_simple.vocab_size(), self.model_config.penalty_alpha,
-                    model_config=self.model_config)
-                sampled_top_beam_ids = beam_ids[:, 0, 1:]
-                sampled_top_beam_ids = tf.pad(sampled_top_beam_ids,
-                                      [[0, 0],
-                                       [0, self.model_config.max_simple_sentence - tf.shape(sampled_top_beam_ids)[1]]],
-                                      constant_values=self.data.vocab_simple.encode(constant.SYMBOL_PAD))
-                sampled_top_beam_ids.set_shape([self.model_config.batch_size, self.model_config.max_simple_sentence])
-                sampled_top_beam_ids_list = tf.unstack(sampled_top_beam_ids, axis=1)
+                sampled_target_tensor = sampled_target_tensor.stack()
+                sampled_target_tensor.set_shape([self.model_config.max_simple_sentence,
+                                                self.model_config.batch_size])
+                sampled_target_tensor = tf.transpose(sampled_target_tensor, perm=[1, 0])
+                sampled_target_list = tf.unstack(sampled_target_tensor, axis=1)
 
-                sampled_top_decoder_logits = decoder_logits[:, 0, 1:]
-                sampled_top_decoder_logits = tf.pad(sampled_top_decoder_logits,
-                                            [[0, 0],
-                                             [0,
-                                              self.model_config.max_simple_sentence - tf.shape(sampled_top_decoder_logits)[
-                                                  1]]],
-                                            constant_values=0)
-                sampled_top_decoder_logits.set_shape(
-                    [self.model_config.batch_size, self.model_config.max_simple_sentence])
+                sampled_logit_tensor = sampled_logit_tensor.stack()
+                sampled_logit_tensor.set_shape([self.model_config.max_simple_sentence,
+                                               self.model_config.batch_size])
+                sampled_logit_tensor = tf.transpose(sampled_logit_tensor, perm=[1, 0])
+                sampled_logit_list = tf.unstack(sampled_logit_tensor, axis=1)
 
-                sampled_decoder_logit_list = tf.unstack(sampled_top_decoder_logits, axis=1)
             else:
                 # Beam Search
                 print('Use Beam Search with Beam Search Size %d.' % self.model_config.beam_search_size)
@@ -140,16 +139,16 @@ class TransformerGraph(Graph):
 
         gt_target_list = sentence_simple_input_placeholder
         output = ModelOutput(
-            contexts=cur_context,
+            contexts=cur_context if 'rule' in self.model_config.memory else None,
             encoder_outputs=encoder_outputs,
-            decoder_outputs_list=decoder_output_list,
-            final_outputs_list=final_output_list,
+            decoder_outputs_list=final_output_list if train_mode != 'dynamic_self-critical' else None,
+            final_outputs_list=final_output_list if train_mode != 'dynamic_self-critical' else None,
             decoder_logit_list=decoder_logit_list if train_mode != 'dynamic_self-critical' else None,
             gt_target_list=gt_target_list,
             encoder_embed_inputs_list=tf.unstack(encoder_embed_inputs, axis=1),
             decoder_target_list=decoder_target_list,
-            sample_logit_list=sampled_decoder_logit_list if train_mode == 'dynamic_self-critical' else None,
-            sample_target_list=sampled_top_beam_ids_list if train_mode == 'dynamic_self-critical' else None
+            sample_logit_list=sampled_logit_list if train_mode == 'dynamic_self-critical' else None,
+            sample_target_list=sampled_target_list if train_mode == 'dynamic_self-critical' else None
         )
         return output
 
@@ -246,12 +245,11 @@ class TransformerGraph(Graph):
                 decoder_embed_inputs, encoder_outputs, decoder_attn_bias,
                 encoder_attn_bias, self.hparams)
 
-            encoder_gate_w = tf.get_variable('encoder_gate_w', shape=(
-                1, self.model_config.dimension, 1))
-            encoder_gate_b = tf.get_variable('encoder_gate_b', shape=(1, 1, 1))
-            encoder_gate = tf.tanh(encoder_gate_b + tf.nn.conv1d(encoder_outputs, encoder_gate_w, 1, 'SAME'))
-            encoder_context_outputs = tf.expand_dims(tf.reduce_mean(encoder_outputs * encoder_gate, axis=1), axis=1)
-            contexts = [context + encoder_context_outputs for context in contexts]
+            # encoder_gate_w = tf.get_variable('encoder_gate_w', shape=(
+            #     1, self.model_config.dimension, 1))
+            # encoder_gate_b = tf.get_variable('encoder_gate_b', shape=(1, 1, 1))
+            # encoder_gate = tf.tanh(encoder_gate_b + tf.nn.conv1d(encoder_outputs, encoder_gate_w, 1, 'SAME'))
+            # encoder_context_outputs = tf.expand_dims(tf.reduce_mean(encoder_outputs * encoder_gate, axis=1), axis=1)
             cur_context = tf.concat(contexts, axis=-1)
             cur_mem_contexts = tf.stack(self.embedding_fn(rule_id_input_placeholder, mem_contexts), axis=1)
             cur_mem_outputs = tf.stack(self.embedding_fn(rule_id_input_placeholder, mem_outputs), axis=1)
@@ -265,9 +263,9 @@ class TransformerGraph(Graph):
             temp_output = tf.concat((decoder_output, mem_output), axis=-1)
             w = tf.get_variable('w_ffn', shape=(
                 1, self.model_config.dimension*2, self.model_config.dimension))
-            b = tf.get_variable('b_ffn', shape=(
-                1, 1, self.model_config.dimension))
-            mem_output = tf.nn.conv1d(temp_output, w, 1, 'SAME') + b
+            # b = tf.get_variable('b_ffn', shape=(
+            #     1, 1, self.model_config.dimension))
+            mem_output = tf.nn.conv1d(temp_output, w, 1, 'SAME')
             g = tf.greater(global_step, tf.constant(2*self.model_config.memory_prepare_step, dtype=tf.int64))
             final_output = tf.cond(g, lambda: mem_output, lambda: decoder_output)
             return final_output, decoder_output, cur_context

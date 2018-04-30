@@ -51,9 +51,10 @@ class TrainData:
 
         if 'rule' in self.model_config.memory:
             self.vocab_rule = Rule(model_config, self.model_config.vocab_rules)
-            self.rules = self.populate_rules(
+            self.rules_target, self.rules_align = self.populate_rules(
                 self.model_config.train_dataset_complex_ppdb, self.vocab_rule)
-            assert len(self.rules) == self.size
+            assert len(self.rules_align) == self.size
+            assert len(self.rules_target) == self.size
             print('Populate Rule with size:%s' % self.vocab_rule.get_rule_size())
             # if self.model_config.use_dataset2:
             #     self.rules2 = self.populate_rules(
@@ -125,7 +126,8 @@ class TrainData:
 
             supplement = {}
             if 'rule' in self.model_config.memory:
-                supplement['mem'] = self.rules[i]
+                supplement['rules_target'] = self.rules_target[i]
+                supplement['rules_align'] = self.rules_align[i]
 
             obj = {}
             obj['words_comp'] = words_complex
@@ -156,16 +158,23 @@ class TrainData:
             #     j += 1
 
     def populate_rules(self, rule_path, vocab_rule):
-        data = []
+        data_target, data_align = [], []
         for line in open(rule_path, encoding='utf-8'):
             cur_rules = line.split('\t')
-            tmp = []
+            tmp, tmp_align = [], []
             for cur_rule in cur_rules:
-                rule_id, rule_targets = vocab_rule.encode(cur_rule)
-                if rule_targets is not None:
+                rule_id, rule_origins, rule_targets = vocab_rule.encode(cur_rule)
+                if rule_targets is not None and rule_origins is not None:
                     tmp.append((rule_id, [self.vocab_simple.encode(rule_target) for rule_target in rule_targets]))
-            data.append(tmp)
-        return data
+
+                    if len(rule_origins) == 1 and len(rule_targets) == 1:
+                        tmp_align.append(
+                            (self.vocab_complex.encode(rule_origins[0]),
+                             self.vocab_simple.encode(rule_targets[0])))
+            data_target.append(tmp)
+            data_align.append(tmp_align)
+
+        return data_target, data_align
 
     def populate_data(self, data_path_comp, data_path_simp, vocab_comp, vocab_simp, need_raw=False):
         # Populate data into memory
@@ -197,7 +206,8 @@ class TrainData:
         i = rd.sample(range(self.size), 1)[0]
         supplement = {}
         if 'rule' in self.model_config.memory:
-            supplement['mem'] = self.rules[i]
+            supplement['rules_target'] = self.rules_target[i]
+            supplement['rules_align'] = self.rules_align[i]
 
         return i, self.data[i], supplement
 

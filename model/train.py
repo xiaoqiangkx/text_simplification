@@ -8,6 +8,7 @@ sys.path.insert(0,'/home/zhaos5/ts/text_simplification')
 
 from data_generator.train_data import TrainData
 from model.transformer import TransformerGraph
+from model.seq2seq import Seq2SeqGraph
 from model.model_config import DefaultConfig, DefaultTrainConfig, list_config
 from model.model_config import WikiDressLargeNewTrainDefault, WikiDressHugeNewTrainDefault
 from data_generator.vocab import Vocab
@@ -66,10 +67,12 @@ def get_graph_train_data(
                     tmp_sups['rule_id_input_placeholder'] = []
                 if 'rule_target_input_placeholder' not in tmp_sups:
                     tmp_sups['rule_target_input_placeholder'] = []
+                if 'rule_pair_input_placeholder' not in tmp_sups:
+                    tmp_sups['rule_pair_input_placeholder'] = []
 
                 cur_rule_id_input_placeholder = []
                 cur_rule_target_input_placeholder = []
-                for rule_tuple in sup['mem']:
+                for rule_tuple in sup['rules_target']:
                     rule_id = rule_tuple[0]
                     rule_targets = rule_tuple[1]
                     for target in rule_targets:
@@ -87,6 +90,24 @@ def get_graph_train_data(
                 tmp_sups['rule_id_input_placeholder'].append(cur_rule_id_input_placeholder)
                 tmp_sups['rule_target_input_placeholder'].append(cur_rule_target_input_placeholder)
 
+                cur_rule_align_input_placeholder = []
+                for rule_tuple in sup['rules_align']:
+                    rule_tar = rule_tuple[1]
+                    rule_tar = obj_data['words_simp'].index(rule_tar)
+                    rule_ori = rule_tuple[0]
+                    rule_ori = obj_data['words_comp'].index(rule_ori)
+                    cur_rule_align_input_placeholder.append([rule_tar, rule_ori])
+
+                if len(cur_rule_align_input_placeholder) < model_config.max_cand_rules:
+                    num_pad = model_config.max_cand_rules - len(cur_rule_align_input_placeholder)
+                    cur_rule_align_input_placeholder.extend(
+                        num_pad * [[0, 0]])
+                else:
+                    cur_rule_align_input_placeholder = cur_rule_align_input_placeholder[:model_config.max_cand_rules]
+
+                tmp_sups['rule_pair_input_placeholder'].append(cur_rule_align_input_placeholder)
+
+
         for step in range(model_config.max_simple_sentence):
             input_feed[obj['sentence_simple_input_placeholder'][step].name] = [tmp_sentence_simple[batch_idx][step]
                                                             for batch_idx in range(model_config.batch_size)]
@@ -103,6 +124,9 @@ def get_graph_train_data(
                 input_feed[obj['rule_target_input_placeholder'][step].name] = [
                     tmp_sups['rule_target_input_placeholder'][batch_idx][step]
                     for batch_idx in range(model_config.batch_size)]
+                input_feed[obj['rule_pair_input_placeholder'][step].name] = [
+                    tmp_sups['rule_pair_input_placeholder'][batch_idx][step]
+                    for batch_idx in range(model_config.batch_size)]
 
     return input_feed
 
@@ -115,6 +139,8 @@ def train(model_config=None):
     graph = None
     if model_config.framework == 'transformer':
         graph = TransformerGraph(data, True, model_config)
+    elif model_config.framework == 'seq2seq':
+        graph = Seq2SeqGraph(data, True, model_config)
     else:
         raise NotImplementedError('Unknown Framework.')
     graph.create_model_multigpu()
@@ -182,9 +208,12 @@ def train(model_config=None):
             graph.objs,
             model_config)
 
+        # fetches = [graph.train_op, graph.loss, graph.global_step,
+        #            graph.perplexity, graph.ops, graph.attn_dists, graph.targets, graph.cs]
+        # _, loss, step, perplexity, _ops , attn_dists, targets, cs = sess.run(fetches, input_feed)
         fetches = [graph.train_op, graph.loss, graph.global_step,
-                   graph.perplexity, graph.ops]
-        _, loss, step, perplexity, ops = sess.run(fetches, input_feed)
+                   graph.perplexity, graph.ops, graph.logits]
+        _, loss, step, perplexity, _, logits = sess.run(fetches, input_feed)
         perplexitys.append(perplexity)
 
         if step % model_config.model_print_freq == 0:

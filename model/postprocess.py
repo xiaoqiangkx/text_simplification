@@ -41,11 +41,12 @@ class PostProcess:
 
         ndecoder_targets = []
         for batch_i in range(batch_size):
-            if len(np.shape(attn_dists)) == 2:
+            if len(np.shape(attn_dists[batch_i])) == 2:
                 ndecoder_target = self.replace_unk_by_attn_onestep(
                     encoder_words[batch_i], attn_dists[batch_i], decoder_targets[batch_i])
                 ndecoder_targets.append(ndecoder_target)
-            elif len(np.shape(attn_dists)) == 3:
+            elif len(np.shape(attn_dists[batch_i])) == 3:
+                raise NotImplemented('Transformer Attn Unk Replacement not avaiable')
                 num_heads = np.shape(attn_dists)[1]
                 ndecoder_target_cands = []
                 for head_i in range(num_heads):
@@ -63,7 +64,7 @@ class PostProcess:
         for len_i in range(len(decoder_target)):
             target = decoder_target[len_i]
             if target == constant.SYMBOL_UNK or target == constant.SYMBOL_NUM:
-                nword = encoder_word[attn_dist[len_i]]
+                nword = encoder_word[np.argmax(attn_dist[len_i])]
                 ndecoder_target[len_i] = nword
         return ndecoder_target
 

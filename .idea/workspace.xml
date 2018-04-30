@@ -5,548 +5,206 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2401f24-4001-493d-a510-7f72da9e93d7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h1_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h5.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l1h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h1_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h5.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l2h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h1_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h5.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l3h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h1_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h5.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bt.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bt_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wikihuge/wkhb.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wikihuge/wkhb_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_greedy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_sampled.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset_ext" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/dummy_rules_vocab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/eval_dummy_complex_dataset.rules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset.rules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset2.syntax" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_complex_dataset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_process/ppdb_cand.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_process/ppdb_filter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/seq2seq.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/seq2seq_beamsearch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/codelab/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/dummy_complex_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab50000" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_rules_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/dummy_rules_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/dummy_simple_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab50000" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_subvocab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_vocab50000" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" beforeDir="false" afterPath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset" beforeDir="false" afterPath="$PROJECT_DIR$/data/train_dummy_complex_dataset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" beforeDir="false" afterPath="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset" beforeDir="false" afterPath="$PROJECT_DIR$/data/train_dummy_simple_dataset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.rules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.syntax" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset2.syntax" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/data_prefilter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_complex_dataset" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_complex_dataset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_mapper" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_mapper" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.0" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" beforeDir="false" afterPath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/data_ner_prepare.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/data_prepare.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/rule.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generator/rule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/train_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generator/train_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/val_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generator/val_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/vocab_prepare.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/data_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/data_preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/voc_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/voc_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl0.gtx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl0.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl0.titan.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl0.titanx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl1.gtx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl1.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl1.titan.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl1.titanx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl2.gtx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl2.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl2.titan.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_cl2.titanx.long.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasev3.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasev3.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbasev3.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl0.long.gtx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl0.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl1.long.gtx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl1.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl2.long.gtx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/ACL/dress_final_ffn_rbv3_cl2.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_da.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_di.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_dp1.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_dq.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_lc.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/eval_dress_nt.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/test_temp.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress2_layer4_ppdb_args.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_da.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_di.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_dp1.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_dq.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_h256.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer1.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer2.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer3.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_attnloss.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_dim512.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_h10.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_lm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_mc.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_nt.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb2.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.3.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.5.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.8.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.3.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.5.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.8.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args0.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args3015.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_aloss.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_comb.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_flatten.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h1.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h10.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h2.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_args_large.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_comb.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_large.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_rlks.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_ppdb_rls.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_layer4_subword.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_lc.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_lc_dag.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_lc_rl.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_lc_tlg.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_nt.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_ppdb.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/NAACL/train_dress_s2s.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad_base.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad_base_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad_mc5.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adagrad_mc5_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam_base.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam_base_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam_mc5.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/dressnew/dressnew_adam_mc5_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/legacy.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/legacy_final_ffn.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_plain.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_plain_mc4.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_plain_mc4_drop2_adam.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_slurm_nuqm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_slurm_nuqm_notiming.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/eval_slurm_uqm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_plain.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_plain_mc4.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_plain_mc4_drop2_adam.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_slurm_nuqm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_slurm_nuqm_notiming.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/old/train_slurm_uqm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_add.long.gtx1080.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_add.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_addsub.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_addsub_eval.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_eval.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_sub.long.titanx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_crc/wiki_base_sub_eval.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_psc/sample.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments_psc/wiki_base.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/giga/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/giga/data_process.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/giga/data_simp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/experiments/lm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/experiments/lm_sub.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/lm_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/lm_data_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/language_model/transformer_lm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codelab/test_len.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_len.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codelab/tf_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_complex_vocab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_complex_vocab50000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_rules_vocab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_simple_vocab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_simple_vocab50000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_subvocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_subvocab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_vocab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dummy_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_vocab50000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules.v3.sing.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset2" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.rules" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset.rules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.syntax" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset.syntax" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset2" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset2.syntax" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_rule_multi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_complex_dataset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_mapper" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_mapper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_rule_whitespace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl0.gtx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl0.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl0.titan.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl0.titanx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl1.gtx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl1.titan.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl1.titanx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl2.gtx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl2.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl2.titan.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_cl2.titanx.long.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl0.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl1.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasesing_cl2.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasev3.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasev3.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbasev3.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl0.long.gtx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl0.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl1.long.gtx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl1.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl2.long.gtx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn_rbv3_cl2.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_da.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_di.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_dp1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_dq.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_lc.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/eval_dress_nt.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/test_temp.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress2_layer4_ppdb_args.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_da.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_di.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_dp1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_dq.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_h256.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer2.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer3.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_attnloss.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_dim512.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_h10.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_lm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_mc.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_nt.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb2.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.3.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.5.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aedloss0.8.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.3.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.5.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_aloss0.8.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args0.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args3015.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_aloss.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_comb.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_flatten.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h10.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_h2.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_args_large.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_comb.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_large.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_rlks.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_ppdb_rls.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_layer4_subword.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_lc.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_lc_dag.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_lc_rl.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_lc_tlg.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_nt.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_ppdb.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_s2s.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adagrad.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adam.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/legacy.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/legacy_final_ffn.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_plain.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_plain_mc4.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_plain_mc4_drop2_adam.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_slurm_nuqm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_slurm_nuqm_notiming.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_slurm_uqm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_plain.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_plain_mc4.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_plain_mc4_drop2_adam.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_slurm_nuqm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_slurm_nuqm_notiming.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/train_slurm_uqm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_add.long.gtx1080.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_add.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_addsub.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_addsub_eval.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_eval.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_sub.long.titanx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_sub_eval.long.titan.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/rule.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/train_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/val_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/vocab.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari_eval.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bt.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bt_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/eval.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/graph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/metric.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/metric.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ppdb.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/postprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/postprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/en/tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/script/en/tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/bin/t2t-datagen" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/bin/t2t-datagen" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/bin/t2t-decoder" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/bin/t2t-decoder" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/bin/t2t-make-tf-configs" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/bin/t2t-make-tf-configs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/bin/t2t-trainer" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/bin/t2t-trainer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_math.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_math.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_math_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_math_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/algorithmic_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/all_problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/all_problems.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/all_problems_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/all_problems_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/audio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/audio_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/audio_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/cipher.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/cipher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/cnn_dailymail.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/cnn_dailymail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/desc2code.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/desc2code.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/desc2code_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/desc2code_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/dna_encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/dna_encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/dna_encoder_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/dna_encoder_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/gene_expression.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/gene_expression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/gene_expression_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/gene_expression_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/generator_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/generator_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/generator_utils_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/generator_utils_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/ice_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/ice_parsing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/image.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/image_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/imdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/imdb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/inspect.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/librispeech.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/librispeech.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/lm1b.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/lm1b.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/multinli.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/multinli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/problem_hparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/problem_hparams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/ptb.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/ptb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/snli.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/snli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder_build_subword.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder_build_subword.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/text_encoder_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/tokenizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/tokenizer_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/tokenizer_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_encs.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_encs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_ende.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_ende.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enfr.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enfr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enmk.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enmk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enzh.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_enzh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/translate_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/wiki.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/wiki.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/data_generators/wsj_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/data_generators/wsj_parsing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/common_attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/common_attention.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/common_attention_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/common_attention_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/common_hparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/common_hparams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/common_layers.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/common_layers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/common_layers_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/common_layers_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/modalities.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/modalities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/modalities_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/modalities_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/rev_block.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/rev_block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/layers/rev_block_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/layers/rev_block_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/aligned.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/attention_lm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/attention_lm_moe.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/bluenet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/bluenet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/bytenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/bytenet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/bytenet_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/bytenet_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/cycle_gan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/gene_expression.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/gene_expression_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/lstm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/lstm_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/lstm_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/multimodel.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/multimodel_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/neural_gpu.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/neural_gpu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/neural_gpu_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/neural_gpu_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/resnet_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/resnet_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/shake_shake.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/shake_shake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/slicenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/slicenet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/slicenet_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/slicenet_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_moe.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_revnet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_revnet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_sketch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/transformer_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer_vae.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/vanilla_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/vanilla_gan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/xception.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/xception.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/xception_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/xception_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/problems.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/problems_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/problems_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/tpu/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/tpu/tpu_trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/tpu/tpu_trainer_lib.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/tpu/tpu_trainer_lib_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/avg_checkpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/avg_checkpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/beam_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/beam_search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_old.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_raw.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/beam_search_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/bleu_hook.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/bleu_hook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/bleu_hook_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/bleu_hook_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/data_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/data_reader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/data_reader_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/data_reader_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/decoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/decoding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/devices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/diet.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/diet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/diet_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/diet_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/expert_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/expert_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/expert_utils_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/expert_utils_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/get_ende_bleu.sh" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/get_ende_bleu.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/get_rouge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/get_rouge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/input_fn_builder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/input_fn_builder_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/metrics_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/metrics_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/modality.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/modality.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/model_builder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/optimize.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/optimize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/registry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/registry_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/registry_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/rouge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/rouge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/rouge_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/rouge_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/t2t_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/t2t_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/trainer_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/trainer_utils_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/usr_dir.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/usr_dir.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/yellowfin.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/yellowfin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/utils/yellowfin_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/utils/yellowfin_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/visualization/TransformerVisualization.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/visualization/TransformerVisualization.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/visualization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/visualization/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor/visualization/attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/visualization/attention.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/make_tf_configs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t-datagen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t-decoder" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t-make-tf-configs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t-trainer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t_datagen.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t_decoder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/bin/t2t_trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/algorithmic.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/algorithmic_math.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/algorithmic_math_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/algorithmic_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/all_problems.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/all_problems_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/audio.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/audio_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/cipher.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/cnn_dailymail.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/desc2code.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/desc2code_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/dna_encoder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/dna_encoder_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/gene_expression.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/gene_expression_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/generator_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/generator_utils_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/gym.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/ice_parsing.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/image.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/image_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/imdb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/inspect.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/librispeech.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/lm1b.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/multinli.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/problem.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/problem_hparams.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/ptb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/snli.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/speech_recognition.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/test_data/corpus-1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/test_data/corpus-2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/test_data/vocab-1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/test_data/vocab-2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/text_encoder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/text_encoder_build_subword.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/text_encoder_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/tokenizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/tokenizer_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_encs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_ende.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_enfr.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_enmk.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_enzh.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/translate_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/wiki.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/data_generators/wsj_parsing.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/graph.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/attention_visualization/attention-visualization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/attention_visualization/attention-visualization.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/common-types.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/explore_view/explore-view.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/explore_view/explore-view.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/graph_visualization/graph-visualization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/graph_visualization/graph-visualization.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/insights_app/insights-app.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/insights_app/insights-app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/language_selector/language-selector-content.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/language_selector/language-selector-content.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/language_selector/language-selector.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/language_selector/language-selector.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/processing_visualization/processing-visualization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/processing_visualization/processing-visualization.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/query_card/query-card.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/query_card/query-card.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/translation_result/translation-result.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/polymer/translation_result/translation-result.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/query_processor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/insights/transformer_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/common_attention.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/common_attention_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/common_hparams.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/common_layers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/common_layers_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/modalities.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/modalities_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/rev_block.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/layers/rev_block_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/aligned.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/attention_lm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/attention_lm_moe.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/bluenet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/bluenet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/bytenet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/bytenet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/cycle_gan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/gene_expression.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/gene_expression_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/lstm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/lstm_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/multimodel.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/multimodel_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/neural_gpu.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/neural_gpu_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/resnet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/resnet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/revnet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/revnet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/shake_shake.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/slicenet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/slicenet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/super_lm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_moe.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_revnet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_revnet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_sketch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/transformer_vae.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/vanilla_gan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/xception.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/models/xception_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/notebooks/hello_t2t.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/problems.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/problems_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/tpu/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/tpu/tpu_trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/tpu/tpu_trainer_lib.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/tpu/tpu_trainer_lib_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/avg_checkpoints.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/beam_search.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/beam_search_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/bleu_hook.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/bleu_hook_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/data_reader.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/data_reader_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/decoding.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/devices.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/diet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/diet_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/expert_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/expert_utils_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/flags.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/get_cnndm_rouge.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/get_ende_bleu.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/get_rouge.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/metrics_hook.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/metrics_hook_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/metrics_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/modality.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/optimize.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/registry.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/registry_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/rouge.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/rouge_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/t2t_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/usr_dir.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/yellowfin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/utils/yellowfin_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/visualization/TransformerVisualization.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/visualization/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/visualization/attention.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensor2tensor_141/visualization/attention.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/util/arguments.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/arguments.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/checkpoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/checkpoint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/decode.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/decode.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/sari.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/sari.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -560,26 +218,34 @@
     <SUITE FILE_PATH="coverage/text_simplification3$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1523963553484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1524599706591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb.coverage" NAME="ppdb Coverage Results" MODIFIED="1523735879930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification$eval.coverage" NAME="eval_dummy Coverage Results" MODIFIED="1524746704524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1523998285761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_rule_whitespace_py.coverage" NAME="Nosetests in test_rule_whitespace.py Coverage Results" MODIFIED="1524910084199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$eval.coverage" NAME="eval_dummy Coverage Results" MODIFIED="1525004336874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification3$train.coverage" NAME="train Coverage Results" MODIFIED="1524025946288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process.coverage" NAME="ppdb_process Coverage Results" MODIFIED="1523961331879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_len_py.coverage" NAME="Nosetests in test_len.py Coverage Results" MODIFIED="1524780985757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$train_real.coverage" NAME="train_real Coverage Results" MODIFIED="1525055152267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$graph.coverage" NAME="graph Coverage Results" MODIFIED="1524916050126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$beam_search_backprop.coverage" NAME="beam_search_backprop Coverage Results" MODIFIED="1524714260598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensor2tensor/utils" />
-    <SUITE FILE_PATH="coverage/text_simplification$voc_process.coverage" NAME="voc_process Coverage Results" MODIFIED="1524546242596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification3$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1523929296278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process_eval_validate.coverage" NAME="ppdb_process_eval_validate Coverage Results" MODIFIED="1523825817060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/text_simplification$sari.coverage" NAME="sari Coverage Results" MODIFIED="1524561379258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
-    <SUITE FILE_PATH="coverage/text_simplification3$test.coverage" NAME="test Coverage Results" MODIFIED="1523839214198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
-    <SUITE FILE_PATH="coverage/text_simplification$train.coverage" NAME="train_dummy Coverage Results" MODIFIED="1524746352845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification3$train_eval.coverage" NAME="train_eval Coverage Results" MODIFIED="1522914763286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$ppdb_filter.coverage" NAME="ppdb_filter Coverage Results" MODIFIED="1525004033355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$train.coverage" NAME="train_dummy Coverage Results" MODIFIED="1525004842842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$data_prefilter.coverage" NAME="data_prefilter Coverage Results" MODIFIED="1524543393237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/text_simplification3$data_combine_filter.coverage" NAME="data_combine_filter Coverage Results" MODIFIED="1523328051067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/text_simplification$data_preprocess.coverage" NAME="data_preprocess Coverage Results" MODIFIED="1524520830750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification3$eval2.coverage" NAME="eval2 Coverage Results" MODIFIED="1522954866309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification_old$train.coverage" NAME="train Coverage Results" MODIFIED="1522622534794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$test.coverage" NAME="test Coverage Results" MODIFIED="1524913623506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1523998285761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process.coverage" NAME="ppdb_process Coverage Results" MODIFIED="1523961331879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$voc_process.coverage" NAME="voc_process Coverage Results" MODIFIED="1524546242596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$ppdb_augment.coverage" NAME="ppdb_augment Coverage Results" MODIFIED="1525005200287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$tf_test.coverage" NAME="tf_test Coverage Results" MODIFIED="1524911068429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$sari.coverage" NAME="sari Coverage Results" MODIFIED="1524988644134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
+    <SUITE FILE_PATH="coverage/text_simplification3$test.coverage" NAME="test Coverage Results" MODIFIED="1523839214198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification3$train_eval.coverage" NAME="train_eval Coverage Results" MODIFIED="1522914763286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification3$data_combine_filter.coverage" NAME="data_combine_filter Coverage Results" MODIFIED="1523328051067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$data_preprocess.coverage" NAME="data_preprocess Coverage Results" MODIFIED="1524520830750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_rule_multi_py.coverage" NAME="Nosetests in test_rule_multi.py Coverage Results" MODIFIED="1524912620782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification$train_dummy.coverage" NAME="train_dummy Coverage Results" MODIFIED="1524169959167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification$test.coverage" NAME="test Coverage Results" MODIFIED="1524599756468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
-    <SUITE FILE_PATH="coverage/text_simplification$metric.coverage" NAME="metric Coverage Results" MODIFIED="1524625100990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$metric.coverage" NAME="metric Coverage Results" MODIFIED="1524995705802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification3$eval.coverage" NAME="eval Coverage Results" MODIFIED="1524026480594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -593,32 +259,44 @@
       <file leaf-file-name="model_config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/model_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="197">
+              <caret line="173" selection-start-line="173" selection-end-line="173" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transformer.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/transformer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="70" column="25" lean-forward="true" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wk2b_rule.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule.sh">
+      <file leaf-file-name="wikilarge_l14h5.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="19" column="344" selection-start-line="19" selection-start-column="344" selection-end-line="19" selection-end-column="344" />
+              <caret line="19" column="79" selection-start-line="19" selection-start-column="74" selection-end-line="19" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wikilarge_l41h5.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="152" selection-start-line="19" selection-start-column="152" selection-end-line="19" selection-end-column="152" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wikilarge_l41h5_eval.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="151" selection-start-line="19" selection-start-column="151" selection-end-line="19" selection-end-column="151" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wikilarge_l14h5_eval.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -634,36 +312,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>50000</find>
-      <find>decoder_output_list</find>
-      <find>dimension</find>
-      <find>model_co</find>
-      <find>beam_</find>
-      <find>num_hea</find>
-      <find>output.</find>
-      <find>alive_seq</find>
-      <find>finished_decoder_logits.set</find>
-      <find>dynamic</find>
-      <find>mode</find>
-      <find>transformer_decoder2</find>
-      <find>multihead_attention(</find>
-      <find>multihead_attention2</find>
-      <find>finished</find>
-      <find>ones</find>
-      <find>alive_sampled_out</find>
-      <find>tf.nn.top_k</find>
-      <find>top_k</find>
-      <find>tf.multinomial</find>
-      <find>sample_logit_list</find>
-      <find>reuse</find>
-      <find>multinomial</find>
-      <find>tf.nn.top</find>
-      <find>logit</find>
-      <find>final_out</find>
-      <find>teacher</find>
-      <find>decoder</find>
-      <find>beam</find>
-      <find>max</find>
+      <find>drop</find>
+      <find>attention_type</find>
+      <find>rules_align</find>
+      <find>attn_loss</find>
+      <find>layer_drop</find>
+      <find>prin</find>
+      <find>rule_ori</find>
+      <find>sampled</find>
+      <find>valid_dummy_mapper</find>
+      <find>Load e</find>
+      <find>teachercritical</find>
+      <find>items</find>
+      <find>train_dataset_simple_ext</find>
+      <find>greed_target_str</find>
+      <find>sample_target_str:</find>
+      <find>global</find>
+      <find>SARIsent</find>
+      <find>verb_ops_ori</find>
+      <find>rl_configs</find>
+      <find>teachercriticalv2</find>
+      <find>1sampled_id</find>
+      <find>sampled_id</find>
+      <find>rule_g</find>
+      <find>Load cand rules from</find>
+      <find>rule_global</find>
+      <find>gt_comp_list</find>
+      <find>large</find>
+      <find>transformer_de</find>
+      <find>huge</find>
+      <find>train_dataset_complex_ppdb_cand</find>
     </findStrings>
     <replaceStrings>
       <replace>val_dataset_simple_rawlines_file</replace>
@@ -675,57 +353,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h2_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h2.sh" />
-        <option value="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h5.sh" />
-        <option value="$PROJECT_DIR$/experiments/baselines/wikilarge_l4h5_eval.sh" />
-        <option value="$PROJECT_DIR$/data_process/data_preprocess.py" />
-        <option value="$PROJECT_DIR$/data_process/data_prefilter.py" />
-        <option value="$PROJECT_DIR$/data_process/voc_process.py" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_eval.sh" />
-        <option value="$PROJECT_DIR$/util/arguments.py" />
-        <option value="$PROJECT_DIR$/experiments/wikihuge/wkhb_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wikihuge/wkhb.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bt_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bt.sh" />
-        <option value="$PROJECT_DIR$/model/eval.py" />
-        <option value="$PROJECT_DIR$/codelab/test.py" />
-        <option value="$PROJECT_DIR$/data_process/ppdb_process_eval.py" />
-        <option value="$PROJECT_DIR$/util/sari.py" />
-        <option value="$PROJECT_DIR$/util/decode.py" />
-        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" />
-        <option value="$PROJECT_DIR$/data/train_dummy_simple_dataset" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.0" />
         <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" />
         <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" />
         <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" />
         <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" />
         <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" />
         <option value="$PROJECT_DIR$/data/valid_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/dummy_rules_vocab" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_sari_eval.sh" />
-        <option value="$PROJECT_DIR$/model/train.py" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_sari.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari.sh" />
-        <option value="$PROJECT_DIR$/tensor2tensor/utils/beam_search.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor_old/utils/beam_search_backprop.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor/layers/common_attention.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor_old/utils/beam_search_backprop_sampled.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_greedy.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_sampled.py" />
-        <option value="$PROJECT_DIR$/model/metric.py" />
-        <option value="$PROJECT_DIR$/tensor2tensor/models/transformer.py" />
-        <option value="$PROJECT_DIR$/model/graph.py" />
-        <option value="$PROJECT_DIR$/model/transformer.py" />
+        <option value="$PROJECT_DIR$/data/valid_dummy_mapper" />
         <option value="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" />
+        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset" />
+        <option value="$PROJECT_DIR$/data/train_dummy_simple_dataset" />
+        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" />
+        <option value="$PROJECT_DIR$/model/seq2seq.py" />
+        <option value="$PROJECT_DIR$/data/data_mis/train_dummy_simple_dataset_ext" />
+        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_complex_dataset" />
+        <option value="$PROJECT_DIR$/data/data_miss/eval_dummy_complex_dataset.rules" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_mapper" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.1" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.0" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.2" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.0" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.1" />
+        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.2" />
+        <option value="$PROJECT_DIR$/model/train.py" />
+        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset.rules" />
+        <option value="$PROJECT_DIR$/data_process/ppdb_filter.py" />
+        <option value="$PROJECT_DIR$/data_process/ppdb_augment.py" />
+        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules" />
+        <option value="$PROJECT_DIR$/data_process/ppdb_cand.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh" />
+        <option value="$PROJECT_DIR$/util/sari.py" />
+        <option value="$PROJECT_DIR$/model/transformer.py" />
+        <option value="$PROJECT_DIR$/model/graph.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh" />
         <option value="$PROJECT_DIR$/model/model_config.py" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule.sh" />
+        <option value="$PROJECT_DIR$/model/metric.py" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh" />
       </list>
     </option>
   </component>
@@ -739,9 +417,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="48" />
+    <option name="x" value="44" />
     <option name="y" value="23" />
-    <option name="width" value="1392" />
+    <option name="width" value="1396" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -768,13 +446,12 @@
               <item name="text_simplification" type="b2602c69:ProjectViewProjectNode" />
               <item name="text_simplification" type="462c0819:PsiDirectoryNode" />
               <item name="experiments" type="462c0819:PsiDirectoryNode" />
-              <item name="wiki2" type="462c0819:PsiDirectoryNode" />
+              <item name="nbaselines" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="text_simplification" type="b2602c69:ProjectViewProjectNode" />
               <item name="text_simplification" type="462c0819:PsiDirectoryNode" />
-              <item name="experiments" type="462c0819:PsiDirectoryNode" />
-              <item name="wikihuge" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -791,17 +468,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tensor2tensor/utils" />
-      <recent name="$PROJECT_DIR$/tensor2tensor_old/utils" />
+      <recent name="$PROJECT_DIR$/experiments/nbaselines" />
       <recent name="$PROJECT_DIR$/experiments/wiki2" />
-      <recent name="$PROJECT_DIR$/experiments/wikihuge" />
-      <recent name="$PROJECT_DIR$/experiments/baselines" />
+      <recent name="$PROJECT_DIR$/data/data_miss" />
+      <recent name="$PROJECT_DIR$/data/data_mis" />
+      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/data/data_bigram" />
       <recent name="$PROJECT_DIR$/experiments_crc/dressnew" />
       <recent name="$PROJECT_DIR$/experiments_psc" />
-      <recent name="$PROJECT_DIR$/experiments/ACL" />
-      <recent name="$PROJECT_DIR$/util/data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -816,26 +494,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.eval_dummy">
-    <configuration name="beam_search_backprop" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="text_simplification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tensor2tensor/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.train_real">
     <configuration name="eval_dummy" type="PythonConfigurationType" factoryName="Python">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -850,7 +509,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/eval.py" />
-      <option name="PARAMETERS" value="-ngpus 1 -bsize 2 -fw transformer -out test -layer_drop 0.1 -op adagrad -lr 0.001 --mode dummy -nhl 2 -nel 2 -ndl 2 -lc True --min_count 0 -eval_freq 0 --memory rule -memcfg mofinal --memory_prepare_step 1000" />
+      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 300" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -874,26 +533,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="ppdb_process_eval" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="text_simplification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/anaconda/envs/dl_py27/bin/python2.7" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_process_eval.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="ppdb_augment" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -901,12 +541,50 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codelab" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codelab/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_cand.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="ppdb_filter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_filter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="sari" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/sari.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -926,7 +604,26 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/train.py" />
-      <option name="PARAMETERS" value="-ngpus 1 -bsize 2 -fw transformer -out test -layer_drop 0.1 -op adagrad -lr 0.001 --mode dummy -nhl 2 -nel 2 -ndl 2 -lc True --min_count 0 -eval_freq 0 --memory rule -memcfg mofinal --memory_prepare_step 1000" />
+      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 300 -tmode teachercritical --rl_config rule" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="train_real" type="PythonConfigurationType" factoryName="Python">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/train.py" />
+      <option name="PARAMETERS" value="-ngpus 1 -bsize 80 -fw transformer -out wk2b_wrv1 -layer_drop 0.2 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 4 -eval_freq 0 -tmode teachercriticalv2 --rl_config rule=large:rule_global -warm $PROJECT_DIR$/../tmp/ckpt/model.ckpt-4903" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -1140,19 +837,20 @@
     </configuration>
     <list>
       <item itemvalue="Python.eval_dummy" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.ppdb_process_eval" />
+      <item itemvalue="Python.train_real" />
       <item itemvalue="Python.train_dummy" />
+      <item itemvalue="Python.sari" />
       <item itemvalue="Python.metric" />
-      <item itemvalue="Python.beam_search_backprop" />
+      <item itemvalue="Python.ppdb_filter" />
+      <item itemvalue="Python.ppdb_augment" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ppdb_augment" />
         <item itemvalue="Python.train_dummy" />
-        <item itemvalue="Python.beam_search_backprop" />
+        <item itemvalue="Python.ppdb_filter" />
         <item itemvalue="Python.metric" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.ppdb_process_eval" />
+        <item itemvalue="Python.sari" />
       </list>
     </recent_temporary>
   </component>
@@ -1176,25 +874,43 @@
     <history-entry file="Nosetests_for_test_test - 2017.11.17 at 03h 01m 56s.xml">
       <configuration name="Nosetests for test.test" configurationId="tests" />
     </history-entry>
+    <history-entry file="Nosetests_in_test_len_py - 2018.04.26 at 18h 11m 43s.xml">
+      <configuration name="Nosetests in test_len.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_len_py - 2018.04.26 at 18h 11m 58s.xml">
+      <configuration name="Nosetests in test_len.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_len_py - 2018.04.26 at 18h 16m 26s.xml">
+      <configuration name="Nosetests in test_len.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_rule_whitespace_py - 2018.04.28 at 06h 07m 46s.xml">
+      <configuration name="Nosetests in test_rule_whitespace.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_rule_whitespace_py - 2018.04.28 at 06h 08m 05s.xml">
+      <configuration name="Nosetests in test_rule_whitespace.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_rule_multi_py - 2018.04.28 at 06h 50m 23s.xml">
+      <configuration name="Nosetests in test_rule_multi.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="48" y="23" width="1392" height="877" extended-state="0" />
+    <frame x="44" y="23" width="1396" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.10522548" side_tool="true" weight="0.2621118" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8947745" visible="true" weight="0.31382316" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8947745" weight="0.32876712" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49227798" visible="true" weight="0.1795977" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49227798" visible="true" weight="0.22206303" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3275218" />
       <window_info anchor="right" id="SciView" order="3" weight="0.3297414" />
-      <window_info anchor="right" id="Structure" order="7" side_tool="true" visible="true" weight="0.1724138" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3648817" />
+      <window_info anchor="right" id="Structure" order="7" side_tool="true" visible="true" weight="0.12034384" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3648817" />
       <window_info id="Favorites" order="1" sideWeight="0.507722" side_tool="true" weight="0.21045096" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1319,19 +1035,9 @@
           <option name="timeStamp" value="453" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/eval.py</url>
-          <line>279</line>
-          <option name="timeStamp" value="556" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codelab/test.py</url>
           <line>25</line>
           <option name="timeStamp" value="575" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/metric.py</url>
-          <line>116</line>
-          <option name="timeStamp" value="580" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py</url>
@@ -1347,11 +1053,6 @@
           <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py</url>
           <line>357</line>
           <option name="timeStamp" value="591" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/graph.py</url>
-          <line>257</line>
-          <option name="timeStamp" value="602" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_sampled.py</url>
@@ -1370,8 +1071,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/model/transformer.py</url>
-          <line>248</line>
+          <line>247</line>
           <option name="timeStamp" value="614" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/train.py</url>
+          <line>216</line>
+          <option name="timeStamp" value="657" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/eval.py</url>
+          <line>306</line>
+          <option name="timeStamp" value="662" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/postprocess.py</url>
+          <line>123</line>
+          <option name="timeStamp" value="672" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codelab/test_rule_multi.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="678" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/util/sari.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="718" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_process/ppdb_filter.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="719" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_process/ppdb_cand.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="722" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/metric.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="724" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1384,413 +1125,431 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="616" />
+      <option name="time" value="725" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="contexts" language="Python" />
+        <watch expression="from collections import defaultdict, Counter " language="Python" />
+        <watch expression="Counter(dic).most_common()" language="Python" />
+        <watch expression="rule" language="Python" />
+        <watch expression="kv[1]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>contexts</expression-string>
+        <expression-string>kv[1]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>tf.get_default_graph().get_operations()</expression-string>
+        <expression-string>rule</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>tf.gather_nd(sampled_decoder_logit_list[0], sampled_top_beam_ids[0])</expression-string>
+        <expression-string>Counter(dic).most_common()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>tf.gather(sampled_decoder_logit_list[0], sampled_top_beam_ids[0])</expression-string>
+        <expression-string>Counter(dic)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>sampled_top_beam_ids_list[0]</expression-string>
+        <expression-string>from collections import defaultdict, Counter</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.data.vocab_simple.encode(constant.SYMBOL_PAD)</expression-string>
+        <expression-string>Coun</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.model_config.max_simple_sentence - tf.shape(top_beam_ids)[1]</expression-string>
+        <expression-string>dic</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>tf.reduce_any(finished_decoder_logits, 1)</expression-string>
+        <expression-string>rules</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>tf.gather_nd(curr_scores, topk_coordinates)</expression-string>
+        <expression-string>line</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>topk_decoder_logits</expression-string>
+        <expression-string>nrules</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/ops/gen_random_ops.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset2">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-547">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+        <state>
+          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+    <entry file="file://$PROJECT_DIR$/data_generator/train_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/dummy_complex_vocab">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.0">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_complex_dataset">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/dummy_rules_vocab">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wikihuge_old/dressnew_adagrad_base.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule_eval.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="217" selection-start-line="19" selection-start-column="217" selection-end-line="19" selection-end-column="217" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_sari_eval.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="17" lean-forward="true" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_eval.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari_eval.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="221" selection-start-line="19" selection-start-column="221" selection-end-line="19" selection-end-column="221" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="469" column="30" selection-start-line="469" selection-start-column="30" selection-end-line="469" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_generator/vocab.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1096">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="2082">
+          <caret line="176" selection-start-line="176" selection-end-line="176" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/layers/common_attention.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset_ext">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="2691" column="21" selection-start-line="2691" selection-start-column="21" selection-end-line="2691" selection-end-column="21" />
+          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor_old/layers/common_attention.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/dummy_complex_vocab">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule_l1.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_mapper">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1232">
-          <caret line="2211" column="24" selection-start-line="2211" selection-start-column="4" selection-end-line="2211" selection-end-column="24" />
+        <state relative-caret-position="60">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/framework/ops.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_complex_dataset">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="399" selection-start-line="399" selection-end-line="399" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor_old/utils/beam_search_backprop.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.2">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="197" column="28" lean-forward="true" selection-start-line="197" selection-start-column="28" selection-end-line="197" selection-end-column="28" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/train.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.1">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="187" selection-start-line="187" selection-end-line="187" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor_old/utils/beam_search_backprop_sampled.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.0">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1664">
-          <caret line="413" column="61" lean-forward="true" selection-start-line="413" selection-start-column="61" selection-end-line="413" selection-end-column="61" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/ops/random_ops.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.2">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="323" column="4" selection-start-line="323" selection-start-column="4" selection-end-line="323" selection-end-column="4" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_sari.sh">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.0">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="20" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.1">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5094">
-          <caret line="179" column="4" selection-start-line="179" selection-start-column="4" selection-end-line="179" selection-end-column="4" />
+        <state relative-caret-position="60">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="508" column="67" selection-start-line="508" selection-start-column="47" selection-end-line="508" selection-end-column="67" />
-          <folding>
-            <element signature="e#659#697#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_greedy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="586" selection-start-line="586" selection-end-line="586" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="2898" selection-start-line="2898" selection-end-line="2898" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_sampled.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="574" column="39" selection-start-line="574" selection-start-column="39" selection-end-line="574" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/metric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor_old/models/transformer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-729">
-          <caret line="604" column="24" selection-start-line="604" selection-start-column="24" selection-end-line="605" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/client/session.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="1311" selection-start-line="1311" selection-end-line="1311" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tensor2tensor/models/transformer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="949" column="1" lean-forward="true" selection-start-line="949" selection-start-column="1" selection-end-line="949" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/graph.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="226" column="81" selection-start-line="226" selection-start-column="76" selection-end-line="226" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="4" column="12" lean-forward="true" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_generator/val_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="159" selection-start-line="159" selection-end-line="159" />
+        <state relative-caret-position="281">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_complex_dataset">
+    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        <state relative-caret-position="170">
+          <caret line="970" selection-start-line="970" selection-end-line="970" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+        <state relative-caret-position="105">
+          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/model_config.py">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state relative-caret-position="90">
+          <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset.rules">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3225">
+          <caret line="215" column="44" selection-start-line="215" selection-start-column="38" selection-end-line="215" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_process/ppdb_process_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="413" column="20" selection-start-line="413" selection-start-column="8" selection-end-line="413" selection-end-column="20" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#328#949#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_simple_dataset">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/eval_dummy_complex_dataset.rules">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_simple_dataset2.syntax">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/dummy_simple_vocab50000">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_complex_dataset.rules">
+    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="5" selection-end-column="34" />
+        <state relative-caret-position="15">
+          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_simple_dataset.rules">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/train_dummy_simple_dataset2">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/valid_dummy_simple_dataset">
+    <entry file="file://$PROJECT_DIR$/data_process/ppdb_cand.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+        <state relative-caret-position="90">
+          <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_process/ppdb_filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b.sh">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="344" selection-start-line="19" selection-start-column="344" selection-end-line="19" selection-end-column="344" />
+          <caret line="19" column="146" lean-forward="true" selection-start-line="19" selection-start-column="146" selection-end-line="19" selection-end-column="166" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="82" selection-start-line="19" selection-start-column="82" selection-end-line="19" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="82" selection-start-line="19" selection-start-column="82" selection-end-line="19" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/sari.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1419">
+          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_generator/vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="84" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="252" selection-start-line="19" selection-start-column="247" selection-end-line="19" selection-end-column="252" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="253" selection-start-line="19" selection-start-column="248" selection-end-line="19" selection-end-column="253" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="252" selection-start-line="19" selection-start-column="248" selection-end-line="19" selection-end-column="252" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tensor2tensor/models/transformer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="843" column="55" selection-start-line="843" selection-start-column="55" selection-end-line="843" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/transformer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="70" column="25" lean-forward="true" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
+        <state relative-caret-position="310">
+          <caret line="272" column="53" lean-forward="true" selection-start-line="272" selection-start-column="53" selection-end-line="272" selection-end-column="53" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/graph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="295" column="68" selection-start-line="295" selection-start-column="64" selection-end-line="295" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#614#866#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="251" selection-start-line="19" selection-start-column="247" selection-end-line="19" selection-end-column="251" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/baselines/wikilarge_l1h1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/metric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="32" column="40" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#1915#7397#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/model_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="173" selection-start-line="173" selection-end-line="173" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="79" selection-start-line="19" selection-start-column="74" selection-end-line="19" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="152" selection-start-line="19" selection-start-column="152" selection-end-line="19" selection-end-column="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="151" selection-start-line="19" selection-start-column="151" selection-end-line="19" selection-end-column="151" />
         </state>
       </provider>
     </entry>

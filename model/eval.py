@@ -8,6 +8,7 @@ sys.path.insert(0,'/home/zhaos5/ts/text_simplification')
 
 from data_generator.val_data import ValData
 from model.transformer import TransformerGraph
+from model.seq2seq import Seq2SeqGraph
 from model.model_config import DefaultConfig, DefaultTestConfig, list_config
 from data_generator.vocab import Vocab
 from util import constant
@@ -166,6 +167,8 @@ def eval(model_config=None, ckpt=None):
     graph = None
     if model_config.framework == 'transformer':
         graph = TransformerGraph(val_data, False, model_config)
+    elif model_config.framework == 'seq2seq':
+        graph = Seq2SeqGraph(val_data, False, model_config)
     tf.reset_default_graph()
     graph.create_model_multigpu()
 
@@ -204,11 +207,15 @@ def eval(model_config=None, ckpt=None):
             fetches.update(
                 {'encoder_embs': [obj['encoder_embs'] for obj in graph.objs],
                  'final_outputs': [obj['final_outputs'] for obj in graph.objs]})
+        if model_config.replace_unk_by_attn:
+            fetches.update({'attn_distr': [obj['attn_distr'] for obj in graph.objs]})
         results = sess.run(fetches, input_feed)
         output_target, loss, step = (results['decoder_target_list'], results['loss'],
                                           results['global_step'])
         if model_config.replace_unk_by_emb:
             output_encoder_embs, output_final_outputs = results['encoder_embs'], results['final_outputs']
+        if model_config.replace_unk_by_attn:
+            attn_distr = results['attn_distr']
         batch_perplexity = math.exp(loss)
         perplexitys_all.append(batch_perplexity)
 
@@ -247,7 +254,7 @@ def eval(model_config=None, ckpt=None):
             target = decode(target, val_data.vocab_simple, model_config.subword_vocab_size>0)
             target_raw = target
             if model_config.replace_unk_by_attn:
-                target_raw = postprocess.replace_unk_by_attn(sentence_complex_raw, None, target_raw)
+                target_raw = postprocess.replace_unk_by_attn(sentence_complex_raw, attn_distr[0], target_raw)
             elif model_config.replace_unk_by_emb:
                 target_raw = postprocess.replace_unk_by_emb(
                     sentence_complex_raw, encoder_embs, final_outputs, target_raw)
@@ -436,7 +443,7 @@ def eval(model_config=None, ckpt=None):
     return sari_joshua
 
 
-def get_ckpt(modeldir, logdir, wait_second=60):
+def get_ckpt(modeldir, logdir, wait_second=10):
     while True:
         try:
             ckpt = copy_ckpt_to_modeldir(modeldir, logdir)

@@ -66,7 +66,7 @@ class ValData:
             cur_rules = line.split('\t')
             tmp = []
             for cur_rule in cur_rules:
-                rule_id, rule_targets = vocab_rule.encode(cur_rule)
+                rule_id, _, rule_targets = vocab_rule.encode(cur_rule)
                 if rule_targets is not None:
                     tmp.append((rule_id, [self.vocab_simple.encode(rule_target) for rule_target in rule_targets]))
             data.append(tmp)

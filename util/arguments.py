@@ -52,6 +52,10 @@ def get_args():
                         help='Size of dimension?')
     parser.add_argument('-emb', '--tied_embedding', default='none',
                         help='Version of tied embedding?')
+    parser.add_argument('-attntype', '--attention_type', default='dot',
+                        help='Type of Attention?')
+    parser.add_argument('-eloss', '--external_loss', default='',
+                        help='External Loss')
     parser.add_argument('-ns', '--number_samples', default=0, type=int,
                         help='Number of samples used in Softmax?')
 

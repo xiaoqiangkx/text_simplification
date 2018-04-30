@@ -31,8 +31,8 @@ class Rule:
         if len(rule_items) == 4:
             rule_pair = rule_items[1] + '=>' + rule_items[2]
             if rule_pair in self.r2i:
-                return self.r2i[rule_pair], rule_items[2].split()
-        return None, None
+                return self.r2i[rule_pair], rule_items[1].split(), rule_items[2].split()
+        return None, None, None
 
     def contain(self, rule):
         rule_items = rule.split('=>')
