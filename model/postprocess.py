@@ -120,12 +120,13 @@ class PostProcess:
                     ndecoder_targets[batch_i][queries_i] = target_word
         return ndecoder_targets
 
-    def replace_unk_by_emb(self, encoder_words, encoder_embs, decoder_outputs, decoder_targets):
+    def replace_unk_by_emb(self, encoder_words, encoder_embs, decoder_outputs, decoder_targets, sentence_complex_markers):
         batch_size = np.shape(decoder_targets)[0]
         # decoder_targets[0][3] = constant.SYMBOL_UNK
 
         ndecoder_targets = cp.deepcopy(decoder_targets)
         for batch_i in range(batch_size):
+            sentence_complex_marker = sentence_complex_markers[batch_i]
             for len_i in range(len(decoder_targets[batch_i])):
                 target = decoder_targets[batch_i][len_i]
                 if target == constant.SYMBOL_UNK or target == constant.SYMBOL_NUM:
@@ -138,28 +139,40 @@ class PostProcess:
                     dists = [99999 for _ in range(len(encoder_words[batch_i]))]
                     replace = False
                     for loop_i in range(len(encoder_words[batch_i])):
-                        if encoder_words[batch_i][loop_i] in word_exclude:
-                            continue
-                        emb = encoder_embs[batch_i, loop_i, :]
-                        dists[loop_i] = cosine(query, emb)
-                        replace = True
-
-                    target_idx = -1
-                    if replace:
-                        target_idx = np.argmin(dists)
-                    else:
-                        word_exclude = set()
-                        word_exclude.update([constant.SYMBOL_START, constant.SYMBOL_END, constant.SYMBOL_UNK,
-                                             constant.SYMBOL_PAD, constant.SYMBOL_GO, constant.SYMBOL_NUM])
-                        dists = [99999 for _ in range(len(encoder_words[batch_i]))]
+                    #     if encoder_words[batch_i][loop_i] in word_exclude and (
+                    #             loop_i < len(sentence_complex_marker) and not sentence_complex_marker[loop_i]):
+                    #         continue
+                    #     emb = encoder_embs[batch_i, loop_i, :]
+                    #     dists[loop_i] = cosine(query, emb)
+                    #     replace = True
+                    #
+                    # target_idx = -1
+                    # if replace:
+                    #     target_idx = np.argmin(dists)
+                    # else:
                         for loop_i in range(len(encoder_words[batch_i])):
                             if encoder_words[batch_i][loop_i] in word_exclude:
                                 continue
                             emb = encoder_embs[batch_i, loop_i, :]
                             dists[loop_i] = cosine(query, emb)
                             replace = True
+
+                        target_idx = -1
                         if replace:
                             target_idx = np.argmin(dists)
+                        else:
+                            word_exclude = set()
+                            word_exclude.update([constant.SYMBOL_START, constant.SYMBOL_END, constant.SYMBOL_UNK,
+                                                 constant.SYMBOL_PAD, constant.SYMBOL_GO, constant.SYMBOL_NUM])
+                            dists = [99999 for _ in range(len(encoder_words[batch_i]))]
+                            for loop_i in range(len(encoder_words[batch_i])):
+                                if encoder_words[batch_i][loop_i] in word_exclude:
+                                    continue
+                                emb = encoder_embs[batch_i, loop_i, :]
+                                dists[loop_i] = cosine(query, emb)
+                                replace = True
+                            if replace:
+                                target_idx = np.argmin(dists)
                     if target_idx >= 0:
                         target_word = encoder_words[batch_i][target_idx]
                         ndecoder_targets[batch_i][len_i] = target_word

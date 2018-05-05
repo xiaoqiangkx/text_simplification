@@ -234,10 +234,6 @@ def eval(model_config=None, ckpt=None):
                 encoder_embs = output_encoder_embs[i]
                 final_outputs = output_final_outputs[i]
 
-            # Replace UNK for sentence_complex_raw and ref_raw
-            # Note that sentence_complex_raw_lines and ref_raw_lines are original file lines
-            sentence_complex_raw = postprocess.replace_ner(sentence_complex_raw, mapper)
-
             if exclude_idxs:
                 sentence_complex = exclude_list(sentence_complex, exclude_idxs)
                 sentence_complex_raw = exclude_list(sentence_complex_raw, exclude_idxs)
@@ -253,11 +249,14 @@ def eval(model_config=None, ckpt=None):
 
             target = decode(target, val_data.vocab_simple, model_config.subword_vocab_size>0)
             target_raw = target
+
+            sentence_complex_marker = [[val_data.vocab_simple.encode(w)==val_data.vocab_simple.encode(constant.SYMBOL_UNK)
+                                 for w in sent] for sent in sentence_complex_raw]
             if model_config.replace_unk_by_attn:
                 target_raw = postprocess.replace_unk_by_attn(sentence_complex_raw, attn_distr[0], target_raw)
             elif model_config.replace_unk_by_emb:
                 target_raw = postprocess.replace_unk_by_emb(
-                    sentence_complex_raw, encoder_embs, final_outputs, target_raw)
+                    sentence_complex_raw, encoder_embs, final_outputs, target_raw, sentence_complex_marker)
             elif model_config.replace_unk_by_cnt:
                 target_raw = postprocess.replace_unk_by_cnt(sentence_complex_raw, target_raw)
             if model_config.replace_ner:
@@ -265,6 +264,10 @@ def eval(model_config=None, ckpt=None):
             target_raw = postprocess.replace_others(target_raw)
             sentence_simple = decode(sentence_simple, val_data.vocab_simple, model_config.subword_vocab_size>0)
             sentence_complex = decode(sentence_complex, val_data.vocab_complex, model_config.subword_vocab_size>0)
+
+            # Replace UNK for sentence_complex_raw and ref_raw
+            # Note that sentence_complex_raw_lines and ref_raw_lines are original file lines
+            sentence_complex_raw = postprocess.replace_ner(sentence_complex_raw, mapper)
             sentence_complex_raw = truncate_sents(sentence_complex_raw)
 
             # Truncate decode results
@@ -476,6 +479,35 @@ if __name__ == '__main__':
             if ckpt:
                 eval(DefaultTestConfig(), ckpt)
                 # eval(DefaultTestConfig2(), ckpt)
+    elif args.mode == 'dress':
+        from model.model_config import WikiDressLargeDefault, WikiDressLargeEvalDefault, WikiDressLargeTestDefault
+
+        best_sari = None
+        while True:
+            model_config = WikiDressLargeDefault()
+            ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
+
+            if ckpt:
+                vconfig = WikiDressLargeEvalDefault()
+                if best_sari is None:
+                    best_sari = get_best_sari(vconfig.resultdir)
+
+                sari_point = eval(vconfig, ckpt)
+                eval(WikiDressLargeTestDefault(), ckpt)
+                print('=====================Current Best SARI:%s=====================' % best_sari)
+                if float(sari_point) < best_sari:
+                    remove(ckpt + '.index')
+                    remove(ckpt + '.meta')
+                    remove(ckpt + '.data-00000-of-00001')
+                    print('remove ckpt:%s' % ckpt)
+                else:
+                    for file in listdir(model_config.modeldir):
+                        step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
+                        if step not in file:
+                            remove(model_config.modeldir + file)
+                    print('Get Best Model, remove ckpt except:%s.' % ckpt)
+                    best_sari = float(sari_point)
+
     elif args.mode == 'dressnew' or args.mode == 'wikihuge':
         from model.model_config import WikiDressLargeNewEvalDefault,WikiDressLargeNewTestDefault, WikiDressLargeNewDefault, WikiDressLargeNewEvalForBatchSize
         best_sari = None
@@ -484,7 +516,7 @@ if __name__ == '__main__':
             ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
 
             if ckpt:
-                vconfig = WikiDressLargeNewEvalDefault()
+                vconfig = WikiDressLargeNewTestDefault()
                 if best_sari is None:
                     best_sari = get_best_sari(vconfig.resultdir)
 

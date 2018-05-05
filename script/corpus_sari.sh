@@ -6,7 +6,7 @@
 # ref=/disk/scratch/Dataset/simplification/data/turkcorpus/test.8turkers.tok.turk
 
 if [[ -z $3 ]]; then
-  echo "Usage: star output reference src"
+  echo "Usage: sari output reference src"
   exit 1
 fi
 

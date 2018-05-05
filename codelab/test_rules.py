@@ -1,9 +1,10 @@
-from model.model_config import SubTestWikiEightRefConfigV2Sing
+from model.model_config import WikiDressLargeNewTestDefault
 import numpy as np
 from collections import defaultdict
 
-model_config = SubTestWikiEightRefConfigV2Sing()
-output_path = '/Users/zhaosanqiang916/git/acl/joshua_target_579995.txt'
+model_config = WikiDressLargeNewTestDefault()
+# output_path = '/Users/zhaosanqiang916/git/tmp/joshua_target_104889.txt'
+output_path = '/zfs1/hdaqing/saz31/text_simplification/SBMT-SARI2.txt'
 
 ppdb_mapper = defaultdict(set)
 ppdb_path = model_config.path_ppdb_refine #'/Users/zhaosanqiang916/git/text_simplification_data/ppdb/XU_PPDB'

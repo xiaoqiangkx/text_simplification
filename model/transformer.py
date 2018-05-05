@@ -250,7 +250,7 @@ class TransformerGraph(Graph):
             # encoder_gate_b = tf.get_variable('encoder_gate_b', shape=(1, 1, 1))
             # encoder_gate = tf.tanh(encoder_gate_b + tf.nn.conv1d(encoder_outputs, encoder_gate_w, 1, 'SAME'))
             # encoder_context_outputs = tf.expand_dims(tf.reduce_mean(encoder_outputs * encoder_gate, axis=1), axis=1)
-            cur_context = tf.concat(contexts, axis=-1)
+            cur_context = contexts[0] #tf.concat(contexts, axis=-1)
             cur_mem_contexts = tf.stack(self.embedding_fn(rule_id_input_placeholder, mem_contexts), axis=1)
             cur_mem_outputs = tf.stack(self.embedding_fn(rule_id_input_placeholder, mem_outputs), axis=1)
 

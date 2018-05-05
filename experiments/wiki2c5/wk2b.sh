@@ -2,7 +2,7 @@
 
 
 #SBATCH --cluster=gpu
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:1
 #SBATCH --partition=gtx1080
 #SBATCH --job-name=wk2bc5
 #SBATCH --output=wk2bc5.out
@@ -17,5 +17,5 @@
 module restore
 
 # Run the job
-srun python ../../model/train.py -ngpus 4 -bsize 50 -fw transformer -out wk2b -layer_drop 0.2 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 5 -eval_freq 0
+srun python ../../model/train.py -ngpus 1 -bsize 50 -fw transformer -out wk2bc5 -layer_drop 0.2 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 5 -eval_freq 0
 

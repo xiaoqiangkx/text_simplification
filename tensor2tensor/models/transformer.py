@@ -973,7 +973,8 @@ def transformer_decoder2(decoder_input,
                 make_image_summary=make_image_summary,
                 dropout_broadcast_dims=attention_dropout_broadcast_dims)
             x = common_layers.layer_postprocess(x, y, hparams)
-            contexts.append(tf.identity(x))
+            if layer == 0:
+                contexts.append(tf.identity(x))
         with tf.variable_scope("ffn"):
           y = transformer_ffn_layer(
               common_layers.layer_preprocess(x, hparams), hparams,

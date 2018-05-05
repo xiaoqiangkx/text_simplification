@@ -327,7 +327,7 @@ def get_all_ress(syns, mapper, ress, checker, line_src):
 mapper = populate_ppdb()
 
 voc = set()
-voc_file = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikihugenew/train/rule_voc.txt'
+voc_file = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilarge/train/rule_voc.txt'
 for line in open(voc_file):
     items = line.split('\t')
     cnt = int(items[1])

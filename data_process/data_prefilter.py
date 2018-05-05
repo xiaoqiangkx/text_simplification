@@ -1,6 +1,6 @@
 import re
 
-base = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilargenew/train/'
+base = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilarge/train/'
 lines_comp = open(base + 'src.txt').readlines()
 lines_simp = open(base + 'dst.txt').readlines()
 lines_map = open(base + 'rule_mapper.txt').readlines()

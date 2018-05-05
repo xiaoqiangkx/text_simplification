@@ -4,7 +4,7 @@ from util.sari import SARIsent
 from util.fkgl import get_fkgl
 from model.lm import GoogleLM
 from collections import defaultdict
-
+from nltk.corpus import stopwords
 from nltk.translate.bleu_score import sentence_bleu
 
 
@@ -13,6 +13,7 @@ class Metric:
         self.model_config = model_config
         self.data = data
 
+        self.stopWords = set(stopwords.words('english'))
         if 'ext_simple' in self.model_config.rl_configs:
             self.gt_simple_list_ext = []
             for line in open(self.model_config.train_dataset_simple_ext):
@@ -26,16 +27,26 @@ class Metric:
                 if len(items) == 4:
                     ori = items[1]
                     tar = items[2]
+                    if ori in self.stopWords:
+                        continue
+                    if self.data.vocab_rule.get_freq(line.strip()) <= self.model_config.rulecnt_threshold:
+                        continue
                     weight = float(items[3])
                     if self.data.vocab_simple.encode(
                             ori) >= constant.REVERED_VOCAB_SIZE and self.data.vocab_simple.encode(
-                            tar) >= constant.REVERED_VOCAB_SIZE and weight > 0:
+                            tar) >= constant.REVERED_VOCAB_SIZE and weight > 0.7:
                         self.mappers_ori[ori][tar] = weight
                         self.mappers_tar[tar][ori] = weight
             print('Load cand rules from %s.' % self.model_config.train_dataset_complex_ppdb_cand)
 
             self.mappers_ori_lines, self.mappers_tar_lines = [],[]
-            for line in open(self.model_config.train_dataset_complex_ppdb):
+            train_dataset_complex_ppdb = self.model_config.train_dataset_complex_ppdb
+            if 'rule_version' in self.model_config.rl_configs and self.model_config.rl_configs['rule_version'] == 'v2':
+                train_dataset_complex_ppdb = self.model_config.train_dataset_complex_ppdb + '.v2'
+            rule_weight = 1.0
+            if 'rule_weight' in self.model_config.rl_configs:
+                rule_weight = self.model_config.rl_configs['rule_weight']
+            for line in open(train_dataset_complex_ppdb):
                 rules = line.strip().split('\t')
                 mapper_ori, mapper_tar = defaultdict(dict), defaultdict(dict)
                 for rule in rules:
@@ -43,15 +54,17 @@ class Metric:
                     if len(items) == 4:
                         ori = items[1]
                         tar = items[2]
+                        if self.data.vocab_rule.get_freq(line.strip()) <= self.model_config.rulecnt_threshold:
+                            continue
                         weight = float(items[3])
                         if self.data.vocab_simple.encode(
                                 ori) >= constant.REVERED_VOCAB_SIZE and self.data.vocab_simple.encode(
                                 tar) >= constant.REVERED_VOCAB_SIZE and weight > 0:
-                            mapper_ori[ori][tar] = weight
-                            mapper_tar[tar][ori] = weight
+                            mapper_ori[ori][tar] = weight * rule_weight
+                            mapper_tar[tar][ori] = weight * rule_weight
                 self.mappers_ori_lines.append(mapper_ori)
                 self.mappers_tar_lines.append(mapper_tar)
-            print('Load line rules from %s.' % self.model_config.train_dataset_complex_ppdb)
+            print('Load line rules from %s with weight %s.' % (train_dataset_complex_ppdb, rule_weight))
 
     def truncate_sent(self, sent, bos=3, eos=4):
         sent = list(sent)
@@ -94,13 +107,13 @@ class Metric:
                 #       (self.data.vocab_simple.describe(sampled_ids[-1]), greed_target_str, rewards[-1], id, cur_gt_comp_str))
 
                 continue
-            elif greed_target_str in mappers_tar_line:
+            elif greed_target_str in mappers_tar_line and 'noneg' not in self.model_config.rl_configs:
                 oris = mappers_tar_line[greed_target_str]
                 ori = list(oris.keys())[0]
                 weight = oris[ori]
                 sampled_id = self.data.vocab_simple.encode(ori)
                 sampled_ids.append(sampled_id)
-                rewards.append(-weight)
+                rewards.append(-1 * weight)
 
                 # cur_gt_comp_list = gt_comp_list[batch_i]
                 # cur_gt_comp_str = ' '.join([self.data.vocab_complex.describe(o) for o in cur_gt_comp_list])
@@ -236,17 +249,17 @@ class Metric:
                            [cur_gt_simp_str] + self.gt_simple_list_ext[id], reward))
 
             if 'rule' in self.model_config.rl_configs:
-                # mapper_ori, mapper_tar = self.mappers_ori[id], self.mappers_tar[id]
+                mappers_ori, mappers_tar = self.mappers_ori_lines[id], self.mappers_tar_lines[id]
                 sample_target_str = self.data.vocab_simple.describe(sample_target[batch_i])
                 greed_target_str = self.data.vocab_simple.describe(greed_target[batch_i])
                 reward = 0.0
-                if sample_target_str in self.mappers_tar:
-                    oris = self.mappers_tar[sample_target_str]
+                if sample_target_str in mappers_tar:
+                    oris = mappers_tar[sample_target_str]
                     if greed_target_str in oris:
                         reward += oris[greed_target_str]
 
-                if sample_target_str in self.mappers_ori :
-                    tars = self.mappers_ori[sample_target_str]
+                if sample_target_str in mappers_ori :
+                    tars = mappers_ori[sample_target_str]
                     if greed_target_str in tars:
                         reward -= tars[greed_target_str]
 

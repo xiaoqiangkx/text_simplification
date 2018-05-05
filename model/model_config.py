@@ -7,7 +7,7 @@ args = get_args()
 
 def get_path(file_path, env='sys'):
     if env == 'crc':
-        return "/zfs1/hdaqing/saz31/text_simplification_0424/tmp/" + file_path
+        return "/zfs1/hdaqing/saz31/text_simplification_0504/tmp/" + file_path
     elif env == 'aws':
         return '/home/zhaos5/ts/perf/' + file_path
     else:
@@ -95,6 +95,7 @@ class DefaultConfig():
     vocab_complex = get_path('data/%s/dummy_complex_vocab'%data_base, 'sys')
     vocab_all = get_path('data/%s/dummy_vocab'%data_base, 'sys')
     vocab_rules = get_path('data/%s/dummy_rules_vocab'%data_base, 'sys')
+    rule_mode = 'unigram'
     # if args.lower_case:
     #     vocab_simple = vocab_simple + '.lower'
     #     vocab_complex = vocab_complex + '.lower'
@@ -163,6 +164,7 @@ class DefaultConfig():
     # sari_ppdb_simp_weight: the weight for ppdb in sari
     # sample: sari|rule|rule_weight:2.0
     rl_configs = {}
+    rulecnt_threshold = 0
     for cfg in rl_config.split(':'):
         kv = cfg.split('=')
         if kv[0] == 'dummy':
@@ -180,6 +182,8 @@ class DefaultConfig():
                 elif kv[1] == 'huge':
                     train_dataset_complex_ppdb_cand = get_path(
                         '../text_simplification_data/train/dress/wikihugenew/train/rule_cand.txt', 'sys')
+            if len(kv) > 2:
+                rulecnt_threshold = float(kv[2])
 
         if kv[0] == 'rule_weight':
             rl_configs['rule_weight'] = float(kv[1])
@@ -187,6 +191,10 @@ class DefaultConfig():
             rl_configs['ext_simple'] = True
         if kv[0] == 'rule_global':
             rl_configs['rule_global'] = True
+        if kv[0] == 'noneg':
+            rl_configs['noneg'] = True
+        if kv[0] == 'rule_version':
+            rl_configs['rule_version'] = kv[1]
 
     rule_base = args.rule_base
     use_dataset2 = args.use_dataset2
@@ -297,6 +305,104 @@ class WikiDressLargeNewTestDefault(WikiDressLargeNewDefault):
         '../text_simplification_data/train/dress/wikilargenew/test/src.raw.txt', 'sys')
     val_dataset_simple_rawlines_file_references = 'ref.'
     val_dataset_simple_rawlines_file = 'dst.raw.txt'
+    num_refs = 8
+
+    max_cand_rules = 50
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/test/rule_mapper.txt', 'sys')
+
+
+########################################################################################## WIKILARGE
+
+
+class WikiDressLargeDefault(DefaultConfig):
+    model_print_freq = 100
+    save_model_secs = 600
+    model_eval_freq = args.model_eval_freq
+
+    train_dataset_simple = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/dst.txt', 'sys')
+    train_dataset_complex = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/src.txt', 'sys')
+    vocab_rules = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/rule_voc.txt', 'sys')
+    train_dataset_complex_ppdb = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/rule_mapper.txt', 'sys')
+    dmode = args.dmode
+    if dmode == 'v2':
+        train_dataset_simple = get_path(
+            '../text_simplification_data/train/dress/wikilarge/train/dst2.txt', 'sys')
+        train_dataset_complex = get_path(
+            '../text_simplification_data/train/dress/wikilarge/train/src2.txt', 'sys')
+        vocab_rules = get_path(
+            '../text_simplification_data/train/dress/wikilarge/train/rule_voc2.txt', 'sys')
+        train_dataset_complex_ppdb = get_path(
+            '../text_simplification_data/train/dress/wikilarge/train/rule_mapper2.txt', 'sys')
+
+    max_cand_rules = 15
+    vocab_simple = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/wiki.full.aner.train.dst.vocab.lower', 'sys')
+    vocab_complex = get_path(
+        '../text_simplification_data/train/dress/wikilarge/train/wiki.full.aner.train.src.vocab.lower', 'sys')
+    # vocab_all = get_path(
+    #     '../text_simplification_data/train/dress/wikilarge/train/voc_all.txt', 'sys')
+
+    val_dataset_simple_folder = get_path('../text_simplification_data/val/', 'sys')
+    val_dataset_simple_file = 'tune.8turkers.tok.simp.ner'
+    val_dataset_complex = get_path('../text_simplification_data/val/tune.8turkers.tok.norm.ner', 'sys')
+    val_mapper = get_path('../text_simplification_data/val/tune.8turkers.tok.map', 'sys')
+    # wiki.full.aner.ori.valid.dst is uppercase whereas tune.8turkers.tok.simp is lowercase
+    val_dataset_complex_rawlines_file = get_path(
+        '../text_simplification_data/val/tune.8turkers.tok.norm', 'sys')
+    val_dataset_simple_rawlines_file_references = 'tune.8turkers.tok.turk.'
+    val_dataset_simple_rawlines_file = 'tune.8turkers.tok.simp'
+
+    val_dataset_simple_raw_file = 'wiki.full.aner.ori.valid.dst'
+    val_dataset_complex_raw = get_path(
+        '../text_simplification_data/val/wiki.full.aner.ori.valid.src', 'sys')
+
+
+    num_refs = 8
+
+    dimension = args.dimension
+
+    max_complex_sentence = 85
+    max_simple_sentence = 85
+
+    min_count = args.min_count
+    batch_size = args.batch_size
+
+    tokenizer = 'split'
+
+
+class WikiDressLargeTrainDefault(WikiDressLargeDefault):
+    beam_search_size = 0
+    max_cand_rules = 15
+
+
+class WikiDressLargeEvalDefault(WikiDressLargeDefault):
+    beam_search_size = 1
+    environment = args.environment
+    output_folder = args.output_folder
+    resultdir = get_path('../' + output_folder + '/result/eightref_val', environment)
+    max_cand_rules = 50
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/val/rule_mapper.txt', 'sys')
+
+
+class WikiDressLargeTestDefault(WikiDressLargeDefault):
+    beam_search_size = 1
+    environment = args.environment
+    output_folder = args.output_folder
+    resultdir = get_path('../' + output_folder + '/result/eightref_test', environment)
+
+    val_dataset_simple_folder = get_path('../text_simplification_data/test/')
+    # use the original dress
+    val_dataset_simple_file = 'wiki.full.aner.test.dst'
+    val_dataset_complex = get_path('../text_simplification_data/test/wiki.full.aner.test.src')
+    val_mapper = get_path('../text_simplification_data/test/test.8turkers.tok.map.dress')
+    val_dataset_complex_rawlines_file = get_path(
+        '../text_simplification_data/test/test.8turkers.tok.norm')
+    val_dataset_simple_rawlines_file_references = 'test.8turkers.tok.turk.'
+    val_dataset_simple_rawlines_file = 'test.8turkers.tok.simp'
     num_refs = 8
 
     max_cand_rules = 50

@@ -49,7 +49,7 @@ class TrainData:
         print('Use Train Dataset: \n Simple\t %s. \n Complex\t %s. \n Size\t %d.'
               % (data_simple_path, data_complex_path, self.size))
 
-        if 'rule' in self.model_config.memory:
+        if 'rule' in self.model_config.memory or 'rule' in self.model_config.rl_configs:
             self.vocab_rule = Rule(model_config, self.model_config.vocab_rules)
             self.rules_target, self.rules_align = self.populate_rules(
                 self.model_config.train_dataset_complex_ppdb, self.vocab_rule)

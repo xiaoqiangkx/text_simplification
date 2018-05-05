@@ -10,7 +10,7 @@ from data_generator.train_data import TrainData
 from model.transformer import TransformerGraph
 from model.seq2seq import Seq2SeqGraph
 from model.model_config import DefaultConfig, DefaultTrainConfig, list_config
-from model.model_config import WikiDressLargeNewTrainDefault, WikiDressHugeNewTrainDefault
+from model.model_config import WikiDressLargeNewTrainDefault, WikiDressHugeNewTrainDefault,WikiDressLargeTrainDefault
 from data_generator.vocab import Vocab
 from util import session
 from util import constant
@@ -231,5 +231,7 @@ if __name__ == '__main__':
         config = WikiDressLargeNewTrainDefault()
     elif args.mode == 'wikihuge':
         config = WikiDressHugeNewTrainDefault()
+    elif args.mode == 'dress':
+        config = WikiDressLargeTrainDefault()
     print(list_config(config))
     train(config)

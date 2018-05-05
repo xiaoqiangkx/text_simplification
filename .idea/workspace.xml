@@ -5,68 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2401f24-4001-493d-a510-7f72da9e93d7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset_ext" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/dummy_rules_vocab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/eval_dummy_complex_dataset.rules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset.rules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset2.syntax" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_complex_dataset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_simple_dataset.raw.2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_process/ppdb_cand.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_process/ppdb_filter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/seq2seq.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/seq2seq_beamsearch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codelab/check_diff.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codelab/test_file.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codelab/test_nrules.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codelab/vocab_rule_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5t2v1_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l42h5_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l43h5.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l43h5_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2b.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2b512.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2b512_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2b_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2br.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2br512.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki/wk2br_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1noneg.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1noneg_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1xu.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1xu_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2xu.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2xu_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2b.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c2_eval.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c3.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c4.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c5.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c5_eval.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codelab/test_len.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_len.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codelab/tf_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_complex_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_complex_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_complex_vocab50000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_rules_vocab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_simple_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_simple_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_simple_vocab50000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_subvocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_subvocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_vocab" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_vocab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy_vocab50000" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/dummy_vocab50000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules.v3.sing.tmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_complex_dataset2" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_complex_dataset2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.rules" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset.rules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset.syntax" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset.syntax" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset2" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/train_dummy_simple_dataset2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/train_dummy_simple_dataset2.syntax" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_rule_multi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_complex_dataset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_mapper" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_plain/valid_dummy_mapper" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_rule_whitespace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codelab/find_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/find_result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codelab/test_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/codelab/test_rules.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.gtx1080.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.titan.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/ACL/dress_final_ffn.long.titanx.sh" beforeDir="false" />
@@ -162,8 +137,8 @@
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_nt.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_ppdb.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/NAACL/train_dress_s2s.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adagrad.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adam.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adagrad.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5t2v1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/dressnew/dressnew_adam.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l42h5.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/legacy.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/legacy_final_ffn.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/old/eval_plain.sh" beforeDir="false" />
@@ -187,16 +162,23 @@
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_eval.long.titan.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_sub.long.titanx.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_generator/experiments_crc/wiki_base_sub_eval.long.titan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/rule.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/train_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/val_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generator/vocab.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_rule_sari_eval.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_sari_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bt.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bt_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/rule.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generator/rule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generator/train_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generator/train_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_process/data_prefilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/data_prefilter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_process/ppdb_process_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/ppdb_process_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_process/ppdb_process_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/ppdb_process_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_process/voc_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process/voc_process.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c3_eval.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c4_eval.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki2c5/wk2b_eval.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/wiki/wk2br512_eval.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/eval.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/graph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/metric.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/metric.py" afterDir="false" />
@@ -204,8 +186,9 @@
       <change beforePath="$PROJECT_DIR$/model/postprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/postprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/arguments.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/arguments.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/sari.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/sari.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/corpus_sari.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/corpus_sari.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/corpus_sari_nonref.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/corpus_sari_nonref.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tensor2tensor/models/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensor2tensor/models/transformer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -216,30 +199,36 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/text_simplification3$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1523963553484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1524599706591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1525160664230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb.coverage" NAME="ppdb Coverage Results" MODIFIED="1523735879930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_rule_whitespace_py.coverage" NAME="Nosetests in test_rule_whitespace.py Coverage Results" MODIFIED="1524910084199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
-    <SUITE FILE_PATH="coverage/text_simplification$eval.coverage" NAME="eval_dummy Coverage Results" MODIFIED="1525004336874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$eval.coverage" NAME="eval_dummy Coverage Results" MODIFIED="1525334053013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification3$train.coverage" NAME="train Coverage Results" MODIFIED="1524025946288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_len_py.coverage" NAME="Nosetests in test_len.py Coverage Results" MODIFIED="1524780985757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
-    <SUITE FILE_PATH="coverage/text_simplification$train_real.coverage" NAME="train_real Coverage Results" MODIFIED="1525055152267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$train_real.coverage" NAME="train_real Coverage Results" MODIFIED="1525400454237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$graph.coverage" NAME="graph Coverage Results" MODIFIED="1524916050126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$beam_search_backprop.coverage" NAME="beam_search_backprop Coverage Results" MODIFIED="1524714260598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensor2tensor/utils" />
     <SUITE FILE_PATH="coverage/text_simplification3$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1523929296278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process_eval_validate.coverage" NAME="ppdb_process_eval_validate Coverage Results" MODIFIED="1523825817060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification$ppdb_filter.coverage" NAME="ppdb_filter Coverage Results" MODIFIED="1525004033355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/text_simplification$train.coverage" NAME="train_dummy Coverage Results" MODIFIED="1525004842842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/text_simplification$data_prefilter.coverage" NAME="data_prefilter Coverage Results" MODIFIED="1524543393237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$train.coverage" NAME="train_dummy Coverage Results" MODIFIED="1525122667977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$data_prefilter.coverage" NAME="data_prefilter Coverage Results" MODIFIED="1525169125620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$eval_real.coverage" NAME="eval_real Coverage Results" MODIFIED="1525332528734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification3$eval2.coverage" NAME="eval2 Coverage Results" MODIFIED="1522954866309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/text_simplification$vocab_rule_generator.coverage" NAME="vocab_rule_generator Coverage Results" MODIFIED="1525170089106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification_old$train.coverage" NAME="train Coverage Results" MODIFIED="1522622534794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification$test.coverage" NAME="test Coverage Results" MODIFIED="1524913623506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$check_diff.coverage" NAME="check_diff Coverage Results" MODIFIED="1525226529356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$Nosetests_in_test_rules_py.coverage" NAME="Nosetests in test_rules.py Coverage Results" MODIFIED="1525142014828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process_eval.coverage" NAME="ppdb_process_eval Coverage Results" MODIFIED="1523998285761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1525336057806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification3$ppdb_process.coverage" NAME="ppdb_process Coverage Results" MODIFIED="1523961331879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/text_simplification$voc_process.coverage" NAME="voc_process Coverage Results" MODIFIED="1524546242596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/text_simplification$voc_process.coverage" NAME="voc_process Coverage Results" MODIFIED="1525166299752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification$ppdb_augment.coverage" NAME="ppdb_augment Coverage Results" MODIFIED="1525005200287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification$tf_test.coverage" NAME="tf_test Coverage Results" MODIFIED="1524911068429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
     <SUITE FILE_PATH="coverage/text_simplification$sari.coverage" NAME="sari Coverage Results" MODIFIED="1524988644134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/text_simplification3$test.coverage" NAME="test Coverage Results" MODIFIED="1523839214198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codelab" />
+    <SUITE FILE_PATH="coverage/text_simplification$ppdb_process_train.coverage" NAME="ppdb_process_train Coverage Results" MODIFIED="1525180876308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification3$train_eval.coverage" NAME="train_eval Coverage Results" MODIFIED="1522914763286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
     <SUITE FILE_PATH="coverage/text_simplification3$data_combine_filter.coverage" NAME="data_combine_filter Coverage Results" MODIFIED="1523328051067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/text_simplification$data_preprocess.coverage" NAME="data_preprocess Coverage Results" MODIFIED="1524520830750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
@@ -256,47 +245,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="model_config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/model_config.py">
+      <file leaf-file-name="wk2br512_eval.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2br512_eval.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="173" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wikilarge_l14h5.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh">
+      <file leaf-file-name="wk2b.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2b.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="79" selection-start-line="19" selection-start-column="74" selection-end-line="19" selection-end-column="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wikilarge_l41h5.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="152" selection-start-line="19" selection-start-column="152" selection-end-line="19" selection-end-column="152" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wikilarge_l41h5_eval.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="151" selection-start-line="19" selection-start-column="151" selection-end-line="19" selection-end-column="151" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wikilarge_l14h5_eval.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="300">
+              <caret line="20" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -312,36 +274,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>drop</find>
-      <find>attention_type</find>
-      <find>rules_align</find>
-      <find>attn_loss</find>
-      <find>layer_drop</find>
-      <find>prin</find>
-      <find>rule_ori</find>
-      <find>sampled</find>
-      <find>valid_dummy_mapper</find>
-      <find>Load e</find>
-      <find>teachercritical</find>
-      <find>items</find>
-      <find>train_dataset_simple_ext</find>
-      <find>greed_target_str</find>
-      <find>sample_target_str:</find>
-      <find>global</find>
-      <find>SARIsent</find>
-      <find>verb_ops_ori</find>
-      <find>rl_configs</find>
-      <find>teachercriticalv2</find>
-      <find>1sampled_id</find>
-      <find>sampled_id</find>
-      <find>rule_g</find>
-      <find>Load cand rules from</find>
-      <find>rule_global</find>
-      <find>gt_comp_list</find>
-      <find>large</find>
-      <find>transformer_de</find>
-      <find>huge</find>
-      <find>train_dataset_complex_ppdb_cand</find>
+      <find>none</find>
+      <find>base2</find>
+      <find>noneg</find>
+      <find>model_config</find>
+      <find>process_line</find>
+      <find>voc</find>
+      <find>rule</find>
+      <find>mincnt</find>
+      <find>model_config.min_count_rule</find>
+      <find>val_mapper</find>
+      <find>wk2b_wrt2v2xu</find>
+      <find>PostProcess</find>
+      <find>postprocess</find>
+      <find>obj_data</find>
+      <find>replace_unk_by_emb</find>
+      <find>postp</find>
+      <find>rule_weight</find>
+      <find>STARSA</find>
+      <find>star</find>
+      <find>format</find>
+      <find>SARI</find>
+      <find>36</find>
+      <find>STAR</find>
+      <find>corpus_sari_script_nonref</find>
+      <find>wikilarge</find>
+      <find>dim</find>
+      <find>penalty_alpha</find>
+      <find>beam_sear</find>
+      <find>ada</find>
+      <find>adam</find>
     </findStrings>
     <replaceStrings>
       <replace>val_dataset_simple_rawlines_file</replace>
@@ -353,57 +315,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.1" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.2" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.0" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.1" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_simple_dataset.raw.2" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/valid_dummy_mapper" />
-        <option value="$PROJECT_DIR$/data/eval_dummy_complex_dataset.rules" />
-        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/train_dummy_simple_dataset" />
-        <option value="$PROJECT_DIR$/data/train_dummy_complex_dataset.rules" />
-        <option value="$PROJECT_DIR$/model/seq2seq.py" />
-        <option value="$PROJECT_DIR$/data/data_mis/train_dummy_simple_dataset_ext" />
-        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_complex_dataset" />
-        <option value="$PROJECT_DIR$/data/data_miss/eval_dummy_complex_dataset.rules" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_mapper" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.1" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.0" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.2" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.0" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.1" />
-        <option value="$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.2" />
-        <option value="$PROJECT_DIR$/model/train.py" />
-        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset.rules" />
-        <option value="$PROJECT_DIR$/data_process/ppdb_filter.py" />
-        <option value="$PROJECT_DIR$/data_process/ppdb_augment.py" />
-        <option value="$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules" />
-        <option value="$PROJECT_DIR$/data_process/ppdb_cand.py" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh" />
-        <option value="$PROJECT_DIR$/util/sari.py" />
-        <option value="$PROJECT_DIR$/model/transformer.py" />
-        <option value="$PROJECT_DIR$/model/graph.py" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule0_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_rule0.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c4.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c4_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c3.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c3_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c2_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c5.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c2.sh" />
+        <option value="$PROJECT_DIR$/data_process/ppdb_process_train.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2br.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2b.sh" />
+        <option value="$PROJECT_DIR$/codelab/check_diff.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1xu_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1xu.sh" />
         <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh" />
-        <option value="$PROJECT_DIR$/model/model_config.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2xu_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2xu.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5t2v1.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l42h5.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l43h5.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5t2v1_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l43h5_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l42h5_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn.sh" />
         <option value="$PROJECT_DIR$/model/metric.py" />
-        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh" />
-        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh" />
-        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh" />
-        <option value="$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh" />
+        <option value="$PROJECT_DIR$/model/postprocess.py" />
+        <option value="$PROJECT_DIR$/codelab/test_file.py" />
+        <option value="$PROJECT_DIR$/model/eval.py" />
+        <option value="$PROJECT_DIR$/codelab/find_result.py" />
+        <option value="$PROJECT_DIR$/script/corpus_sari_nonref.sh" />
+        <option value="$PROJECT_DIR$/util/sari.py" />
+        <option value="$PROJECT_DIR$/script/corpus_sari.sh" />
+        <option value="$PROJECT_DIR$/codelab/test_rules.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2bpt_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2bpt.sh" />
+        <option value="$PROJECT_DIR$/model/model_config.py" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2b.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2b_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2b512_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2br512.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2br512_eval.sh" />
+        <option value="$PROJECT_DIR$/experiments/wiki/wk2b512.sh" />
       </list>
     </option>
   </component>
@@ -417,9 +379,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="44" />
+    <option name="x" value="48" />
     <option name="y" value="23" />
-    <option name="width" value="1396" />
+    <option name="width" value="1392" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -430,6 +392,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -446,7 +409,12 @@
               <item name="text_simplification" type="b2602c69:ProjectViewProjectNode" />
               <item name="text_simplification" type="462c0819:PsiDirectoryNode" />
               <item name="experiments" type="462c0819:PsiDirectoryNode" />
-              <item name="nbaselines" type="462c0819:PsiDirectoryNode" />
+              <item name="wiki" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="text_simplification" type="b2602c69:ProjectViewProjectNode" />
+              <item name="text_simplification" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="text_simplification" type="b2602c69:ProjectViewProjectNode" />
@@ -457,7 +425,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -467,19 +434,19 @@
     <property name="settings.editor.selected.configurable" value="Console" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/experiments/nbaselines" />
-      <recent name="$PROJECT_DIR$/experiments/wiki2" />
-      <recent name="$PROJECT_DIR$/data/data_miss" />
-      <recent name="$PROJECT_DIR$/data/data_mis" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/experiments/wiki2rule" />
+      <recent name="$PROJECT_DIR$/experiments/wiki2c5" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data/data_bigram" />
-      <recent name="$PROJECT_DIR$/experiments_crc/dressnew" />
-      <recent name="$PROJECT_DIR$/experiments_psc" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/experiments/wiki" />
+      <recent name="$PROJECT_DIR$/experiments/wiki2c5" />
+      <recent name="$PROJECT_DIR$/experiments/nbaselines" />
+      <recent name="$PROJECT_DIR$/experiments/wiki2" />
+      <recent name="$PROJECT_DIR$/experiments/wiki2rule" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -495,6 +462,63 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.train_real">
+    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda/envs/dl_py35/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codelab" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codelab/test_rules.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="check_diff" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codelab" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codelab/check_diff.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="data_prefilter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/data_prefilter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="eval_dummy" type="PythonConfigurationType" factoryName="Python">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -509,12 +533,12 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/eval.py" />
-      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 300" />
+      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 1000" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="metric" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="eval_real" type="PythonConfigurationType" factoryName="Python">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -527,70 +551,32 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/metric.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/eval.py" />
+      <option name="PARAMETERS" value="-ngpus 1 -bsize 500 -fw transformer -out wk2b_wrt2v1nn -layer_drop 0.0 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 4 -eval_freq 0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="ppdb_augment" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="ppdb_process_train" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda/envs/dl_py27/bin/python2.7" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_cand.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_process_train.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="ppdb_filter" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="text_simplification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/ppdb_filter.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="sari" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="text_simplification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/sari.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="train_dummy" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="train_dummy" type="PythonConfigurationType" factoryName="Python">
       <module name="text_simplification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -604,7 +590,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/train.py" />
-      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 300 -tmode teachercritical --rl_config rule" />
+      <option name="PARAMETERS" value="-fw transformer -out ttt_12 -layer_drop 0.2 -op adam -lr 0.001 --mode dummy -lc True --min_count 0 -eval_freq 0 -nel 1 -ndl 2 --memory rule -memcfg mofinal --memory_prepare_step 1000" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -623,7 +609,45 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/train.py" />
-      <option name="PARAMETERS" value="-ngpus 1 -bsize 80 -fw transformer -out wk2b_wrv1 -layer_drop 0.2 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 4 -eval_freq 0 -tmode teachercriticalv2 --rl_config rule=large:rule_global -warm $PROJECT_DIR$/../tmp/ckpt/model.ckpt-4903" />
+      <option name="PARAMETERS" value="-ngpus 1 -bsize 3 -fw transformer -out wk2b_wrv1 -layer_drop 0.2 -op adagrad -lr 0.1 --mode dressnew --dmode v2 -nhl 4 -nel 4 -ndl 4 -lc True --min_count 4 -eval_freq 0 -tmode teachercriticalv2 --rl_config rule=large=3:rule_global  --memory rule -memcfg mofinal --memory_prepare_step 50000" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="voc_process" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_process/voc_process.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="vocab_rule_generator" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="text_simplification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codelab" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codelab/vocab_rule_generator.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -836,21 +860,24 @@
       <envs />
     </configuration>
     <list>
+      <item itemvalue="Python.Unnamed" />
       <item itemvalue="Python.eval_dummy" />
-      <item itemvalue="Python.train_real" />
       <item itemvalue="Python.train_dummy" />
-      <item itemvalue="Python.sari" />
-      <item itemvalue="Python.metric" />
-      <item itemvalue="Python.ppdb_filter" />
-      <item itemvalue="Python.ppdb_augment" />
+      <item itemvalue="Python.train_real" />
+      <item itemvalue="Python.eval_real" />
+      <item itemvalue="Python.ppdb_process_train" />
+      <item itemvalue="Python.data_prefilter" />
+      <item itemvalue="Python.voc_process" />
+      <item itemvalue="Python.vocab_rule_generator" />
+      <item itemvalue="Python.check_diff" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ppdb_augment" />
-        <item itemvalue="Python.train_dummy" />
-        <item itemvalue="Python.ppdb_filter" />
-        <item itemvalue="Python.metric" />
-        <item itemvalue="Python.sari" />
+        <item itemvalue="Python.check_diff" />
+        <item itemvalue="Python.ppdb_process_train" />
+        <item itemvalue="Python.vocab_rule_generator" />
+        <item itemvalue="Python.data_prefilter" />
+        <item itemvalue="Python.voc_process" />
       </list>
     </recent_temporary>
   </component>
@@ -892,9 +919,12 @@
     <history-entry file="Nosetests_in_test_rule_multi_py - 2018.04.28 at 06h 50m 23s.xml">
       <configuration name="Nosetests in test_rule_multi.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Nosetests_in_test_rules_py - 2018.04.30 at 22h 33m 38s.xml">
+      <configuration name="Nosetests in test_rules.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="44" y="23" width="1396" height="877" extended-state="0" />
+    <frame x="48" y="23" width="1392" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -904,13 +934,12 @@
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49227798" visible="true" weight="0.22206303" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49227798" visible="true" weight="0.22198276" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3275218" />
       <window_info anchor="right" id="SciView" order="3" weight="0.3297414" />
-      <window_info anchor="right" id="Structure" order="7" side_tool="true" visible="true" weight="0.12034384" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3648817" />
+      <window_info anchor="right" id="Structure" order="7" side_tool="true" weight="0.11063218" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3648817" />
       <window_info id="Favorites" order="1" sideWeight="0.507722" side_tool="true" weight="0.21045096" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -919,6 +948,7 @@
       <window_info anchor="right" id="Data View" order="1" weight="0.32999283" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3275218" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" />
     </layout>
   </component>
@@ -986,7 +1016,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codelab/find_result.py</url>
-          <line>11</line>
+          <line>15</line>
           <option name="timeStamp" value="372" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -996,7 +1026,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codelab/test_rules.py</url>
-          <line>81</line>
+          <line>82</line>
           <option name="timeStamp" value="406" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1040,21 +1070,6 @@
           <option name="timeStamp" value="575" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py</url>
-          <line>461</line>
-          <option name="timeStamp" value="587" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py</url>
-          <line>233</line>
-          <option name="timeStamp" value="588" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py</url>
-          <line>357</line>
-          <option name="timeStamp" value="591" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tensor2tensor/utils/beam_search_backprop_sampled.py</url>
           <line>493</line>
           <option name="timeStamp" value="608" />
@@ -1081,23 +1096,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/model/eval.py</url>
-          <line>306</line>
+          <line>309</line>
           <option name="timeStamp" value="662" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/postprocess.py</url>
-          <line>123</line>
-          <option name="timeStamp" value="672" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codelab/test_rule_multi.py</url>
           <line>10</line>
           <option name="timeStamp" value="678" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/util/sari.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="718" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/data_process/ppdb_filter.py</url>
@@ -1111,8 +1116,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/model/metric.py</url>
-          <line>53</line>
+          <line>66</line>
           <option name="timeStamp" value="724" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codelab/vocab_rule_generator.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="729" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_process/ppdb_process_train.py</url>
+          <line>489</line>
+          <option name="timeStamp" value="732" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_process/ppdb_process_train.py</url>
+          <line>444</line>
+          <option name="timeStamp" value="734" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_process/ppdb_process_train.py</url>
+          <line>427</line>
+          <option name="timeStamp" value="735" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_generator/train_data.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="736" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/util/sari.py</url>
+          <line>220</line>
+          <option name="timeStamp" value="751" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/util/sari.py</url>
+          <line>236</line>
+          <option name="timeStamp" value="752" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/transformer.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="754" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1125,431 +1170,440 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="725" />
+      <option name="time" value="756" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="from collections import defaultdict, Counter " language="Python" />
-        <watch expression="Counter(dic).most_common()" language="Python" />
-        <watch expression="rule" language="Python" />
-        <watch expression="kv[1]" language="Python" />
+        <watch expression="vocab_rule.encode(cur_rules[150])" language="Python" />
+        <watch expression="model_config.min_count_rule" language="Python" />
+        <watch expression="range(hparams.num_encoder_layers or                        hparams.num_hidden_layers)" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>kv[1]</expression-string>
+        <expression-string>range(hparams.num_encoder_layers or                        hparams.num_hidden_layers)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>rule</expression-string>
+        <expression-string>args</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>Counter(dic).most_common()</expression-string>
+        <expression-string>postprocess.replace_unk_by_emb(                     sentence_complex_raw, encoder_embs, final_outputs, target_raw, sentence_complex_marker)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>Counter(dic)</expression-string>
+        <expression-string>[[val_data.vocab_simple.encode(w)==val_data.vocab_simple.encode(constant.SYMBOL_UNK)                                  for w in sent] for sent in sentence_complex_raw]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>from collections import defaultdict, Counter</expression-string>
+        <expression-string>[[val_data.vocab_simple.encode(w) for w in sent] for sent in sentence_complex_raw]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>Coun</expression-string>
+        <expression-string>[[w for w in sent] for sent in sentence_complex_raw]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dic</expression-string>
+        <expression-string>[val_data.vocab_simple.encode(w) for w in [sent for sent in sentence_complex_raw]]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>rules</expression-string>
+        <expression-string>[val_data.vocab_simple.encode(w) for w for sent in sentence_complex_raw]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>line</expression-string>
+        <expression-string>[val_data.vocab_simple.encode(w) for w in sent for sent in sentence_complex_raw]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>nrules</expression-string>
+        <expression-string>[val_data.vocab_simple.encode(w) for w in sentence_complex_raw[0]]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset2">
+    <entry file="file://$PROJECT_DIR$/model/model_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
+        <state relative-caret-position="2070">
+          <caret line="139" column="38" selection-start-line="139" selection-start-column="25" selection-end-line="139" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_generator/train_data.py">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2bpt_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2082">
-          <caret line="176" selection-start-line="176" selection-end-line="176" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="20" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset_ext">
+    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        <state relative-caret-position="2610">
+          <caret line="184" column="21" selection-start-line="184" selection-start-column="16" selection-end-line="184" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/dummy_complex_vocab">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule_l1.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_mapper">
+    <entry file="file://$PROJECT_DIR$/util/arguments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        <state relative-caret-position="1335">
+          <caret line="89" column="39" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_complex_dataset">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.raw.0">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.0">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/valid_dummy_simple_dataset">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" lean-forward="true" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_generator/val_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/envs/dl_py35/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="970" selection-start-line="970" selection-end-line="970" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_simple_dataset">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset.rules">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3225">
-          <caret line="215" column="44" selection-start-line="215" selection-start-column="38" selection-end-line="215" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_process/ppdb_process_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="413" column="20" selection-start-line="413" selection-start-column="8" selection-end-line="413" selection-end-column="20" />
-          <folding>
-            <element signature="e#328#949#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/eval_dummy_complex_dataset.rules">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data_miss/train_dummy_complex_dataset_cand.rules">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_process/ppdb_cand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_process/ppdb_filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_rule.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5t2v1_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="146" lean-forward="true" selection-start-line="19" selection-start-column="146" selection-end-line="19" selection-end-column="166" />
+          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev1.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l43h5_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="180">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev1_eval.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l42h5_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="82" selection-start-line="19" selection-start-column="82" selection-end-line="19" selection-end-column="82" />
+        <state relative-caret-position="180">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2bweightrulev2_eval.sh">
+    <entry file="file://$PROJECT_DIR$/util/checkpoint.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="82" selection-start-line="19" selection-start-column="82" selection-end-line="19" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/sari.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1419">
-          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_generator/vocab.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2_eval.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="84" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
+        <state relative-caret-position="248">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        <state relative-caret-position="300">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global_eval.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2b.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="83" selection-start-line="19" selection-start-column="83" selection-end-line="19" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1noneg.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="260" selection-start-line="19" selection-start-column="255" selection-end-line="19" selection-end-column="260" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2b_eval.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2global_eval.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
+        <state relative-caret-position="75">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulev2.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1nn.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        <state relative-caret-position="285">
+          <caret line="19" column="339" selection-start-line="19" selection-start-column="339" selection-end-line="19" selection-end-column="339" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="243" selection-start-line="19" selection-start-column="243" selection-end-line="19" selection-end-column="243" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="243" selection-start-line="19" selection-start-column="243" selection-end-line="19" selection-end-column="243" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2rule/wk2b_rule0c5.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1w2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2c5/wk2bt2v1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="331" selection-start-line="19" selection-start-column="331" selection-end-line="19" selection-end-column="331" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="252" selection-start-line="19" selection-start-column="247" selection-end-line="19" selection-end-column="252" />
+          <caret line="19" column="205" selection-start-line="19" selection-start-column="205" selection-end-line="19" selection-end-column="252" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1global.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="253" selection-start-line="19" selection-start-column="248" selection-end-line="19" selection-end-column="253" />
+        <state relative-caret-position="75">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2gloabl.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v1noneg_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="252" selection-start-line="19" selection-start-column="248" selection-end-line="19" selection-end-column="252" />
+          <caret line="19" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/postprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="150" column="48" lean-forward="true" selection-start-line="150" selection-start-column="48" selection-end-line="150" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codelab/test_file.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="18" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codelab/find_result.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="137" selection-start-line="7" selection-start-column="137" selection-end-line="7" selection-end-column="137" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script/multi-bleu.perl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="137" column="21" lean-forward="true" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_generator/val_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="254" selection-start-line="254" selection-end-line="254" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script/corpus_sari_nonref.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="82" selection-start-line="25" selection-start-column="82" selection-end-line="25" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script/corpus_sari.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codelab/test_rules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_generator/train_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/metric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/sari.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="223" selection-start-line="223" selection-end-line="223" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tensor2tensor/models/transformer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="843" column="55" selection-start-line="843" selection-start-column="55" selection-end-line="843" selection-end-column="55" />
+        <state relative-caret-position="348">
+          <caret line="944" selection-start-line="944" selection-end-line="944" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tensor2tensor/utils/beam_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2610">
+          <caret line="184" column="21" selection-start-line="184" selection-start-column="16" selection-end-line="184" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/transformer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="272" column="53" lean-forward="true" selection-start-line="272" selection-start-column="53" selection-end-line="272" selection-end-column="53" />
+        <state relative-caret-position="2880">
+          <caret line="202" column="79" selection-start-line="202" selection-start-column="79" selection-end-line="202" selection-end-column="79" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/graph.py">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2bpt_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="295" column="68" selection-start-line="295" selection-start-column="64" selection-end-line="295" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-            <element signature="e#614#866#0" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="19" selection-start-column="5" selection-end-line="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/wiki2/wk2b_weightrulet2v2.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2bpt.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="251" selection-start-line="19" selection-start-column="247" selection-end-line="19" selection-end-column="251" />
+        <state relative-caret-position="45">
+          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/baselines/wikilarge_l1h1.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2br512.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" lean-forward="true" selection-end-line="21" />
+        <state relative-caret-position="315">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/metric.py">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2b512.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="32" column="40" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#1915#7397#0" />
-          </folding>
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/model_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="173" selection-start-line="173" selection-end-line="173" />
+        <state relative-caret-position="120">
+          <caret line="9" column="60" selection-start-line="9" selection-start-column="60" selection-end-line="9" selection-end-column="60" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2br.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/arguments.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="89" column="39" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2b_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="79" selection-start-line="19" selection-start-column="74" selection-end-line="19" selection-end-column="79" />
+          <caret line="19" column="103" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l14h5_eval.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2b512_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="152" selection-start-line="19" selection-start-column="152" selection-end-line="19" selection-end-column="152" />
+          <caret line="19" column="115" selection-start-line="19" selection-start-column="115" selection-end-line="19" selection-end-column="115" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiments/nbaselines/wikilarge_l41h5_eval.sh">
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2br512_eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="151" selection-start-line="19" selection-start-column="151" selection-end-line="19" selection-end-column="151" />
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/wiki/wk2b.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="20" />
         </state>
       </provider>
     </entry>

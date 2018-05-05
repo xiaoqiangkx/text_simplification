@@ -11,7 +11,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=3-00:00:00
 #SBATCH --qos=long
-#SBATCH --mem=32g
+#SBATCH --mem=16g
 
 # Load modules
 module restore

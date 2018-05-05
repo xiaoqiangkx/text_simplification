@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ -z $3 ]]; then
-  echo "Usage: star output reference src"
+  echo "Usage: sari output reference src"
   exit 1
 fi
 

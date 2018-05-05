@@ -100,7 +100,7 @@ class Graph():
                 with tf.device('/cpu:0'):
                     context_size = 0
                     if self.model_config.framework == 'transformer':
-                        context_size = self.model_config.num_decoder_layers
+                        context_size = 1
                     elif self.model_config.framework == 'seq2seq':
                         context_size = 2
                     mem_contexts = tf.get_variable(

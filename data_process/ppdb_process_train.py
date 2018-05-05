@@ -13,6 +13,7 @@ import en
 
 def rui_preprocess(text):
     text = text.lower().strip()
+    return text.split()
     text = text.replace(
         '-lrb-', '(').replace('-rrb-', ')').replace(
         '-lcb-', '(').replace('-rcb-', '(').replace(
@@ -269,13 +270,17 @@ def lcs(a, b):
     return result
 
 mapper = {}
-def process_line(line):
+def process_line(line, is_ppdb=False):
     global mapper
     items = line.strip().lower().split('\t')
     if len(items) < 5 or items[2] == '[cd]':
         return
     ori_words = items[3]
     tar_words = items[4]
+    if ori_words == 'evidence' and tar_words == 'proof':
+        x = 1
+    if ' ' in ori_words or ' ' in tar_words:
+        return
     try:
         if en.verb.infinitive(ori_words) == en.verb.infinitive(tar_words):
             return
@@ -293,6 +298,8 @@ def process_line(line):
         return
     checker = set()
     weight = float(items[1])
+    if is_ppdb:
+        weight -= 0.1
     if ori_words not in mapper:
         mapper[ori_words] = []
     mapper[ori_words].append((tar_words, weight))
@@ -374,7 +381,7 @@ def process_line(line):
             mapper[nori_words].append((ntar_words, weight))
 
 
-def populate_ppdb():
+def populate_ppdb(add_xu=False):
     print('Start Process PPDB.')
     s_t = datetime.now()
     cnt = 0
@@ -385,6 +392,14 @@ def populate_ppdb():
             e_t = datetime.now()
             sp = e_t - s_t
             print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
+    if add_xu:
+        for line in open('/Users/zhaosanqiang916/git/text_simplification_data/ppdb/XU_PPDB'):
+            process_line(line, is_ppdb=True)
+            cnt += 1
+            if cnt % 50000 == 0:
+                e_t = datetime.now()
+                sp = e_t - s_t
+                print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
     print('Populate Mapper with size:%s' % len(mapper))
     return mapper
 
@@ -464,48 +479,48 @@ def get_all_ress(line_src, line_dst, mapper, ress, checker):
                         checker.add(k)
     return ress
 
-mapper = populate_ppdb()
-base = '/zfs1/hdaqing/saz31/smp/tmp0/'
-base2 = '/zfs1/hdaqing/saz31/smp/tmp02/'
+mapper = populate_ppdb(add_xu=False)
+base = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilargenew/train/'
+base2 = '/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilargenew/trainx/'
 
 def thread_process(id):
-    if exists(base2 + 'rule_mapper' + str(id) + '.txt'):
-        return
-    try:
-        f_src = open(base + 'src' + str(id) + '.txt')
-        f_dst = open(base + 'dst' + str(id) + '.txt')
-        f = open(base2 + 'rule_mapper' + str(id) + '.txt', 'w')
-        lines_mapper = []
-        s_time = datetime.now()
-        while True:
-            line_src = f_src.readline()
-            line_dst = f_dst.readline()
-            if not line_src or not line_dst:
-                break
+    # if exists(base2 + 'rule_mapper2' + str(id) + '.txt'):
+    #     return
+    # try:
+    f_src = open(base + 'src' + '' + '.txt')
+    f_dst = open(base + 'dst' + '' + '.txt')
+    f = open(base2 + 'rule_mappern' + '' + '.txt', 'w')
+    lines_mapper = []
+    s_time = datetime.now()
+    while True:
+        line_src = f_src.readline()
+        line_dst = f_dst.readline()
+        if not line_src or not line_dst:
+            break
 
-            line_src = rui_preprocess(line_src.strip())
-            line_dst = line_dst.strip()
+        line_src = rui_preprocess(line_src.strip())
+        line_dst = line_dst.strip()
 
-            ress = []
-            checker = set()
+        ress = []
+        checker = set()
 
-            ress = get_all_ress(line_src, line_dst, mapper, ress, checker)
+        ress = get_all_ress(line_src, line_dst, mapper, ress, checker)
 
-            ress.sort(key=itemgetter(-1), reverse=True)
-            ress = ['X=>%s=>%s=>%s' % (res[0], res[1], str(res[2])) for res in ress]
-            lines_mapper.append('\t'.join(ress))
+        ress.sort(key=itemgetter(-1), reverse=True)
+        ress = ['X=>%s=>%s=>%s' % (res[0], res[1], str(res[2])) for res in ress]
+        lines_mapper.append('\t'.join(ress))
 
-        f.write('\n'.join(lines_mapper))
-        f.close()
-        print('Finished id:%s' % str(id))
-    except:
-        remove(base2 + 'rule_mapper' + str(id) + '.txt')
+    f.write('\n'.join(lines_mapper))
+    f.close()
+    print('Finished id:%s' % str(id))
+    # except:
+    #     remove(base2 + 'rule_mapper' + str(id) + '.txt')
 
 
 thread_process(0)
 
 # c = Counter()
-# for line in lines_mapper:
+# for line in open('/Users/zhaosanqiang916/git/text_simplification_data/train/dress/wikilarge/rule_mapper.txt'):
 #     rules = line.split('\t')
 #     for rule in rules:
 #         if rule:
