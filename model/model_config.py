@@ -7,7 +7,7 @@ args = get_args()
 
 def get_path(file_path, env='sys'):
     if env == 'crc':
-        return "/zfs1/hdaqing/saz31/text_simplification_0504/tmp/" + file_path
+        return "/zfs1/hdaqing/saz31/text_simplification_0924/tmp/" + file_path
     elif env == 'aws':
         return '/home/zhaos5/ts/perf/' + file_path
     else:
@@ -20,6 +20,7 @@ class DefaultConfig():
     num_gpus = args.num_gpus
     framework = args.framework
     warm_start = args.warm_start
+    warm_config = args.warm_config.split(':')
     use_partial_restore = args.use_partial_restore
     batch_size = 3
     dimension = 50
@@ -28,7 +29,7 @@ class DefaultConfig():
     model_eval_freq = args.model_eval_freq
     it_train = args.it_train
     model_print_freq = 10
-    save_model_secs = 10 #600
+    save_model_secs = 600
     number_samples = args.number_samples
     dmode = args.dmode
 
@@ -63,9 +64,6 @@ class DefaultConfig():
     elif framework == 'seq2seq':
         replace_unk_by_attn = False
 
-    external_loss = args.external_loss
-    external_loss = external_loss.split(':')
-
 
     # deprecated: std of trunc norm init, used for initializing embedding / w
     # trunc_norm_init_std = 1e-4
@@ -77,11 +75,15 @@ class DefaultConfig():
     # non-implemented/enc_dect: encoder/decoder+transform
     # none: no tied embedding
     tie_embedding = args.tied_embedding
-    pretrained_embedding = None
+    pretrained = args.pretrained
+    if pretrained:
+        pretrained_embedding = get_path('../text_simplification_data/glove/glove.840B.300d.txt', 'sys')
+    else:
+        pretrained_embedding = ''
 
     attention_type = args.attention_type
 
-    data_base = 'data_miss'
+    data_base = 'data_plain'
     train_dataset_simple = get_path('data/%s/train_dummy_simple_dataset'%data_base, 'sys')
     train_dataset_simple_ext = get_path('data/%s/train_dummy_simple_dataset_ext' % data_base, 'sys')
     train_dataset_simple2 = get_path('data/%s/train_dummy_simple_dataset2'%data_base, 'sys')
@@ -147,12 +149,13 @@ class DefaultConfig():
         memory = []
     max_cand_rules = 15
     memory_prepare_step = args.memory_prepare_step
+    rule_threshold = args.rule_threshold
     memory_config = args.memory_config
     min_count_rule = 0
     if 'mincnt' in memory_config:
         # Assume single digit for min_count_rule
         cnt_idx = memory_config.index('mincnt') + len("mincnt")
-        min_count_rule = int(memory_config[cnt_idx: cnt_idx+1])
+        min_count_rule = float(memory_config[cnt_idx: cnt_idx+3])
     ctxly = None
     if 'ctxly' in memory_config:
         ctxly_idx = memory_config.index('ctxly') + len("ctxly")
@@ -175,30 +178,18 @@ class DefaultConfig():
             rl_configs['sari_weight'] = float(kv[1])
         if kv[0] == 'rule':
             rl_configs['rule'] = True
-            if len(kv) > 1:
-                if kv[1] == 'large':
-                    train_dataset_complex_ppdb_cand = get_path(
-                        '../text_simplification_data/train/dress/wikilargenew/train/rule_cand.txt', 'sys')
-                elif kv[1] == 'huge':
-                    train_dataset_complex_ppdb_cand = get_path(
-                        '../text_simplification_data/train/dress/wikihugenew/train/rule_cand.txt', 'sys')
-            if len(kv) > 2:
-                rulecnt_threshold = float(kv[2])
-
-        if kv[0] == 'rule_weight':
-            rl_configs['rule_weight'] = float(kv[1])
-        if kv[0] == 'ext_simple':
-            rl_configs['ext_simple'] = True
-        if kv[0] == 'rule_global':
-            rl_configs['rule_global'] = True
         if kv[0] == 'noneg':
             rl_configs['noneg'] = True
-        if kv[0] == 'rule_version':
-            rl_configs['rule_version'] = kv[1]
+        if kv[0] == 'stopgrad':
+            rl_configs['stopgrad'] = True
 
     rule_base = args.rule_base
-    use_dataset2 = args.use_dataset2
 
+    fetch_mode = None
+    tune_mode = None
+    tune_style = args.tune_style
+    if tune_style is not None:
+        tune_style = [float(v) for v in tune_style.split(':')][0]
 
 class DefaultTrainConfig(DefaultConfig):
     beam_search_size = 0
@@ -220,35 +211,36 @@ class WikiDressLargeNewDefault(DefaultConfig):
     model_print_freq = 100
     memory_prepare_step = args.memory_prepare_step
 
-    train_dataset_complex = get_path('../text_simplification_data/train/dress/wikilargenew/train/src.txt', 'sys')
-    train_dataset_simple = get_path('../text_simplification_data/train/dress/wikilargenew/train/dst.txt', 'sys')
+    train_dataset_complex = get_path('../text_simplification_data/train/wikilargenew/train/src.txt', 'sys')
+    train_dataset_simple = get_path('../text_simplification_data/train/wikilargenew/train/dst.txt', 'sys')
     vocab_simple = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/voc_dst.txt', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/voc_dst.txt', 'sys')
     vocab_complex = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/voc_src.txt', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/voc_src.txt', 'sys')
     vocab_all = get_path(
-        '../text_simplification_data/train/dress/wikilargenew/train/voc_all.txt', 'sys')
-    vocab_rules = get_path('../text_simplification_data/train/dress/wikilargenew/train/rule_voc.txt', 'sys')
-    train_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/train/rule_mapper.txt', 'sys')
+        '../text_simplification_data/train/wikilargenew/train/voc_all.txt', 'sys')
+    vocab_rules = get_path('../text_simplification_data/train/wikilargenew/train/rule_voc.txt', 'sys')
+    train_dataset_complex_ppdb = get_path('../text_simplification_data/train/wikilargenew/train/rule_mapper.txt', 'sys')
     if dmode == 'v2':
-        train_dataset_complex = get_path('../text_simplification_data/train/dress/wikilargenew/train/src2.txt', 'sys')
-        train_dataset_simple = get_path('../text_simplification_data/train/dress/wikilargenew/train/dst2.txt', 'sys')
+        train_dataset_complex = get_path('../text_simplification_data/train/wikilargenew/train/src2.txt', 'sys')
+        train_dataset_simple = get_path('../text_simplification_data/train/wikilargenew/train/dst2.txt', 'sys')
         vocab_simple = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/voc_dst2.txt', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/voc_dst2.txt', 'sys')
         vocab_complex = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/voc_src2.txt', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/voc_src2.txt', 'sys')
         vocab_all = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/voc_all2.txt', 'sys')
-        vocab_rules = get_path('../text_simplification_data/train/dress/wikilargenew/train/rule_voc.txt', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/voc_all2.txt', 'sys')
+        vocab_rules = get_path('../text_simplification_data/train/wikilargenew/train/rule_voc.txt', 'sys')
         train_dataset_complex_ppdb = get_path(
-            '../text_simplification_data/train/dress/wikilargenew/train/rule_mapper2.txt', 'sys')
-    val_dataset_simple_folder = get_path('../text_simplification_data/train/dress/wikilargenew/val/', 'sys')
+            '../text_simplification_data/train/wikilargenew/train/rule_mapper.txt', 'sys')
+
+    val_dataset_simple_folder = get_path('../text_simplification_data/train/wikilargenew/val/', 'sys')
     val_dataset_simple_file = 'dst.txt'
-    val_dataset_complex = get_path('../text_simplification_data/train/dress/wikilargenew/val/src.txt', 'sys')
-    val_mapper = get_path('../text_simplification_data/train/dress/wikilargenew/val/map.txt', 'sys')
+    val_dataset_complex = get_path('../text_simplification_data/train/wikilargenew/val/src.txt', 'sys')
+    val_mapper = get_path('../text_simplification_data/train/wikilargenew/val/map.txt', 'sys')
 
     val_dataset_complex_rawlines_file = get_path(
-        '../text_simplification_data/train/dress/wikilargenew/val/src.raw.txt', 'sys')
+        '../text_simplification_data/train/wikilargenew/val/src.raw.txt', 'sys')
     val_dataset_simple_rawlines_file_references = 'ref.'
     val_dataset_simple_rawlines_file = 'dst.raw.txt'
     num_refs = 8
@@ -258,10 +250,10 @@ class WikiDressLargeNewDefault(DefaultConfig):
 
 
 class WikiDressHugeNewDefault(WikiDressLargeNewDefault):
-    train_dataset_complex = get_path('../text_simplification_data/train/dress/wikihugenew/train/src.txt', 'sys')
-    train_dataset_simple = get_path('../text_simplification_data/train/dress/wikihugenew/train/dst.txt', 'sys')
-    vocab_rules = get_path('../text_simplification_data/train/dress/wikihugenew/train/rule_voc.txt', 'sys')
-    train_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikihugenew/train/rule_mapper.txt', 'sys')
+    train_dataset_complex = get_path('../text_simplification_data/train/wikihugenew/src.txt', 'sys')
+    train_dataset_simple = get_path('../text_simplification_data/train/wikihugenew/dst.txt', 'sys')
+    vocab_rules = get_path('../text_simplification_data/train/wikihugenew/rule_voc.txt', 'sys')
+    train_dataset_complex_ppdb = get_path('../text_simplification_data/train/wikihugenew/rule_mapper.txt', 'sys')
 
 
 class WikiDressHugeNewTrainDefault(WikiDressHugeNewDefault):
@@ -280,7 +272,7 @@ class WikiDressLargeNewEvalDefault(WikiDressLargeNewDefault):
     output_folder = args.output_folder
     resultdir = get_path('../' + output_folder + '/result/eightref_val', environment)
     max_cand_rules = 50
-    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/val/rule_mapper.txt', 'sys')
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/wikilargenew/val/rule_mapper.txt', 'sys')
 
 
 class WikiDressLargeNewEvalForBatchSize(WikiDressLargeNewDefault):
@@ -296,19 +288,19 @@ class WikiDressLargeNewTestDefault(WikiDressLargeNewDefault):
     output_folder = args.output_folder
     resultdir = get_path('../' + output_folder + '/result/eightref_test', environment)
 
-    val_dataset_simple_folder = get_path('../text_simplification_data/train/dress/wikilargenew/test/', 'sys')
+    val_dataset_simple_folder = get_path('../text_simplification_data/train/wikilargenew/test/', 'sys')
     val_dataset_simple_file = 'dst.txt'
-    val_dataset_complex = get_path('../text_simplification_data/train/dress/wikilargenew/test/src.txt', 'sys')
-    val_mapper = get_path('../text_simplification_data/train/dress/wikilargenew/test/map.txt', 'sys')
+    val_dataset_complex = get_path('../text_simplification_data/train/wikilargenew/test/src.txt', 'sys')
+    val_mapper = get_path('../text_simplification_data/train/wikilargenew/test/map.txt', 'sys')
 
     val_dataset_complex_rawlines_file = get_path(
-        '../text_simplification_data/train/dress/wikilargenew/test/src.raw.txt', 'sys')
+        '../text_simplification_data/train/wikilargenew/test/src.raw.txt', 'sys')
     val_dataset_simple_rawlines_file_references = 'ref.'
     val_dataset_simple_rawlines_file = 'dst.raw.txt'
     num_refs = 8
 
     max_cand_rules = 50
-    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/test/rule_mapper.txt', 'sys')
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/wikilargenew/test/rule_mapper.txt', 'sys')
 
 
 ########################################################################################## WIKILARGE
@@ -320,31 +312,31 @@ class WikiDressLargeDefault(DefaultConfig):
     model_eval_freq = args.model_eval_freq
 
     train_dataset_simple = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/dst.txt', 'sys')
+        '../text_simplification_data/train/wikilarge/wiki.full.aner.train.dst', 'sys')
     train_dataset_complex = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/src.txt', 'sys')
+        '../text_simplification_data/train/wikilarge/wiki.full.aner.train.src', 'sys')
     vocab_rules = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/rule_voc.txt', 'sys')
+        '../text_simplification_data/train/wikilarge/rule_voc.txt', 'sys')
     train_dataset_complex_ppdb = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/rule_mapper.txt', 'sys')
+        '../text_simplification_data/train/wikilarge/rule_mapper.txt', 'sys')
     dmode = args.dmode
-    if dmode == 'v2':
-        train_dataset_simple = get_path(
-            '../text_simplification_data/train/dress/wikilarge/train/dst2.txt', 'sys')
-        train_dataset_complex = get_path(
-            '../text_simplification_data/train/dress/wikilarge/train/src2.txt', 'sys')
-        vocab_rules = get_path(
-            '../text_simplification_data/train/dress/wikilarge/train/rule_voc2.txt', 'sys')
-        train_dataset_complex_ppdb = get_path(
-            '../text_simplification_data/train/dress/wikilarge/train/rule_mapper2.txt', 'sys')
+    # if dmode == 'v2':
+    #     train_dataset_simple = get_path(
+    #         '../text_simplification_data/train/wikilarge/dst2.txt', 'sys')
+    #     train_dataset_complex = get_path(
+    #         '../text_simplification_data/train/wikilarge/src2.txt', 'sys')
+    #     vocab_rules = get_path(
+    #         '../text_simplification_data/train/wikilarge/rule_voc.txt', 'sys')
+    #     train_dataset_complex_ppdb = get_path(
+    #         '../text_simplification_data/train/wikilarge/rule_mapper.txt', 'sys')
 
     max_cand_rules = 15
     vocab_simple = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/wiki.full.aner.train.dst.vocab.lower', 'sys')
+        '../text_simplification_data/train/wikilarge/wiki.full.aner.train.dst.vocab.lower', 'sys')
     vocab_complex = get_path(
-        '../text_simplification_data/train/dress/wikilarge/train/wiki.full.aner.train.src.vocab.lower', 'sys')
+        '../text_simplification_data/train/wikilarge/wiki.full.aner.train.src.vocab.lower', 'sys')
     # vocab_all = get_path(
-    #     '../text_simplification_data/train/dress/wikilarge/train/voc_all.txt', 'sys')
+    #     '../text_simplification_data/train/wikilarge/voc_all.txt', 'sys')
 
     val_dataset_simple_folder = get_path('../text_simplification_data/val/', 'sys')
     val_dataset_simple_file = 'tune.8turkers.tok.simp.ner'
@@ -359,7 +351,6 @@ class WikiDressLargeDefault(DefaultConfig):
     val_dataset_simple_raw_file = 'wiki.full.aner.ori.valid.dst'
     val_dataset_complex_raw = get_path(
         '../text_simplification_data/val/wiki.full.aner.ori.valid.src', 'sys')
-
 
     num_refs = 8
 
@@ -385,7 +376,7 @@ class WikiDressLargeEvalDefault(WikiDressLargeDefault):
     output_folder = args.output_folder
     resultdir = get_path('../' + output_folder + '/result/eightref_val', environment)
     max_cand_rules = 50
-    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/val/rule_mapper.txt', 'sys')
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/val/rule_mapper.txt', 'sys')
 
 
 class WikiDressLargeTestDefault(WikiDressLargeDefault):
@@ -406,8 +397,119 @@ class WikiDressLargeTestDefault(WikiDressLargeDefault):
     num_refs = 8
 
     max_cand_rules = 50
-    val_dataset_complex_ppdb = get_path('../text_simplification_data/train/dress/wikilargenew/test/rule_mapper.txt', 'sys')
+    val_dataset_complex_ppdb = get_path('../text_simplification_data/test/rule_mapper.txt', 'sys')
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Config created for 2019
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+class WikiTransDefaultConfig(DefaultConfig):
+    fetch_mode = args.fetch_mode
+    batch_size = args.batch_size
+    dimension = args.dimension
+    model_print_freq = 100
+    save_model_secs = 600
+    lower_case = args.lower_case
+
+    subword_vocab_size = 8000
+    model_eval_freq = args.model_eval_freq
+    tune_style = args.tune_style
+    tune_mode = args.tune_mode
+    if tune_style is not None:
+        tune_style = [float(v) for v in tune_style.split(':')][0]
+
+    subword_vocab_complex = '/zfs1/hdaqing/saz31/dataset/vocab/comp.subvocab'
+    subword_vocab_simple = '/zfs1/hdaqing/saz31/dataset/vocab/simp.subvocab'
+    subword_vocab_all = ''
+    max_complex_sentence = 210
+    max_simple_sentence = 200
+
+    replace_unk_by_attn = False
+    replace_unk_by_emb = False
+    replace_unk_by_cnt = False
+    dmode = args.dmode
+
+    if fetch_mode == 'tf_example_dataset':
+        print('Use Tf Example Dataset.')
+        train_dataset = '/zfs1/hdaqing/saz31/dataset/trans_tf_example/ppdb_0/train.tfrecords.*'
+        if dmode == 'alter':
+            train_dataset2 = '/zfs1/hdaqing/saz31/dataset/trans_tf_example/wikilarge/train.tfrecords'
+        else:
+            train_dataset2 = None
+
+
+        # train_dataset = '/Users/sanqiangzhao/git/train.tfrecords.*'
+        # subword_vocab_complex = '/Users/sanqiangzhao/git/comp.subvocab'
+        # subword_vocab_simple = '/Users/sanqiangzhao/git/simp.subvocab'
+
+
+class WikiTransTrainConfig(WikiTransDefaultConfig):
+    beam_search_size = 1
+
+
+class WikiTransEvalConfig(WikiTransDefaultConfig):
+    fetch_mode = None
+    environment = args.environment
+    output_folder = args.output_folder
+    resultdir = get_path('../' + output_folder + '/result/eightref_val', environment)
+
+    beam_search_size = 1
+    val_dataset_simple_folder = get_path('../text_simplification_data/val_0930/', 'sys')
+    val_dataset_simple_file = 'words_comps'
+    val_dataset_complex = get_path('../text_simplification_data/val_0930/words_comps', 'sys')
+    # wiki.full.aner.ori.valid.dst is uppercase whereas tune.8turkers.tok.simp is lowercase
+    val_dataset_complex_rawlines_file = get_path(
+        '../text_simplification_data/val_0930/lower.norm.ori', 'sys')
+    val_dataset_simple_rawlines_file_references = 'lower.ref.ori.'
+    val_dataset_simple_rawlines_file = 'lower.norm.ori'
+
+    val_dataset_simple_raw_file = 'lower.norm.ori'
+    val_dataset_complex_raw = get_path(
+        '../text_simplification_data/val_0930/lower.norm.ori', 'sys')
+    val_mapper = get_path('../text_simplification_data/val_0930/mapper_comp_strs')
+    num_refs = 8
+
+
+class WikiTransTestConfig(WikiTransDefaultConfig):
+    fetch_mode = None
+
+    beam_search_size = 1
+    environment = args.environment
+    output_folder = args.output_folder
+    resultdir = get_path('../' + output_folder + '/result/eightref_test', environment)
+
+    val_dataset_simple_folder = get_path('../text_simplification_data/test_0930/')
+    # use the original dress
+    val_dataset_simple_file = 'words_comps'
+    val_dataset_complex = get_path('../text_simplification_data/test_0930/words_comps')
+    val_dataset_complex_rawlines_file = get_path(
+        '../text_simplification_data/test_0930/lower.norm.ori')
+    val_dataset_simple_rawlines_file_references = 'lower.ref.ori.'
+    val_dataset_simple_rawlines_file = 'lower.norm.ori'
+    val_mapper = get_path('../text_simplification_data/test_0930/mapper_comp_strs')
+    num_refs = 8
+
+class WikiTransDummyConfig(WikiTransDefaultConfig):
+    data_base = 'data_trans'
+    subword_vocab_complex = get_path('data/%s/comp.subvocab' % data_base, 'sys')
+    subword_vocab_simple = get_path('data/%s/simp.subvocab' % data_base, 'sys')
+    train_dataset = get_path('data/%s/data.tfrecords' % data_base, 'sys')
+
+    val_dataset_simple_folder = get_path('data/%s/' % data_base, 'sys')
+    val_dataset_simple_file = 'valid_dummy_simple_dataset'
+    val_dataset_complex = get_path('data/%s/valid_dummy_complex_dataset' % data_base, 'sys')
+    val_mapper = get_path('data/%s/valid_dummy_mapper' % data_base, 'sys')
+    val_dataset_complex_rawlines_file = val_dataset_complex
+    val_dataset_simple_rawlines_file_references = 'valid_dummy_simple_dataset.raw.'
+    val_dataset_simple_rawlines_file = val_dataset_simple_file
+    num_refs = 3
+
+    max_complex_sentence = 25
+    max_simple_sentence = 20
+    beam_search_size = 1
+    save_model_secs = 10
 
 def list_config(config):
     attrs = [attr for attr in dir(config)

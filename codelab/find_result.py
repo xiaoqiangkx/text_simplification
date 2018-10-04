@@ -2,10 +2,10 @@ import os
 import operator
 
 mapper = {}
-path = '/zfs1/hdaqing/saz31/text_simplification_0424/' #'/Users/zhaosanqiang916/git/acl' #'/zfs1/hdaqing/saz31/text_simplification/'
+path = '/zfs1/hdaqing/saz31/text_simplification_0805/' #'/Users/zhaosanqiang916/git/acl' #'/zfs1/hdaqing/saz31/text_simplification/'
 for root, dirs, files in os.walk(path):
     for file in files:
-        if '-sari' in file and file.endswith('result') and 'result2' not in root and 'eightref_val' not in root and 'result4' not in root:
+        if '-sari' in file and file.endswith('result') and 'eightref_val' not in root:
             sari_sidx = file.index('-sari')
             sari_eidx = file.rindex('-fkgl', sari_sidx)
             try:

@@ -355,7 +355,7 @@ def beam_search(symbols_to_logits_fn,
       states = nest.map_structure(
           lambda t: _unmerge_beam_dim(t, batch_size, beam_size), flat_states)
     else:
-      flat_logits = symbols_to_logits_fn(flat_ids)
+      flat_logits = symbols_to_logits_fn(flat_ids, i)
 
     logits = tf.reshape(flat_logits, [batch_size, beam_size, -1])
 
@@ -539,8 +539,8 @@ def beam_search(symbols_to_logits_fn,
   # the contents of alive for that batch item. tf.reduce_any(finished_flags, 1)
   # if 0, means that no sequence for that batch index had reached EOS. We need
   # to do the same for the scores as well.
-  finished_seq = tf.where(
-      tf.reduce_any(finished_flags, 1), finished_seq, alive_seq)
-  finished_scores = tf.where(
-      tf.reduce_any(finished_flags, 1), finished_scores, alive_log_probs)
+  # finished_seq = tf.where(
+  #     tf.reduce_any(finished_flags, 1), finished_seq, alive_seq)
+  # finished_scores = tf.where(
+  #     tf.reduce_any(finished_flags, 1), finished_scores, alive_log_probs)
   return finished_seq, finished_scores

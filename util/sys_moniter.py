@@ -14,3 +14,9 @@ def print_gpu_memory():
     pipe = subprocess.Popen('nvidia-smi', stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
     mteval_result = pipe.communicate()
     print(mteval_result[0].decode('utf-8'))
+
+
+def print_cpu_usage():
+    pipe = subprocess.Popen('top -b -n 1', stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+    mteval_result = pipe.communicate()
+    print(mteval_result[0].decode('utf-8'))

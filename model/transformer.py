@@ -18,12 +18,35 @@ class TransformerGraph(Graph):
         self.setup_hparams()
         self.model_fn = self.transformer_fn
 
+    def update_embedding(self, input_embedding, score, step=None, beam_size=None):
+        if not self.model_config.tune_style:
+            return input_embedding
+
+        if beam_size and not self.is_train:
+            score = tf.tile(score, [1, beam_size, 1])
+            score = tf.reshape(score, [-1, 1, self.model_config.dimension])
+
+        if self.is_train:
+            embedding_start = tf.slice(input_embedding, [0, 0, 0], [-1, 1, -1])
+            embedding_start *= score
+            embedding_rest = tf.slice(input_embedding, [0, 1, 0], [-1, -1, -1])
+            output_embedding = tf.concat([embedding_start, embedding_rest], axis=1)
+        elif not self.is_train and step is not None:
+            embedding_start = tf.slice(input_embedding, [0, 0, 0], [-1, 1, -1])
+            embedding_start *= score
+            embedding_rest = tf.slice(input_embedding, [0, 1, 0], [-1, -1, -1])
+            output_embedding = tf.concat([embedding_start, embedding_rest], axis=1)
+        else:
+            return input_embedding
+
+        return output_embedding
+
     def transformer_fn(self,
                        sentence_complex_input_placeholder, emb_complex,
                        sentence_simple_input_placeholder, emb_simple,
                        w, b,
                        rule_id_input_placeholder, mem_contexts, mem_outputs,
-                       global_step):
+                       global_step, ppdb_score):
         encoder_embed_inputs = tf.stack(
             self.embedding_fn(sentence_complex_input_placeholder, emb_complex), axis=1)
         encoder_attn_bias = common_attention.attention_bias_ignore_padding(
@@ -48,9 +71,12 @@ class TransformerGraph(Graph):
                 print('Use Generally Process.')
                 decoder_embed_inputs_list = self.embedding_fn(
                     sentence_simple_input_placeholder[:-1], emb_simple)
+                batch_go = tf.tile(
+                    tf.expand_dims(self.embedding_fn(self.data.vocab_simple.encode(constant.SYMBOL_GO)[0], emb_simple), axis=0),
+                    [self.model_config.batch_size, 1])
                 final_output_list, decoder_output_list, cur_context = self.decode_step(
                     decoder_embed_inputs_list, encoder_outputs, encoder_attn_bias,
-                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step)
+                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step, ppdb_score, batch_go)
                 decoder_logit_list = [self.output_to_logit(o, w, b) for o in final_output_list]
                 decoder_target_list = [tf.argmax(o, output_type=tf.int32, axis=-1)
                                        for o in decoder_logit_list]
@@ -135,7 +161,8 @@ class TransformerGraph(Graph):
                 print('Use Beam Search with Beam Search Size %d.' % self.model_config.beam_search_size)
                 return self.transformer_beam_search(encoder_outputs, encoder_attn_bias, encoder_embed_inputs_list,
                                                     sentence_complex_input_placeholder, emb_simple, w, b,
-                                                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step)
+                                                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step,
+                                                    ppdb_score)
 
         gt_target_list = sentence_simple_input_placeholder
         output = ModelOutput(
@@ -153,13 +180,12 @@ class TransformerGraph(Graph):
         return output
 
     def decode_step(self, decode_input_list, encoder_outputs, encoder_attn_bias,
-                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step):
-        batch_go = [tf.zeros([self.model_config.batch_size, self.model_config.dimension])]
+                    rule_id_input_placeholder, mem_contexts, mem_outputs, global_step, ppdb_score, batch_go):
         target_length = len(decode_input_list) + 1
-        decoder_emb_inputs = tf.stack(batch_go + decode_input_list, axis=1)
+        decoder_emb_inputs = tf.stack([batch_go] + decode_input_list, axis=1)
         final_output, decoder_output, cur_context = self.decode_inputs_to_outputs(
             decoder_emb_inputs, encoder_outputs, encoder_attn_bias,
-            rule_id_input_placeholder, mem_contexts, mem_outputs, global_step)
+            rule_id_input_placeholder, mem_contexts, mem_outputs, global_step, ppdb_score)
 
         decoder_output_list = [
             tf.squeeze(d, 1)
@@ -171,7 +197,8 @@ class TransformerGraph(Graph):
 
     def transformer_beam_search(self, encoder_outputs, encoder_attn_bias, encoder_embed_inputs_list,
                                 sentence_complex_input_placeholder, emb_simple, w, b,
-                                rule_id_input_placeholder, mem_contexts, mem_outputs, global_step):
+                                rule_id_input_placeholder, mem_contexts, mem_outputs, global_step,
+                                ppdb_score):
         # Use Beam Search in evaluation stage
         # Update [a, b, c] to [a, a, a, b, b, b, c, c, c] if beam_search_size == 3
         encoder_beam_outputs = tf.concat(
@@ -184,13 +211,18 @@ class TransformerGraph(Graph):
                      [self.model_config.beam_search_size, 1, 1, 1])
              for o in range(self.model_config.batch_size)], axis=0)
 
-        def symbol_to_logits_fn(ids):
+        def symbol_to_logits_fn(ids, step):
             cur_ids = ids[:, 1:]
             embs = tf.nn.embedding_lookup(emb_simple, cur_ids)
-            embs = tf.pad(embs, [[0, 0], [1, 0], [0, 0]])
+
+            batch_go = tf.expand_dims(tf.tile(
+                tf.expand_dims(self.embedding_fn(self.data.vocab_simple.encode(constant.SYMBOL_GO)[0], emb_simple), axis=0),
+                [self.model_config.batch_size, 1]), axis=1)
+            embs = tf.concat([batch_go, embs], axis=1)
+
             final_outputs, _, _ = self.decode_inputs_to_outputs(embs, encoder_beam_outputs, encoder_attn_beam_bias,
                                                                 rule_id_input_placeholder, mem_contexts, mem_outputs,
-                                                                global_step)
+                                                                global_step, ppdb_score, step)
 
             decoder_logit_list = self.output_to_logit(final_outputs[:, -1, :], w, b)
             return decoder_logit_list
@@ -206,6 +238,7 @@ class TransformerGraph(Graph):
         top_beam_ids = tf.pad(top_beam_ids,
                               [[0, 0],
                                [0, self.model_config.max_simple_sentence - tf.shape(top_beam_ids)[1]]])
+
         decoder_target_list = [tf.squeeze(d, 1)
                                for d in tf.split(top_beam_ids, self.model_config.max_simple_sentence, axis=1)]
         decoder_score = -beam_score[:, 0] / tf.to_float(tf.shape(top_beam_ids)[1])
@@ -215,7 +248,7 @@ class TransformerGraph(Graph):
         tf.get_variable_scope().reuse_variables()
         final_outputs, decoder_outputs, _ = self.decode_inputs_to_outputs(decode_input_embs, encoder_outputs, encoder_attn_bias,
                                                                           rule_id_input_placeholder, mem_contexts,
-                                                                          mem_outputs, global_step)
+                                                                          mem_outputs, global_step, ppdb_score)
         output = ModelOutput(
             encoder_outputs=encoder_outputs,
             final_outputs_list=final_outputs,
@@ -231,10 +264,12 @@ class TransformerGraph(Graph):
         return prev_logit
 
     def decode_inputs_to_outputs(self, decoder_embed_inputs, encoder_outputs, encoder_attn_bias,
-                                 rule_id_input_placeholder, mem_contexts, mem_outputs, global_step):
+                                 rule_id_input_placeholder, mem_contexts, mem_outputs, global_step,
+                                 ppdb_score, step=None):
         if self.hparams.pos == 'timing':
             decoder_embed_inputs = common_attention.add_timing_signal_1d(decoder_embed_inputs)
             print('Use positional encoding in decoder text.')
+        decoder_embed_inputs = self.update_embedding(decoder_embed_inputs, ppdb_score, step, self.model_config.beam_search_size)
 
         decoder_attn_bias = common_attention.attention_bias_lower_triangle(tf.shape(decoder_embed_inputs)[1])
         decoder_embed_inputs = tf.nn.dropout(decoder_embed_inputs,
@@ -260,13 +295,24 @@ class TransformerGraph(Graph):
             weights = tf.nn.softmax(bias + tf.matmul(cur_context, cur_mem_contexts, transpose_b=True))
             mem_output = tf.matmul(weights, cur_mem_outputs)
 
+            trainable_mem = 'stopgrad' not in self.model_config.rl_configs
             temp_output = tf.concat((decoder_output, mem_output), axis=-1)
-            w = tf.get_variable('w_ffn', shape=(
-                1, self.model_config.dimension*2, self.model_config.dimension))
-            # b = tf.get_variable('b_ffn', shape=(
-            #     1, 1, self.model_config.dimension))
-            mem_output = tf.nn.conv1d(temp_output, w, 1, 'SAME')
-            g = tf.greater(global_step, tf.constant(2*self.model_config.memory_prepare_step, dtype=tf.int64))
+            w_u = tf.get_variable('w_ffn', shape=(
+                1, self.model_config.dimension*2, self.model_config.dimension), trainable=trainable_mem)
+            b_u = tf.get_variable('b_ffn', shape=(
+                1, 1, self.model_config.dimension), trainable=trainable_mem)
+            # w_u.reuse_variables()
+            # b_u.reuse_variables()
+            tf.get_variable_scope().reuse_variables()
+            w_t = tf.get_variable('w_ffn', shape=(
+                1, self.model_config.dimension*2, self.model_config.dimension), trainable=True)
+            b_t = tf.get_variable('b_ffn', shape=(
+                1, 1, self.model_config.dimension), trainable=True)
+            w = tf.cond(tf.equal(tf.mod(self.global_step, 2), 0), lambda: w_t, lambda: w_u)
+            b = tf.cond(tf.equal(tf.mod(self.global_step, 2), 0), lambda: b_t, lambda: b_u)
+
+            mem_output = tf.nn.conv1d(temp_output, w, 1, 'SAME') + b
+            g = tf.greater(global_step, tf.constant(self.model_config.memory_prepare_step, dtype=tf.int64))
             final_output = tf.cond(g, lambda: mem_output, lambda: decoder_output)
             return final_output, decoder_output, cur_context
         else:

@@ -39,6 +39,10 @@ class Graph():
         self.objs = []
         optim = self.get_optim()
 
+        fetch_data = None
+        if self.model_config.fetch_mode == 'tf_example_dataset':
+            fetch_data = self.data.get_data_sample()
+
         with tf.device('/cpu:0'):
             self.global_step = tf.get_variable(
                 'global_step', initializer=tf.constant(0, dtype=tf.int64), trainable=False)
@@ -47,7 +51,8 @@ class Graph():
             for gpu_id in range(self.model_config.num_gpus):
                 with tf.device('/device:GPU:%d' % gpu_id):
                     with tf.name_scope('%s_%d' % ('gpu_scope', gpu_id)):
-                        loss, obj = self.create_model()
+                        loss, obj = self.create_model(fetch_data=fetch_data)
+                        # var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                         grad = optim.compute_gradients(loss)
                         tf.get_variable_scope().reuse_variables()
                         losses.append(loss)
@@ -72,23 +77,69 @@ class Graph():
             self.saver = tf.train.Saver(write_version=tf.train.SaverDef.V2)
             self.ops = tf.tuple(ops)
 
-    def create_model(self):
+    def create_model(self, fetch_data=None):
         with tf.variable_scope('variables'):
             sentence_simple_input_placeholder = []
-            for step in range(self.model_config.max_simple_sentence):
-                sentence_simple_input_placeholder.append(
-                    tf.zeros(self.model_config.batch_size, tf.int32, name='simple_input'))
-
             sentence_complex_input_placeholder = []
-            for step in range(self.model_config.max_complex_sentence):
-                sentence_complex_input_placeholder.append(
-                    tf.zeros(self.model_config.batch_size, tf.int32, name='complex_input'))
+            ppdb_score = None
+
+            if fetch_data is not None and self.model_config.fetch_mode == 'tf_example_dataset':
+                for t in tf.unstack(fetch_data['line_comp_ids'], axis=1):
+                    sentence_complex_input_placeholder.append(t)
+                for t in tf.unstack(fetch_data['line_simp_ids'], axis=1):
+                    sentence_simple_input_placeholder.append(t)
+
+                if self.model_config.tune_style:
+                    if self.is_train:
+                        ppdb_score = fetch_data['ppdb_score']
+                    else:
+                        ppdb_score = tf.constant(
+                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
+                    if self.model_config.tune_mode == 'plus':
+                        ppdb_score += 0.1
+                    ppdb_score = tf.expand_dims(tf.tile(
+                        tf.expand_dims(ppdb_score, axis=-1),
+                        [1, self.model_config.dimension]), axis=1)
+
+            else:
+                for step in range(self.model_config.max_simple_sentence):
+                    sentence_simple_input_placeholder.append(
+                        tf.zeros(self.model_config.batch_size, tf.int32, name='simple_input'))
+
+                for step in range(self.model_config.max_complex_sentence):
+                    sentence_complex_input_placeholder.append(
+                        tf.zeros(self.model_config.batch_size, tf.int32, name='complex_input'))
+
+                if self.model_config.tune_style:
+                    if not self.is_train:
+                        ppdb_score = tf.constant(
+                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
+                        ppdb_score = tf.expand_dims(tf.tile(
+                            tf.expand_dims(ppdb_score, axis=-1),
+                            [1, self.model_config.dimension]), axis=1)
+                    else:
+                        # TODO (sanqiang): temp setting
+                        ppdb_score = tf.constant(
+                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
+                        ppdb_score = tf.expand_dims(tf.tile(
+                            tf.expand_dims(ppdb_score, axis=-1),
+                            [1, self.model_config.dimension]), axis=1)
 
             sentence_idxs = tf.zeros(self.model_config.batch_size, tf.int32, name='sent_idx')
 
             embedding = Embedding(self.data.vocab_complex, self.data.vocab_simple, self.model_config)
             emb_complex = embedding.get_complex_embedding()
             emb_simple = embedding.get_simple_embedding()
+            if (self.is_train and self.model_config.pretrained_embedding is not None):
+                self.embed_complex_placeholder = tf.placeholder(
+                    tf.float32, (self.data.vocab_complex.vocab_size(), self.model_config.dimension),
+                    'complex_emb')
+                self.replace_emb_complex = emb_complex.assign(self.embed_complex_placeholder)
+
+                self.embed_simple_placeholder = tf.placeholder(
+                    tf.float32, (self.data.vocab_simple.vocab_size(), self.model_config.dimension),
+                    'simple_emb')
+                self.replace_emb_simple = emb_simple.assign(self.embed_simple_placeholder)
 
             w = embedding.get_w()
             b = embedding.get_b()
@@ -133,7 +184,7 @@ class Graph():
             output = self.model_fn(sentence_complex_input_placeholder, emb_complex,
                                    sentence_simple_input_placeholder, emb_simple,
                                    w, b, rule_id_input_placeholder, mem_contexts, mem_outputs,
-                                   self.global_step)
+                                   self.global_step, ppdb_score)
 
             encoder_embs, final_outputs = None, None
             if self.model_config.replace_unk_by_emb:
@@ -183,8 +234,10 @@ class Graph():
                             decoder_targets, decoder_outputs, contexts,
                             rule_target_input_placeholder, rule_id_input_placeholder,
                             global_step, emb_simple, encoder_outputs):
-                        if global_step <= self.model_config.memory_prepare_step:
+                        if 'stopgrad' in self.model_config.rl_configs and global_step % 2 != 0:
                             return mem_contexts_tmp, mem_outputs_tmp, mem_counter_tmp
+                        # if global_step <= self.model_config.memory_prepare_step:
+                        #     return mem_contexts_tmp, mem_outputs_tmp, mem_counter_tmp
 
                         batch_size = np.shape(rule_target_input_placeholder)[0]
                         max_rules = np.shape(rule_target_input_placeholder)[1]
@@ -297,21 +350,23 @@ class Graph():
                                                  greedy_target_unit,
                                                  tf.stack(sentence_simple_input_placeholder, axis=-1),
                                                  tf.stack(sentence_complex_input_placeholder, axis=-1),
+                                                 self.global_step
                                                  ],
                                                 [tf.int32, tf.float32], stateful=False, name='reward')
                             reward.set_shape((self.model_config.batch_size,))
                             sampled_target_unit.set_shape((self.model_config.batch_size,))
                         elif self.model_config.train_mode == 'teachercritical':
                             sampled_target_unit = tf.cast(tf.squeeze(tf.multinomial(logit, 1), axis=1), tf.int32)
-                            reward = tf.py_func(self.metric.self_crititcal_reward_unit,
+                            sampled_target_unit, reward = tf.py_func(self.metric.self_crititcal_reward_unit,
                                                  [sentence_idxs, step,
                                                   sampled_target_unit, greedy_target_unit,
                                                   tf.stack(sentence_simple_input_placeholder, axis=-1),
                                                   tf.stack(sentence_complex_input_placeholder, axis=-1),
-                                                  tf.ones((1, 1)),
+                                                  self.global_step,
                                                   ],
-                                                 tf.float32, stateful=False, name='reward')
+                                                  [tf.int32, tf.float32], stateful=False, name='reward')
                             reward.set_shape((self.model_config.batch_size, ))
+                            sampled_target_unit.set_shape((self.model_config.batch_size,))
                         indices = tf.stack(
                             [tf.range(0, self.model_config.batch_size, dtype=tf.int32),
                              tf.squeeze(sampled_target_unit)],
@@ -347,7 +402,7 @@ class Graph():
                     #     lambda : teacherforce_loss())
                 elif self.model_config.train_mode == 'teachercritical' or self.model_config.train_mode == 'teachercriticalv2':
                     loss = tf.cond(
-                        tf.equal(tf.mod(self.global_step, 3), 0),
+                        tf.equal(tf.mod(self.global_step, 2), 0),
                         lambda : teacherforce_loss(),
                         lambda : teacherforce_critical_loss())
 
@@ -355,22 +410,8 @@ class Graph():
                 else:
                     loss = teacherforce_loss()
 
-                # if 'ruleattn' in self.model_config.external_loss:
-                #     batch_pos = tf.range(
-                #         self.model_config.batch_size * self.model_config.max_cand_rules) // self.model_config.max_cand_rules
-                #     batch_pos = tf.reshape(
-                #         batch_pos, [self.model_config.batch_size, self.model_config.max_cand_rules])
-                #     batch_pos = tf.expand_dims(batch_pos, axis=2)
-                #     ids = tf.stack(rule_pair_input_placeholder, axis=1)
-                #     bias = 1.0 - tf.to_float(
-                #         tf.logical_and(tf.equal(ids[:, :, 0], 0), tf.equal(ids[:, :, 1], 0)))
-                #     ids = tf.concat([batch_pos, ids], axis=2)
-                #     distrs = tf.stack(output.attn_distr_list, axis=1)
-                #     ruleattn_loss = -tf.gather_nd(distrs, ids)*bias
-                #     loss += ruleattn_loss
-                #     self.pairs = tf.stack(rule_pair_input_placeholder, axis=1)
-
                 obj = {
+                    'decoder_target_list': output.decoder_target_list,
                     'sentence_idxs': sentence_idxs,
                     'sentence_simple_input_placeholder': sentence_simple_input_placeholder,
                     'sentence_complex_input_placeholder': sentence_complex_input_placeholder,

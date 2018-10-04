@@ -1,5 +1,7 @@
 import copy as cp
 import random as rd
+import tensorflow as tf
+import glob
 
 import numpy as np
 from nltk import word_tokenize
@@ -13,6 +15,8 @@ from util import constant
 
 
 class TrainData:
+    """Fetching training dataset from plain data."""
+
     def __init__(self, model_config):
         self.model_config = model_config
 
@@ -37,8 +41,6 @@ class TrainData:
             self.vocab_complex = Vocab(model_config, vocab_all_path)
 
         self.size = self.get_size(data_complex_path)
-        if self.model_config.use_dataset2:
-            self.size2 = self.get_size(self.model_config.train_dataset_complex2)
         # Populate basic complex simple pairs
         if not self.model_config.it_train:
             self.data = self.populate_data(data_complex_path, data_simple_path,
@@ -56,10 +58,8 @@ class TrainData:
             assert len(self.rules_align) == self.size
             assert len(self.rules_target) == self.size
             print('Populate Rule with size:%s' % self.vocab_rule.get_rule_size())
-            # if self.model_config.use_dataset2:
-            #     self.rules2 = self.populate_rules(
-            #         self.model_config.train_dataset_complex_ppdb2, self.vocab_rule)
-            #     assert len(self.rules2) == self.size2
+        if model_config.pretrained:
+            self.init_pretrained_embedding()
 
     def process_line(self, line, vocab, max_len, need_raw=False):
         if self.model_config.tokenizer == 'split':
@@ -103,10 +103,6 @@ class TrainData:
     def get_data_sample_it(self, data_simple_path, data_complex_path):
         f_simple = open(data_simple_path, encoding='utf-8')
         f_complex = open(data_complex_path, encoding='utf-8')
-        # if self.model_config.use_dataset2:
-        #     f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
-        #     f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
-        #     j = 0
         i = 0
         while True:
             if i >= self.size:
@@ -138,24 +134,6 @@ class TrainData:
             yield i, obj, supplement
 
             i += 1
-
-
-            # if self.model_config.use_dataset2:
-            #     if j == self.size2:
-            #         f_simple2 = open(self.model_config.train_dataset_simple2, encoding='utf-8')
-            #         f_complex2 = open(self.model_config.train_dataset_complex2, encoding='utf-8')
-            #         j = 0
-            #     line_complex2 = f_complex2.readline()
-            #     line_simple2 = f_simple2.readline()
-            #     words_complex2, _ = self.process_line(line_complex2, self.vocab_complex)
-            #     words_simple2, _ = self.process_line(line_simple2, self.vocab_simple)
-            #
-            #     supplement2 = {}
-            #     if self.model_config.memory == 'rule':
-            #         supplement2['mem'] = self.rules2[j]
-            #
-            #     yield j, words_simple2, words_complex2, cp.deepcopy([1.0] * len(words_simple2)), cp.deepcopy([1.0] * len(words_complex2)), supplement2
-            #     j += 1
 
     def populate_rules(self, rule_path, vocab_rule):
         data_target, data_align = [], []
@@ -211,5 +189,121 @@ class TrainData:
 
         return i, self.data[i], supplement
 
+    def init_pretrained_embedding(self):
+        if self.model_config.subword_vocab_size > 0:
+            # Subword doesn't need pretrained embedding.
+            return
+
+        if self.model_config.pretrained_embedding is None:
+            return
+
+        print('Use Pretrained Embedding\t%s.' % self.model_config.pretrained_embedding)
+
+        if not hasattr(self, 'glove'):
+            self.glove = {}
+            for line in open(self.model_config.pretrained_embedding, encoding='utf-8'):
+                pairs = line.split()
+                word = ' '.join(pairs[:-self.model_config.dimension])
+                if word in self.vocab_simple.w2i or word in self.vocab_complex.w2i:
+                    embedding = pairs[-self.model_config.dimension:]
+                    self.glove[word] = embedding
+
+            # For vocabulary complex
+            pretrained_cnt = 0
+            random_cnt = 0
+            self.pretrained_emb_complex = np.empty(
+                (self.vocab_complex.vocab_size(), self.model_config.dimension), dtype=np.float32)
+            for wid, word in enumerate(self.vocab_complex.i2w):
+                if word in self.glove:
+                    n_vector = np.array(self.glove[word])
+
+                    self.pretrained_emb_complex[wid, :] = n_vector
+                    pretrained_cnt += 1
+                else:
+                    n_vector = np.array([np.random.uniform(-0.08, 0.08)
+                                         for _ in range(self.model_config.dimension)])
+                    self.pretrained_emb_complex[wid, :] = n_vector
+                    random_cnt += 1
+            assert self.vocab_complex.vocab_size() == random_cnt + pretrained_cnt
+            print(
+                'For Vocab Complex, %s words initialized with pretrained vector, '
+                'other %s words initialized randomly.' %
+                (pretrained_cnt, random_cnt))
+
+            # For vocabulary simple
+            pretrained_cnt = 0
+            random_cnt = 0
+            self.pretrained_emb_simple = np.empty(
+                (len(self.vocab_simple.i2w), self.model_config.dimension), dtype=np.float32)
+            for wid, word in enumerate(self.vocab_simple.i2w):
+                if word in self.glove:
+                    n_vector = np.array(self.glove[word])
+                    self.pretrained_emb_simple[wid, :] = n_vector
+                    pretrained_cnt += 1
+                else:
+                    n_vector = np.array([np.random.uniform(-0.08, 0.08)
+                                         for _ in range(self.model_config.dimension)])
+                    self.pretrained_emb_simple[wid, :] = n_vector
+                    random_cnt += 1
+            assert len(self.vocab_simple.i2w) == random_cnt + pretrained_cnt
+            print(
+                'For Vocab Simple, %s words initialized with pretrained vector, '
+                'other %s words initialized randomly.' %
+                (pretrained_cnt, random_cnt))
+
+            del self.glove
 
 
+class TfExampleTrainDataset():
+    """Fetching training dataset from tf.example Dataset"""
+
+    def __init__(self, model_config):
+        self.model_config = model_config
+
+        vocab_simple_path = self.model_config.subword_vocab_simple
+        vocab_complex_path = self.model_config.subword_vocab_complex
+        self.vocab_simple = Vocab(model_config, vocab_simple_path)
+        self.vocab_complex = Vocab(model_config, vocab_complex_path)
+
+        self.feature_set = {
+            'line_comp_ids': tf.FixedLenFeature([self.model_config.max_complex_sentence], tf.int64),
+            'line_simp_ids': tf.FixedLenFeature([self.model_config.max_simple_sentence], tf.int64),
+        }
+        if self.model_config.tune_style:
+            self.feature_set['ppdb_score'] = tf.FixedLenFeature([], tf.float32)
+
+        self.dataset = self._get_dataset(glob.glob(self.model_config.train_dataset))
+        self.iterator = tf.data.Iterator.from_structure(
+            self.dataset.output_types,
+            self.dataset.output_shapes)
+        self.training_init_op = self.iterator.make_initializer(self.dataset)
+
+        if self.model_config.dmode == 'alter':
+            self.dataset2 = self._get_dataset(glob.glob(self.model_config.train_dataset2))
+            self.iterator2 = tf.data.Iterator.from_structure(
+                self.dataset2.output_types,
+                self.dataset2.output_shapes)
+            self.training_init_op2 = self.iterator.make_initializer(self.dataset)
+
+    def get_data_sample(self):
+        if rd.random() >= 0.5 or self.model_config.dmode != 'alter':
+            return self.iterator.get_next()
+        else:
+            return self.iterator2.get_next()
+
+    def _parse(self, serialized_example):
+        features = tf.parse_single_example(serialized_example, features=self.feature_set)
+        output =  {
+            'line_comp_ids': features['line_comp_ids'],
+            'line_simp_ids': features['line_simp_ids'],
+        }
+        if self.model_config.tune_style:
+            output['ppdb_score'] = features['ppdb_score']
+        return output
+
+
+    def _get_dataset(self, path):
+        dataset = tf.data.TFRecordDataset([path]).repeat().shuffle(1000)
+        dataset = dataset.map(self._parse, num_parallel_calls=10)
+        dataset = dataset.shuffle(buffer_size=10000)
+        return dataset.batch(self.model_config.batch_size)

@@ -2,8 +2,9 @@
 import sys
 # sys.path.insert(0, '/ihome/hdaqing/saz31/sanqiang/text_simplification')
 # sys.path.insert(0,'/home/hed/text_simp_proj/text_simplification')
-sys.path.insert(0,'/ihome/cs2770_s2018/maz54/ts/text_simplification')
-sys.path.insert(0,'/home/zhaos5/ts/text_simplification')
+# sys.path.insert(0,'/ihome/cs2770_s2018/maz54/ts/text_simplification')
+# sys.path.insert(0,'/ihome/hdaqing/saz31/ts/text_simplification')
+sys.path.insert(0,'/ihome/hdaqing/saz31/ts_0924/text_simplification')
 
 
 from data_generator.val_data import ValData
@@ -109,10 +110,16 @@ def get_graph_val_data(objs,
                     tmp_sups['rule_id_input_placeholder'].append(cur_rule_id_input_placeholder)
                     tmp_sups['rule_target_input_placeholder'].append(cur_rule_target_input_placeholder)
             else:
-                tmp_sentence_simple.append(
-                    [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_simple_sentence)
-                tmp_sentence_complex.append(
-                    [data.vocab_complex.encode(constant.SYMBOL_PAD)] * model_config.max_complex_sentence)
+                if model_config.subword_vocab_size > 0:
+                    tmp_sentence_simple.append(
+                        data.vocab_simple.encode(constant.SYMBOL_PAD) * model_config.max_simple_sentence)
+                    tmp_sentence_complex.append(
+                        data.vocab_complex.encode(constant.SYMBOL_PAD) * model_config.max_complex_sentence)
+                else:
+                    tmp_sentence_simple.append(
+                        [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_simple_sentence)
+                    tmp_sentence_complex.append(
+                        [data.vocab_complex.encode(constant.SYMBOL_PAD)] * model_config.max_complex_sentence)
                 if 'rule' in model_config.memory:
                     if 'rule_id_input_placeholder' not in tmp_sups:
                         tmp_sups['rule_id_input_placeholder'] = []
@@ -216,7 +223,12 @@ def eval(model_config=None, ckpt=None):
             output_encoder_embs, output_final_outputs = results['encoder_embs'], results['final_outputs']
         if model_config.replace_unk_by_attn:
             attn_distr = results['attn_distr']
-        batch_perplexity = math.exp(loss)
+
+        try:
+            batch_perplexity = math.exp(loss)
+        except OverflowError:
+            batch_perplexity = 100.0
+
         perplexitys_all.append(batch_perplexity)
 
         for i, effective_batch_size in enumerate(out_effective_batch_size):
@@ -364,17 +376,17 @@ def eval(model_config=None, ckpt=None):
     # print('Current Mteval iBLEU decode: \t%f' % bleu_decode)
 
     # MtEval Result - raw
-    bleu_oi_raw = mteval.get_bleu_from_rawresult(step, targets_raw)
-    bleu_or_raw = bleu_oi_raw
-    if model_config.num_refs > 0:
-        path_ref = model_config.val_dataset_simple_folder + model_config.val_dataset_simple_rawlines_file_references
-        bleu_or_raw = mteval.get_bleu_from_decoderesult_multirefs(step, path_ref, targets_raw,
-                                                                  lowercase=model_config.lower_case)
-    if model_config.num_refs > 0:
-        bleu_raw = 0.9 * bleu_or_raw + 0.1 * bleu_oi_raw
-    else:
-        bleu_raw = bleu_oi_raw
-    print('Current Mteval iBLEU raw: \t%f' % bleu_raw)
+    # bleu_oi_raw = mteval.get_bleu_from_rawresult(step, targets_raw)
+    # bleu_or_raw = bleu_oi_raw
+    # if model_config.num_refs > 0:
+    #     path_ref = model_config.val_dataset_simple_folder + model_config.val_dataset_simple_rawlines_file_references
+    #     bleu_or_raw = mteval.get_bleu_from_decoderesult_multirefs(step, path_ref, targets_raw,
+    #                                                               lowercase=model_config.lower_case)
+    # if model_config.num_refs > 0:
+    #     bleu_raw = 0.9 * bleu_or_raw + 0.1 * bleu_oi_raw
+    # else:
+    #     bleu_raw = bleu_oi_raw
+    # print('Current Mteval iBLEU raw: \t%f' % bleu_raw)
 
     bleu_joshua = mteval.get_bleu_from_joshua(
         step, model_config.val_dataset_simple_folder + model_config.val_dataset_simple_rawlines_file,
@@ -392,9 +404,9 @@ def eval(model_config=None, ckpt=None):
 
     decimal_cnt = 5
     format = "%." + str(decimal_cnt) + "f"
-    bleu_raw = format % bleu_raw
-    bleu_oi_raw = format % bleu_oi_raw
-    bleu_or_raw = format % bleu_or_raw
+    # bleu_raw = format % bleu_raw
+    # bleu_oi_raw = format % bleu_oi_raw
+    # bleu_or_raw = format % bleu_or_raw
     # bleu_decode = format % bleu_decode
     # bleu_oi_decode = format % bleu_oi_decode
     # bleu_or_decode = format % bleu_or_decode
@@ -404,25 +416,26 @@ def eval(model_config=None, ckpt=None):
     fkgl = format % fkgl
     perplexity = format % perplexity
 
-    content = '\n'.join(['bleu_raw\t' + str(bleu_raw),
-                         'bleu_oi_raw\t' + str(bleu_oi_raw),
-                         'bleu_or_raw\t' + str(bleu_or_raw),
-                         # 'bleu_decode\t' + str(bleu_decode),
-                         # 'bleu_oi_decode\t' + str(bleu_oi_decode),
-                         # 'bleu_or_decode\t' + str(bleu_or_decode),
-                         'ibleu\t' + str(ibleu),
-                         'bleu_joshua\t' + str(bleu_joshua),
-                         'sari\t' + str(sari_joshua),
-                         'fkgl\t' + str(fkgl)
+    content = '\n'.join([
+        # 'bleu_raw\t' + str(bleu_raw),
+        # 'bleu_oi_raw\t' + str(bleu_oi_raw),
+        # 'bleu_or_raw\t' + str(bleu_or_raw),
+        # 'bleu_decode\t' + str(bleu_decode),
+        # 'bleu_oi_decode\t' + str(bleu_oi_decode),
+        # 'bleu_or_decode\t' + str(bleu_or_decode),
+        'ibleu\t' + str(ibleu),
+        'bleu_joshua\t' + str(bleu_joshua),
+        'sari\t' + str(sari_joshua),
+        'fkgl\t' + str(fkgl)
                          ])
 
     # Output Result
     f = open((model_config.resultdir + '/step' + str(step) +
-              '-bleuraw' + str(bleu_raw) +
-              '-bleurawoi' + str(bleu_oi_raw) +
-              '-bleurawor' + str(bleu_or_raw) +
+              # '-bleuraw' + str(bleu_raw) +
+              # '-bleurawoi' + str(bleu_oi_raw) +
+              # '-bleurawor' + str(bleu_or_raw) +
               '-bleuj' + str(bleu_joshua) +
-              '-perplexity' + str(perplexity) +
+              # '-perplexity' + str(perplexity) +
               '-bleunltk' + str(ibleu) +
               '-sari' + str(sari_joshua) +
               '-fkgl' + str(fkgl)
@@ -431,11 +444,11 @@ def eval(model_config=None, ckpt=None):
     f.write(content)
     f.close()
     f = open((model_config.resultdir + '/step' + str(step) +
-              '-bleuraw' + str(bleu_raw) +
-              '-bleurawoi' + str(bleu_oi_raw) +
-              '-bleurawor' + str(bleu_or_raw) +
+              # '-bleuraw' + str(bleu_raw) +
+              # '-bleurawoi' + str(bleu_oi_raw) +
+              # '-bleurawor' + str(bleu_or_raw) +
               '-bleuj' + str(bleu_joshua) +
-              '-perplexity' + str(perplexity) +
+              # '-perplexity' + str(perplexity) +
               '-bleunltk' + str(ibleu) +
               '-sari' + str(sari_joshua) +
               '-fkgl' + str(fkgl)+ '.result'),
@@ -494,19 +507,34 @@ if __name__ == '__main__':
 
                 sari_point = eval(vconfig, ckpt)
                 eval(WikiDressLargeTestDefault(), ckpt)
+                if args.memory is not None and 'rule' in args.memory:
+                    for rcand in [15, 30, 50]:
+                        vconfig.max_cand_rules = rcand
+                        vconfig.resultdir = get_path(
+                            '../' + vconfig.output_folder + '/result/eightref_val_cand' + str(rcand),
+                            vconfig.environment)
+                        eval(vconfig, ckpt)
+
+                    tconfig = WikiDressLargeTestDefault()
+                    for rcand in [15, 30, 50]:
+                        tconfig.max_cand_rules = rcand
+                        tconfig.resultdir = get_path(
+                            '../' + tconfig.output_folder + '/result/eightref_test_cand' + str(rcand),
+                            tconfig.environment)
+                        eval(tconfig, ckpt)
                 print('=====================Current Best SARI:%s=====================' % best_sari)
-                if float(sari_point) < best_sari:
-                    remove(ckpt + '.index')
-                    remove(ckpt + '.meta')
-                    remove(ckpt + '.data-00000-of-00001')
-                    print('remove ckpt:%s' % ckpt)
-                else:
-                    for file in listdir(model_config.modeldir):
-                        step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
-                        if step not in file:
-                            remove(model_config.modeldir + file)
-                    print('Get Best Model, remove ckpt except:%s.' % ckpt)
-                    best_sari = float(sari_point)
+                # if float(sari_point) < best_sari:
+                #     remove(ckpt + '.index')
+                #     remove(ckpt + '.meta')
+                #     remove(ckpt + '.data-00000-of-00001')
+                #     print('remove ckpt:%s' % ckpt)
+                # else:
+                #     for file in listdir(model_config.modeldir):
+                #         step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
+                #         if step not in file:
+                #             remove(model_config.modeldir + file)
+                #     print('Get Best Model, remove ckpt except:%s.' % ckpt)
+                #     best_sari = float(sari_point)
 
     elif args.mode == 'dressnew' or args.mode == 'wikihuge':
         from model.model_config import WikiDressLargeNewEvalDefault,WikiDressLargeNewTestDefault, WikiDressLargeNewDefault, WikiDressLargeNewEvalForBatchSize
@@ -523,13 +551,13 @@ if __name__ == '__main__':
                 sari_point = eval(vconfig, ckpt)
 
                 # Try different max_cand_rules
-                if args.memory is not None and 'rule' in args.memory:
-                    for rcand in [15, 30, 50]:
-                        vconfig.max_cand_rules = rcand
-                        vconfig.resultdir = get_path(
-                            '../' + vconfig.output_folder + '/result/eightref_val_cand' + str(rcand),
-                            vconfig.environment)
-                        eval(vconfig, ckpt)
+                # if args.memory is not None and 'rule' in args.memory:
+                #     for rcand in [15, 30, 50]:
+                #         vconfig.max_cand_rules = rcand
+                #         vconfig.resultdir = get_path(
+                #             '../' + vconfig.output_folder + '/result/eightref_val_cand' + str(rcand),
+                #             vconfig.environment)
+                #         eval(vconfig, ckpt)
 
                 eval(WikiDressLargeNewTestDefault(), ckpt)
                 print('=====================Current Best SARI:%s=====================' % best_sari)
@@ -545,4 +573,46 @@ if __name__ == '__main__':
                             remove(model_config.modeldir + file)
                     print('Get Best Model, remove ckpt except:%s.' % ckpt)
                     best_sari = float(sari_point)
+    elif args.mode == 'trans':
+        from model.model_config import WikiTransDefaultConfig, WikiTransEvalConfig, WikiTransTestConfig
+
+        best_sari = None
+        while True:
+            model_config = WikiTransDefaultConfig()
+            ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
+
+            if ckpt:
+                vconfig = WikiTransEvalConfig()
+                if best_sari is None:
+                    best_sari = get_best_sari(vconfig.resultdir)
+
+                sari_point = eval(vconfig, ckpt)
+
+                eval(WikiTransTestConfig(), ckpt)
+                print('=====================Current Best SARI:%s=====================' % best_sari)
+                if float(sari_point) < best_sari:
+                    remove(ckpt + '.index')
+                    remove(ckpt + '.meta')
+                    remove(ckpt + '.data-00000-of-00001')
+                    print('remove ckpt:%s' % ckpt)
+                else:
+                    for file in listdir(model_config.modeldir):
+                        step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
+                        if step not in file:
+                            remove(model_config.modeldir + file)
+                    print('Get Best Model, remove ckpt except:%s.' % ckpt)
+                    best_sari = float(sari_point)
+
+    elif args.mode == 'dummy_trans':
+        from model.model_config import WikiTransDummyConfig
+
+        model_config = WikiTransDummyConfig()
+        while True:
+            ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
+
+            if ckpt:
+                vconfig = WikiTransDummyConfig()
+                vconfig.fetch_mode = None
+                sari_point = eval(vconfig, ckpt)
+
 

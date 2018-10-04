@@ -2,44 +2,34 @@
 import sys
 # sys.path.insert(0,'/ihome/hdaqing/saz31/sanqiang/text_simplification')
 # sys.path.insert(0,'/home/hed/text_simp_proj/text_simplification')
-sys.path.insert(0,'/ihome/cs2770_s2018/maz54/ts/text_simplification')
-sys.path.insert(0,'/home/zhaos5/ts/text_simplification')
+# sys.path.insert(0,'/ihome/cs2770_s2018/maz54/ts/text_simplification')
+# sys.path.insert(0,'/ihome/hdaqing/saz31/ts/text_simplification')
+sys.path.insert(0,'/ihome/hdaqing/saz31/ts_0924/text_simplification')
 
 
-from data_generator.train_data import TrainData
+from data_generator.train_data import TrainData, TfExampleTrainDataset
 from model.transformer import TransformerGraph
 from model.seq2seq import Seq2SeqGraph
 from model.model_config import DefaultConfig, DefaultTrainConfig, list_config
 from model.model_config import WikiDressLargeNewTrainDefault, WikiDressHugeNewTrainDefault,WikiDressLargeTrainDefault
+from model.model_config import WikiTransTrainConfig, WikiTransDummyConfig
 from data_generator.vocab import Vocab
 from util import session
 from util import constant
-from model.eval import eval, get_ckpt
+from model.eval import eval, get_ckpt, get_best_sari
+from model.model_config import get_path
 
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from util.arguments import get_args
 from datetime import datetime
-from util.sys_moniter import print_cpu_memory, print_gpu_memory
+from util.sys_moniter import print_cpu_memory, print_gpu_memory, print_cpu_usage
 from copy import deepcopy
 from os.path import exists, dirname
-from os import listdir
+from os import listdir, remove
 
 
 args = get_args()
-
-
-def find_best_ckpt(model_config):
-    dir = dirname(model_config.logdir[:-1] + '2/')
-    files = listdir(model_config.logdir[:-1] + '2/')
-    max_id = -1
-    for file in files:
-        if file.startswith('model.ckpt-') and file.endswith('.meta'):
-            sid = file.index('model.ckpt-') + len('model.ckpt-')
-            eid = file.rindex('.')
-            id = int(file[sid:eid])
-            max_id = max(id, max_id)
-    return ''.join([dir, '/model.ckpt-', str(max_id)])
 
 
 def get_graph_train_data(
@@ -134,7 +124,11 @@ def get_graph_train_data(
 def train(model_config=None):
     model_config = (DefaultConfig()
                     if model_config is None else model_config)
-    data = TrainData(model_config)
+
+    if model_config.fetch_mode == 'tf_example_dataset':
+        data = TfExampleTrainDataset(model_config)
+    else:
+        data = TrainData(model_config)
 
     graph = None
     if model_config.framework == 'transformer':
@@ -147,10 +141,7 @@ def train(model_config=None):
 
     ckpt_path = None
     if model_config.warm_start:
-        if model_config.warm_start == 'recent':
-            ckpt_path = find_best_ckpt(model_config)
-        else:
-            ckpt_path = model_config.warm_start
+        ckpt_path = model_config.warm_start
         var_list = slim.get_variables_to_restore()
     if ckpt_path is not None:
         # Handling missing vars by ourselves
@@ -158,9 +149,9 @@ def train(model_config=None):
         reader = tf.train.NewCheckpointReader(ckpt_path)
         var_dict = {var.op.name: var for var in var_list}
         for var in var_dict:
-            if 'global_step' in var:
+            if 'global_step' in var and 'optim' not in model_config.warm_config:
                 continue
-            if 'optimization' in var:
+            if 'optimization' in var and 'optim' not in model_config.warm_config:
                 continue
             if reader.has_tensor(var):
                 var_ckpt = reader.get_tensor(var)
@@ -177,6 +168,15 @@ def train(model_config=None):
             ignore_missing_vars=False, reshape_variables=False)
 
     def init_fn(session):
+        if model_config.pretrained_embedding and model_config.subword_vocab_size <= 0:
+            input_feed = {graph.embed_simple_placeholder: data.pretrained_emb_simple,
+                          graph.embed_complex_placeholder: data.pretrained_emb_complex}
+            session.run([graph.replace_emb_complex, graph.replace_emb_simple], input_feed)
+            print('Replace Pretrained Word Embedding.')
+
+            del data.pretrained_emb_simple
+            del data.pretrained_emb_complex
+
         # Restore ckpt either from warm start or automatically get when changing optimizer
         ckpt_path = None
         if model_config.warm_start:
@@ -202,18 +202,24 @@ def train(model_config=None):
     sess = sv.PrepareSession(config=session.get_session_config(model_config))
     perplexitys = []
     start_time = datetime.now()
-    while True:
-        input_feed = get_graph_train_data(
-            data,
-            graph.objs,
-            model_config)
 
-        # fetches = [graph.train_op, graph.loss, graph.global_step,
-        #            graph.perplexity, graph.ops, graph.attn_dists, graph.targets, graph.cs]
-        # _, loss, step, perplexity, _ops , attn_dists, targets, cs = sess.run(fetches, input_feed)
+    # Intialize tf example dataset reader
+    if model_config.fetch_mode == 'tf_example_dataset':
+        sess.run(data.training_init_op)
+        if model_config.dmode == 'alter':
+            sess.run(data.training_init_op2)
+
+    while True:
         fetches = [graph.train_op, graph.loss, graph.global_step,
-                   graph.perplexity, graph.ops, graph.logits]
-        _, loss, step, perplexity, _, logits = sess.run(fetches, input_feed)
+                   graph.perplexity, graph.ops, graph.increment_global_step]
+        if model_config.fetch_mode:
+            _, loss, step, perplexity, _, _ = sess.run(fetches)
+        else:
+            input_feed = get_graph_train_data(
+                data,
+                graph.objs,
+                model_config)
+            _, loss, step, perplexity, _, _ = sess.run(fetches, input_feed)
         perplexitys.append(perplexity)
 
         if step % model_config.model_print_freq == 0:
@@ -222,6 +228,41 @@ def train(model_config=None):
             start_time = end_time
             print('Perplexity:\t%f at step %d using %s.' % (perplexity, step, time_span))
             perplexitys.clear()
+            if step / model_config.model_print_freq == 1:
+                print_cpu_usage()
+                print_cpu_memory()
+                print_gpu_memory()
+
+        if model_config.model_eval_freq > 0 and step % model_config.model_eval_freq == 0:
+            if args.mode == 'dress':
+                from model.model_config import WikiDressLargeDefault, WikiDressLargeEvalDefault, \
+                    WikiDressLargeTestDefault
+                model_config = WikiDressLargeDefault()
+                ckpt = get_ckpt(model_config.modeldir, model_config.logdir)
+
+                vconfig = WikiDressLargeEvalDefault()
+                best_sari = get_best_sari(vconfig.resultdir)
+                sari_point = eval(vconfig, ckpt)
+                eval(WikiDressLargeTestDefault(), ckpt)
+                if args.memory is not None and 'rule' in args.memory:
+                    for rcand in [15, 30, 50]:
+                        vconfig.max_cand_rules = rcand
+                        vconfig.resultdir = get_path(
+                            '../' + vconfig.output_folder + '/result/eightref_val_cand' + str(rcand),
+                            vconfig.environment)
+                        eval(vconfig, ckpt)
+                print('=====================Current Best SARI:%s=====================' % best_sari)
+                if float(sari_point) < best_sari:
+                    remove(ckpt + '.index')
+                    remove(ckpt + '.meta')
+                    remove(ckpt + '.data-00000-of-00001')
+                    print('remove ckpt:%s' % ckpt)
+                else:
+                    for file in listdir(model_config.modeldir):
+                        step = ckpt[ckpt.rindex('model.ckpt-') + len('model.ckpt-'):-1]
+                        if step not in file:
+                            remove(model_config.modeldir + file)
+                    print('Get Best Model, remove ckpt except:%s.' % ckpt)
 
 if __name__ == '__main__':
     config = None
@@ -233,5 +274,9 @@ if __name__ == '__main__':
         config = WikiDressHugeNewTrainDefault()
     elif args.mode == 'dress':
         config = WikiDressLargeTrainDefault()
+    elif args.mode == 'trans':
+        config = WikiTransTrainConfig()
+    elif args.mode == 'dummy_trans':
+        config = WikiTransDummyConfig()
     print(list_config(config))
     train(config)

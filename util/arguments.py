@@ -15,6 +15,8 @@ def get_args():
                         help='Output folder?')
     parser.add_argument('-warm', '--warm_start', default='',
                         help='Path for warm start checkpoint?')
+    parser.add_argument('-wconfig', '--warm_config', default='',
+                        help='Config for warm start?')
     parser.add_argument('-upr', '--use_partial_restore', default=True, type=bool,
                         help='Whether to use partial restore?')
     parser.add_argument('-tmode', '--train_mode', default='teacher',
@@ -30,6 +32,8 @@ def get_args():
                         help='Dropout rate for data input?')
 
     # For Data
+    parser.add_argument('-pt', '--pretrained', default=None,
+                        help='Whether to use pretrained glove?')
     parser.add_argument('-lc', '--lower_case', default=True, type=bool,
                         help='Whether to lowercase the vocabulary?')
     parser.add_argument('-mc', '--min_count', default=5, type=int,
@@ -42,10 +46,10 @@ def get_args():
                         help='The frequency of evaluation at training? not use if = 0.')
     parser.add_argument('-itrain', '--it_train', default=False, type=bool,
                         help='Whether to iterate train data set?')
-    parser.add_argument('-dataset2', '--use_dataset2', default=False, type=bool,
-                        help='Whether to use second dataset with iteractively?')
     parser.add_argument('-dmode', '--dmode', default='',
-                        help='Data mode?')
+                        help='Data mode? for [alter, ] (previous [v2, ])')
+    parser.add_argument('-fmode', '--fetch_mode', default=None,
+                        help='The mode of fetching data?')
 
     # For Graph
     parser.add_argument('-dim', '--dimension', default=300, type=int,
@@ -54,10 +58,13 @@ def get_args():
                         help='Version of tied embedding?')
     parser.add_argument('-attntype', '--attention_type', default='dot',
                         help='Type of Attention?')
-    parser.add_argument('-eloss', '--external_loss', default='',
-                        help='External Loss')
     parser.add_argument('-ns', '--number_samples', default=0, type=int,
                         help='Number of samples used in Softmax?')
+    parser.add_argument('-tune_style', '--tune_style', default=None,
+                        help='The value of tune_stype? turns on if > 0. '
+                             'values split by :, [ppdb_score]')
+    parser.add_argument('-tune_mode', '--tune_mode', default=None,
+                        help='The mode of tune')
 
     parser.add_argument('-path_ppdb', '--path_ppdb_refine',
                         default='../text_simplification_data/ppdb/SimplePPDB.enrich',
@@ -68,6 +75,8 @@ def get_args():
                         help='Separate memory?')
     parser.add_argument('-memcfg', '--memory_config', default='',
                         help='Memory Config?')
+    parser.add_argument('-rh', '--rule_threshold', default=0.0, type=float,
+                        help='Rule threshold?')
     parser.add_argument('-memstep', '--memory_prepare_step', default=300, type=int,
                         help='Number of steps for memory prepare?')
 

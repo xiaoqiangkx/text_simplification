@@ -40,7 +40,11 @@ def decode_to_output(target, sentence_simple, sentence_complex, effective_batch_
 
 
         output_list = [target_batch, sentence_simple_batch, sentence_complex_batch,
-                                  batch_ibleu, batch_sari, batch_fkgl, batch_targets_raw, batch_sentence_complex_raw, '']
+                                  batch_ibleu, batch_sari, batch_fkgl, batch_targets_raw, batch_sentence_complex_raw]
+        output_list = [entry for entry in output_list if len(entry) > 0]
+        output_list.append('')
+        output_list.append('')
+
         if sentence_ref:
             output_list.insert(2, sentence_ref)
         output_batch = '\n'.join(output_list)

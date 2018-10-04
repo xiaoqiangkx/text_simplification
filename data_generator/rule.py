@@ -4,7 +4,7 @@ class Rule:
     def __init__(self, model_config, rule_path=None):
         self.model_config = model_config
         self.rule_path = rule_path
-        self.populate_rulebase(model_config.min_count_rule)
+        self.populate_rulebase(model_config.rule_threshold)
 
     def populate_rulebase(self, minscore):
         self.r2i = {'pad':0}

@@ -31,14 +31,15 @@ class ValData:
         # Populate basic complex simple pairs
         self.data = self.populate_data(self.vocab_complex, self.vocab_simple, True)
         self.data_complex_raw_lines = self.populate_data_rawfile(
-            self.model_config.val_dataset_complex_rawlines_file)
+            self.model_config.val_dataset_complex_rawlines_file,
+            self.model_config.lower_case)
         # Populate simple references
         self.data_references_raw_lines = []
         for i in range(self.model_config.num_refs):
             ref_tmp_rawlines = self.populate_data_rawfile(
                 self.model_config.val_dataset_simple_folder +
                 self.model_config.val_dataset_simple_rawlines_file_references +
-                str(i))
+                str(i), self.model_config.lower_case)
             self.data_references_raw_lines.append(ref_tmp_rawlines)
 
         if self.model_config.replace_ner:
@@ -72,14 +73,19 @@ class ValData:
             data.append(tmp)
         return data
 
-    def populate_data_rawfile(self, data_path):
+    def populate_data_rawfile(self, data_path, lower_case=True):
         """Populate data raw lines into memory"""
         data = []
         for line in open(data_path, encoding='utf-8'):
+            if lower_case:
+                line = line.lower()
             data.append(line.strip())
         return data
 
-    def process_line(self, line, vocab, max_len, need_raw=False):
+    def process_line(self, line, vocab, max_len, need_raw=False, lower_case=True):
+        if lower_case:
+            line = line.lower()
+
         if self.model_config.tokenizer == 'split':
             words = line.split()
         elif self.model_config.tokenizer == 'nltk':
@@ -132,9 +138,11 @@ class ValData:
             line_comp = lines_comp[line_id]
             line_simp = lines_simp[line_id]
             words_comp, words_raw_comp = self.process_line(
-                line_comp, vocab_comp, self.model_config.max_complex_sentence, need_raw)
+                line_comp, vocab_comp, self.model_config.max_complex_sentence, need_raw,
+                self.model_config.lower_case)
             words_simp, words_raw_simp = self.process_line(
-                line_simp, vocab_simp, self.model_config.max_simple_sentence, need_raw)
+                line_simp, vocab_simp, self.model_config.max_simple_sentence, need_raw,
+                self.model_config.lower_case)
 
             obj['words_comp'] = words_comp
             obj['words_simp'] = words_simp
@@ -153,25 +161,26 @@ class ValData:
     def get_data_iter(self):
         i = 0
         while True:
-            ref_rawlines_batch = [self.data_references_raw_lines[j][i]
-                                  for j in range(self.model_config.num_refs)]
-            supplement = {}
-            if 'rule' in self.model_config.memory:
-                supplement['mem'] = self.rules[i]
-
-            obj = {
-                'sentence_simple': self.data[i]['words_simp'],
-                'sentence_complex': self.data[i]['words_comp'],
-                'sentence_complex_raw': self.data[i]['words_raw_comp'],
-                'sentence_simple_raw': self.data[i]['words_raw_simp'],
-                'sentence_complex_raw_lines': self.data_complex_raw_lines[i],
-                'mapper': self.mapper[i],
-                'ref_raw_lines': ref_rawlines_batch,
-                'sup': supplement,
-            }
-
-            yield obj
-
-            i += 1
-            if i == len(self.data):
+            if i >= len(self.data):
                 yield None
+            else:
+                ref_rawlines_batch = [self.data_references_raw_lines[j][i]
+                                      for j in range(self.model_config.num_refs)]
+                supplement = {}
+                if 'rule' in self.model_config.memory:
+                    supplement['mem'] = self.rules[i]
+
+                obj = {
+                    'sentence_simple': self.data[i]['words_simp'],
+                    'sentence_complex': self.data[i]['words_comp'],
+                    'sentence_complex_raw': self.data[i]['words_raw_comp'],
+                    'sentence_simple_raw': self.data[i]['words_raw_simp'],
+                    'sentence_complex_raw_lines': self.data_complex_raw_lines[i],
+                    'mapper': self.mapper[i],
+                    'ref_raw_lines': ref_rawlines_batch,
+                    'sup': supplement,
+                }
+
+                yield obj
+
+                i += 1
