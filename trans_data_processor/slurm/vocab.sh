@@ -7,8 +7,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=3-00:00:00
-#SBATCH --qos=normal
+#SBATCH --time=6-00:00:00
+#SBATCH --qos=long
 #SBATCH --mem=32g
 
 # Load modules

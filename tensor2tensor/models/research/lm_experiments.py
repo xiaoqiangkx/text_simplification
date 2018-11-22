@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Experiments with Language Models.
 
 Train languagemodel_lm1b32k_packed and measure log-ppl/token (dev).
@@ -99,3 +98,61 @@ def lmx_h4k_f16k():
   hparams.weight_dtype = "bfloat16"
   return hparams
 
+
+@registry.register_hparams
+def lmx_relative():
+  """Language model using relative attention."""
+  hparams = lmx_base()
+  hparams.self_attention_type = "dot_product_relative_v2"
+  hparams.activation_dtype = "float32"
+  hparams.weight_dtype = "float32"
+  return hparams
+
+
+@registry.register_hparams
+def lmx_relative_nopos():
+  """Language model using relative attention and no positional encoding."""
+  hparams = lmx_relative()
+  hparams.pos = "none"
+  return hparams
+
+
+@registry.register_hparams
+def lmx_moe():
+  """Transformer with mixture of experts.  140M Params."""
+  hparams = lmx_base()
+  hparams.ffn_layer = "local_moe_tpu"
+  return hparams
+
+
+@registry.register_hparams
+def lmx_moe_h1k_f4k_x32():
+  """Transformer with mixture of experts.  890M Params."""
+  hparams = lmx_h1k_f4k()
+  hparams.ffn_layer = "local_moe_tpu"
+  hparams.moe_num_experts = 32
+  hparams.weight_dtype = "bfloat16"
+  hparams.batch_size = 8192
+  return hparams
+
+
+@registry.register_hparams
+def lmx_moe_h1k_f8k_x16():
+  """Transformer with mixture of experts.  890M Params."""
+  hparams = lmx_h1k_f4k()
+  hparams.filter_size = 8192
+  hparams.ffn_layer = "local_moe_tpu"
+  hparams.moe_num_experts = 16
+  hparams.weight_dtype = "bfloat16"
+  hparams.batch_size = 8192
+  return hparams
+
+
+@registry.register_hparams
+def lmx_h1k_f64k():
+  """HParams for training languagemodel_lm1b32k_packed.  880M Params."""
+  hparams = lmx_base()
+  hparams.hidden_size = 1024
+  hparams.filter_size = 65536
+  hparams.batch_size = 2048
+  return hparams

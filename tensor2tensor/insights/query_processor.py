@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """A base class for all query processing classes."""
 
 
@@ -25,9 +24,6 @@ class QueryProcessor(object):
   TODO(kstevens): Define how the visualization structures should look once the
   protos are in better shape.
   """
-
-  def __init__(self):
-    pass
 
   def process(self, query):
     """Returns the generated visualizations for query.

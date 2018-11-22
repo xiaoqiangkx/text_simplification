@@ -12,7 +12,7 @@ class Embedding:
         self.voc_simple = voc_simple
         # self.init = tf.truncated_normal_initializer(
         #     stddev=self.model_config.trunc_norm_init_std)
-        self.emb_init = tf.contrib.layers.xavier_initializer() # tf.random_uniform_initializer(-0.08, 0.08)
+        self.emb_init = tf.random_uniform_initializer(-0.1, 0.1)
         self.w_init = tf.contrib.layers.xavier_initializer() # tf.random_uniform_initializer(-0.08, 0.08)
         print('Use tied embedding: \t%s.' % self.model_config.tie_embedding)
 

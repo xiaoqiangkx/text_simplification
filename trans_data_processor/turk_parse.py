@@ -1,8 +1,15 @@
+"""Process Val/Test data for turk."""
+import spacy
 
-RAW_PATH = '/Users/sanqiangzhao/git/text_simplification_data/test_0930/test.8turkers.organized.tsv'
-NEW_PATH = '/Users/sanqiangzhao/git/text_simplification_data/test_0930/'
+RAW_PATH = '/Users/sanqiangzhao/git/ts/text_simplification_data/test_0930/test.8turkers.organized.tsv'
+NEW_PATH = '/Users/sanqiangzhao/git/ts/text_simplification_data/test_0930/'
 COMP_PREFIX = 'lower.norm.ori'
 SIMP_PREFIX = 'lower.ref.ori.'
+
+nlp = spacy.load('en_core_web_lg', disable=['parser'])
+def _process_sent(sent):
+    doc = nlp(sent)
+    return ' '.join([w.text for w in doc]).strip().lower()
 
 (comp_sents, ref1_sents, ref2_sents, ref3_sents,
  ref4_sents, ref5_sents, ref6_sents, ref7_sents, ref8_sents) = (
@@ -17,15 +24,15 @@ for line in open(RAW_PATH):
         items[2].strip(), items[3].strip(), items[4].strip(), items[5].strip(),
         items[6].strip(), items[7].strip(), items[8].strip(), items[9].strip())
 
-    comp_sents.append(comp_sent.lower())
-    ref1_sents.append(ref1_sent.lower())
-    ref2_sents.append(ref2_sent.lower())
-    ref3_sents.append(ref3_sent.lower())
-    ref4_sents.append(ref4_sent.lower())
-    ref5_sents.append(ref5_sent.lower())
-    ref6_sents.append(ref6_sent.lower())
-    ref7_sents.append(ref7_sent.lower())
-    ref8_sents.append(ref8_sent.lower())
+    comp_sents.append(_process_sent(comp_sent))
+    ref1_sents.append(_process_sent(ref1_sent))
+    ref2_sents.append(_process_sent(ref2_sent))
+    ref3_sents.append(_process_sent(ref3_sent))
+    ref4_sents.append(_process_sent(ref4_sent))
+    ref5_sents.append(_process_sent(ref5_sent))
+    ref6_sents.append(_process_sent(ref6_sent))
+    ref7_sents.append(_process_sent(ref7_sent))
+    ref8_sents.append(_process_sent(ref8_sent))
 
 
 open(NEW_PATH + COMP_PREFIX, 'w').write('\n'.join(comp_sents))

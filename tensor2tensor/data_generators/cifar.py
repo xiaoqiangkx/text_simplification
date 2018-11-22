@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """CIFAR."""
 
 from __future__ import absolute_import
@@ -21,16 +20,15 @@ from __future__ import print_function
 
 import os
 import tarfile
-
-# Dependency imports
-
 import numpy as np
+import six
 
 from six.moves import cPickle
 
 from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import image_utils
 from tensor2tensor.data_generators import mnist
+from tensor2tensor.utils import metrics
 from tensor2tensor.utils import registry
 
 import tensorflow as tf
@@ -94,8 +92,11 @@ def cifar_generator(cifar_version, tmp_dir, training, how_many, start_from=0):
   all_images, all_labels = [], []
   for filename in data_files:
     path = os.path.join(tmp_dir, prefix, filename)
-    with tf.gfile.Open(path, "r") as f:
-      data = cPickle.load(f)
+    with tf.gfile.Open(path, "rb") as f:
+      if six.PY2:
+        data = cPickle.load(f)
+      else:
+        data = cPickle.load(f, encoding="latin1")
     images = data["data"]
     num_images = images.shape[0]
     images = images.reshape((num_images, 3, image_size, image_size))
@@ -174,6 +175,35 @@ class ImageCifar10PlainGen(ImageCifar10Plain):
     example["inputs"].set_shape([_CIFAR10_IMAGE_SIZE, _CIFAR10_IMAGE_SIZE, 3])
     example["inputs"] = tf.to_int64(example["inputs"])
     return example
+
+
+@registry.register_problem
+class ImageCifar10PlainRandomShift(ImageCifar10Plain):
+  """CIFAR-10 32x32 for image generation with random shift data-augmentation."""
+
+  def dataset_filename(self):
+    return "image_cifar10_plain"  # Reuse CIFAR-10 plain data.
+
+  def preprocess_example(self, example, mode, unused_hparams):
+    example["inputs"].set_shape([_CIFAR10_IMAGE_SIZE, _CIFAR10_IMAGE_SIZE, 3])
+    example["inputs"] = tf.to_int64(example["inputs"])
+    if mode == tf.estimator.ModeKeys.TRAIN:
+      example["inputs"] = image_utils.random_shift(
+          example["inputs"], wsr=0.1, hsr=0.1)
+    return example
+
+
+@registry.register_problem
+class ImageCifar10PlainGenDmol(ImageCifar10PlainGen):
+  """Discretized mixture of logistics problem."""
+
+  def dataset_filename(self):
+    return "image_cifar10_plain"  # Reuse CIFAR-10 plain data.
+
+  def eval_metrics(self):
+    return [
+        metrics.Metrics.DMOL_PERPLEXITY
+    ]
 
 
 @registry.register_problem

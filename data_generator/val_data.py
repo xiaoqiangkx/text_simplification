@@ -3,8 +3,7 @@ from nltk import word_tokenize
 from util import constant
 from util.map_util import load_mappers
 from data_generator.rule import Rule
-
-import copy as cp
+from data_generator import data_utils
 
 
 class ValData:
@@ -61,6 +60,18 @@ class ValData:
                 self.model_config.val_dataset_complex_ppdb, self.vocab_rule)
             print('Populate Rule with size:%s' % self.vocab_rule.get_rule_size())
 
+        if self.model_config.tune_style:
+            self.comp_features = self.populate_comp_features(
+                self.model_config.val_dataset_complex_features)
+
+    def populate_comp_features(self, feature_path):
+        data = []
+        for line in open(feature_path, encoding='utf-8'):
+            items = line.split('\t')
+            data.append(
+                (float(items[0]), float(items[1])))
+        return data
+
     def populate_rules(self, rule_path, vocab_rule):
         data = []
         for line in open(rule_path, encoding='utf-8'):
@@ -82,45 +93,6 @@ class ValData:
             data.append(line.strip())
         return data
 
-    def process_line(self, line, vocab, max_len, need_raw=False, lower_case=True):
-        if lower_case:
-            line = line.lower()
-
-        if self.model_config.tokenizer == 'split':
-            words = line.split()
-        elif self.model_config.tokenizer == 'nltk':
-            words = word_tokenize(line)
-        else:
-            raise Exception('Unknown tokenizer.')
-
-        words = [Vocab.process_word(word, self.model_config)
-                 for word in words]
-        if need_raw:
-            words_raw = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
-        else:
-            words_raw = None
-
-        if self.model_config.subword_vocab_size > 0:
-            words = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
-            words = vocab.encode(' '.join(words))
-        else:
-            words = [vocab.encode(word) for word in words]
-            words = ([self.vocab_simple.encode(constant.SYMBOL_START)] + words +
-                     [self.vocab_simple.encode(constant.SYMBOL_END)])
-
-        if self.model_config.subword_vocab_size > 0:
-            pad_id = vocab.encode(constant.SYMBOL_PAD)
-        else:
-            pad_id = [vocab.encode(constant.SYMBOL_PAD)]
-
-        if len(words) < max_len:
-            num_pad = max_len - len(words)
-            words.extend(num_pad * pad_id)
-        else:
-            words = words[:max_len]
-
-        return words, words_raw
-
     def populate_data(self, vocab_comp, vocab_simp, need_raw=False):
         # Populate data into memory
         data = []
@@ -137,11 +109,11 @@ class ValData:
             obj = {}
             line_comp = lines_comp[line_id]
             line_simp = lines_simp[line_id]
-            words_comp, words_raw_comp = self.process_line(
-                line_comp, vocab_comp, self.model_config.max_complex_sentence, need_raw,
+            words_comp, words_raw_comp = data_utils.process_line(
+                line_comp, vocab_comp, self.model_config.max_complex_sentence, self.model_config, need_raw,
                 self.model_config.lower_case)
-            words_simp, words_raw_simp = self.process_line(
-                line_simp, vocab_simp, self.model_config.max_simple_sentence, need_raw,
+            words_simp, words_raw_simp = data_utils.process_line(
+                line_simp, vocab_simp, self.model_config.max_simple_sentence, self.model_config, need_raw,
                 self.model_config.lower_case)
 
             obj['words_comp'] = words_comp
@@ -169,6 +141,9 @@ class ValData:
                 supplement = {}
                 if 'rule' in self.model_config.memory:
                     supplement['mem'] = self.rules[i]
+
+                if self.model_config.tune_style:
+                    supplement['comp_features'] = self.comp_features[i]
 
                 obj = {
                     'sentence_simple': self.data[i]['words_simp'],

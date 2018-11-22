@@ -31,8 +31,6 @@ class Graph():
         return prev_logit
 
     def create_model_multigpu(self):
-        # with tf.Graph().as_default():
-            # with tf.device('/gpu:0'):
         losses = []
         grads = []
         ops = [tf.constant(0)]
@@ -52,7 +50,6 @@ class Graph():
                 with tf.device('/device:GPU:%d' % gpu_id):
                     with tf.name_scope('%s_%d' % ('gpu_scope', gpu_id)):
                         loss, obj = self.create_model(fetch_data=fetch_data)
-                        # var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                         grad = optim.compute_gradients(loss)
                         tf.get_variable_scope().reuse_variables()
                         losses.append(loss)
@@ -81,7 +78,6 @@ class Graph():
         with tf.variable_scope('variables'):
             sentence_simple_input_placeholder = []
             sentence_complex_input_placeholder = []
-            ppdb_score = None
 
             if fetch_data is not None and self.model_config.fetch_mode == 'tf_example_dataset':
                 for t in tf.unstack(fetch_data['line_comp_ids'], axis=1):
@@ -91,16 +87,53 @@ class Graph():
 
                 if self.model_config.tune_style:
                     if self.is_train:
-                        ppdb_score = fetch_data['ppdb_score']
-                    else:
-                        ppdb_score = tf.constant(
-                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
-                    if self.model_config.tune_mode == 'plus':
-                        ppdb_score += 0.1
-                    ppdb_score = tf.expand_dims(tf.tile(
-                        tf.expand_dims(ppdb_score, axis=-1),
-                        [1, self.model_config.dimension]), axis=1)
+                        # In training, score are from fetch data
+                        scores = []
+                        if self.model_config.tune_style[0]:
+                            ppdb_score = fetch_data['ppdb_score']
+                            scores.append(ppdb_score)
+                            print('Tune ppdb score!')
+                            if 'plus' in self.model_config.tune_mode:
+                                # to avoid most ppdb scores are 0
+                                ppdb_score += 0.1
+                        if self.model_config.tune_style[1]:
+                            add_score = fetch_data['dsim_score']
+                            scores.append(add_score)
+                            print('Tune dsim_score score!')
+                        if self.model_config.tune_style[2]:
+                            add_score = fetch_data['add_score']
+                            scores.append(add_score)
+                            print('Tune add score!')
+                        if self.model_config.tune_style[3]:
+                            len_score = fetch_data['len_score']
+                            scores.append(len_score)
+                            print('Tune length score!')
 
+                    else:
+                        # In evaluating/predict, scores may be a  factor to multiply if in pred mode
+                        #   or actual user provided score
+                        # TODO(sanqiang): not used for now because not fech_data in eval
+                        raise NotImplementedError('No tune style for training')
+                        # ppdb_score = tf.constant(
+                        #     self.model_config.tune_style[0], shape=[self.model_config.batch_size], dtype=tf.float32)
+                        # add_score = tf.constant(
+                        #     self.model_config.tune_style[1], shape=[self.model_config.batch_size], dtype=tf.float32)
+                        # len_score = tf.constant(
+                        #     self.model_config.tune_style[2], shape=[self.model_config.batch_size], dtype=tf.float32)
+
+                    # Assemble scores
+                    dimension_unit = int(self.model_config.dimension / len(scores))
+                    dimension_runit = self.model_config.dimension - (len(scores)-1)*dimension_unit
+                    for s_i, score in enumerate(scores):
+                        if s_i < len(scores)-1:
+                            scores[s_i] = tf.expand_dims(tf.tile(
+                                tf.expand_dims(scores[s_i], axis=-1),
+                                [1, dimension_unit]), axis=1)
+                        else:
+                            scores[s_i] = tf.expand_dims(tf.tile(
+                                tf.expand_dims(scores[s_i], axis=-1),
+                                [1, dimension_runit]), axis=1)
+                    score = tf.concat(scores, axis=-1)
             else:
                 for step in range(self.model_config.max_simple_sentence):
                     sentence_simple_input_placeholder.append(
@@ -111,19 +144,56 @@ class Graph():
                         tf.zeros(self.model_config.batch_size, tf.int32, name='complex_input'))
 
                 if self.model_config.tune_style:
-                    if not self.is_train:
-                        ppdb_score = tf.constant(
-                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
-                        ppdb_score = tf.expand_dims(tf.tile(
-                            tf.expand_dims(ppdb_score, axis=-1),
-                            [1, self.model_config.dimension]), axis=1)
+                    if self.is_train:
+                        raise NotImplementedError('No tune style for training')
+                        #
+                        # ppdb_score = tf.constant(
+                        #     self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
+                        # ppdb_score = tf.expand_dims(tf.tile(
+                        #     tf.expand_dims(ppdb_score, axis=-1),
+                        #     [1, self.model_config.dimension]), axis=1)
                     else:
-                        # TODO (sanqiang): temp setting
-                        ppdb_score = tf.constant(
-                            self.model_config.tune_style, shape=[self.model_config.batch_size], dtype=tf.float32)
-                        ppdb_score = tf.expand_dims(tf.tile(
-                            tf.expand_dims(ppdb_score, axis=-1),
-                            [1, self.model_config.dimension]), axis=1)
+                        scores = []
+                        if self.model_config.tune_style[0]:
+                            ppdb_score = tf.constant(
+                                self.model_config.tune_style[0], shape=[self.model_config.batch_size], dtype=tf.float32)
+                            scores.append(ppdb_score)
+                            print('tune ppdb score')
+                        if self.model_config.tune_style[1]:
+                            dsim_score = tf.constant(
+                                self.model_config.tune_style[1], shape=[self.model_config.batch_size], dtype=tf.float32)
+                            scores.append(dsim_score)
+                            print('tune dsim score')
+                        if self.model_config.tune_style[2]:
+                            add_score = tf.constant(
+                                self.model_config.tune_style[2], shape=[self.model_config.batch_size], dtype=tf.float32)
+                            scores.append(add_score)
+                            print('tune add score')
+                        if self.model_config.tune_style[3]:
+                            len_score = tf.constant(
+                                self.model_config.tune_style[3], shape=[self.model_config.batch_size], dtype=tf.float32)
+                            scores.append(len_score)
+                            print('tune len score')
+                    # Assemble scores
+                    dimension_unit = int(self.model_config.dimension / len(scores))
+                    dimension_runit = self.model_config.dimension - (len(scores)-1) * dimension_unit
+                    for s_i, score in enumerate(scores):
+                        if s_i < len(scores)-1:
+                            scores[s_i] = tf.expand_dims(tf.tile(
+                                tf.expand_dims(scores[s_i], axis=-1),
+                                [1, dimension_unit]), axis=1)
+                        else:
+                            scores[s_i] = tf.expand_dims(tf.tile(
+                                tf.expand_dims(scores[s_i], axis=-1),
+                                [1, dimension_runit]), axis=1)
+                    score = tf.concat(scores, axis=-1)
+
+            # For self.model_config.tune_style:
+            comp_features = {}
+            comp_add_score = tf.zeros(self.model_config.batch_size, tf.float32, name='comp_add_score_input')
+            comp_length = tf.zeros(self.model_config.batch_size, tf.float32, name='comp_length_input')
+            comp_features['comp_add_score'] = comp_add_score
+            comp_features['comp_length'] = comp_length
 
             sentence_idxs = tf.zeros(self.model_config.batch_size, tf.int32, name='sent_idx')
 
@@ -184,7 +254,7 @@ class Graph():
             output = self.model_fn(sentence_complex_input_placeholder, emb_complex,
                                    sentence_simple_input_placeholder, emb_simple,
                                    w, b, rule_id_input_placeholder, mem_contexts, mem_outputs,
-                                   self.global_step, ppdb_score)
+                                   self.global_step, score, comp_features)
 
             encoder_embs, final_outputs = None, None
             if self.model_config.replace_unk_by_emb:
@@ -224,6 +294,8 @@ class Graph():
                 if 'rule' in self.model_config.memory:
                     obj['rule_id_input_placeholder'] = rule_id_input_placeholder
                     obj['rule_target_input_placeholder'] = rule_target_input_placeholder
+                if self.model_config.tune_style:
+                    obj['comp_features'] = comp_features
                 return loss, obj
             else:
                 # Memory Populate
@@ -410,6 +482,23 @@ class Graph():
                 else:
                     loss = teacherforce_loss()
 
+                self.loss_style = tf.constant(0.0, dtype=tf.float32)
+                if output.pred_score_tuple is not None and 'pred' in self.model_config.tune_mode:
+                    print('Create loss for predicting style')
+                    ppdb_pred_score, add_pred_score, len_pred_score = output.pred_score_tuple
+                    # ppdb_pred_score = tf.Print(ppdb_pred_score, [ppdb_pred_score, fetch_data['ppdb_score']],
+                    #                            message='ppdb_pred_score:', first_n=-1, summarize=100)
+                    # add_pred_score = tf.Print(add_pred_score, [add_pred_score, fetch_data['add_score']],
+                    #                            message='add_pred_score:', first_n=-1, summarize=100)
+                    # len_pred_score = tf.Print(len_pred_score, [len_pred_score, fetch_data['len_score']],
+                    #                            message='len_pred_score:', first_n=-1, summarize=100)
+                    # loss = tf.Print(loss, [loss], message='loss before:', summarize=100)
+                    self.loss_style += tf.losses.absolute_difference(ppdb_pred_score, fetch_data['ppdb_score'])
+                    self.loss_style += tf.losses.absolute_difference(add_pred_score, fetch_data['add_score'])
+                    self.loss_style += tf.losses.absolute_difference(len_pred_score, fetch_data['len_score'])
+                    loss += self.loss_style
+                    # loss = tf.Print(loss, [loss], message='loss after:', summarize=100)
+
                 obj = {
                     'decoder_target_list': output.decoder_target_list,
                     'sentence_idxs': sentence_idxs,
@@ -493,7 +582,8 @@ class Graph():
 class ModelOutput:
     def __init__(self, decoder_outputs_list=None, decoder_logit_list=None, decoder_target_list=None,
                  decoder_score=None, gt_target_list=None, encoder_embed_inputs_list=None, encoder_outputs=None,
-                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None, attn_distr_list=None):
+                 contexts=None, final_outputs_list=None, sample_target_list=None, sample_logit_list=None, attn_distr_list=None,
+                 pred_score_tuple=None):
         self._decoder_outputs_list = decoder_outputs_list
         self._decoder_logit_list = decoder_logit_list
         self._decoder_target_list = decoder_target_list
@@ -506,6 +596,7 @@ class ModelOutput:
         self._sample_target_list = sample_target_list
         self._sample_logit_list = sample_logit_list
         self._attn_distr_list = attn_distr_list
+        self._pred_score_tuple = pred_score_tuple
 
     @property
     def encoder_outputs(self):
@@ -555,3 +646,7 @@ class ModelOutput:
     @property
     def attn_distr_list(self):
         return self._attn_distr_list
+
+    @property
+    def pred_score_tuple(self):
+        return self._pred_score_tuple

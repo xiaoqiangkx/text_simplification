@@ -4,15 +4,16 @@
 #!/usr/bin/env bash
 
 
-#SBATCH --cluster=smp
+#SBATCH --cluster=mpi
+#SBATCH --partition=opa-high-mem
 #SBATCH --job-name=ppdb
 #SBATCH --output=ppdb.out
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --time=3-00:00:00
 #SBATCH --qos=normal
-#SBATCH --mem=32g
+#SBATCH --mem=64g
 
 # Load modules
 module restore

@@ -33,17 +33,18 @@ class Vocab:
         self.i2w.append(constant.SYMBOL_START)
         self.w2i[constant.SYMBOL_END] = 4
         self.i2w.append(constant.SYMBOL_END)
+        unk_id = 0
+        for voc_id in range(len(self.i2w), constant.REVERED_VOCAB_SIZE):
+            self.w2i['#unk%s#' % unk_id] = voc_id
+            self.i2w.append('#unk%s#' % unk_id)
+            unk_id += 1
 
-        for i in range(len(self.i2w), constant.REVERED_VOCAB_SIZE):
-            reserved_vocab = 'REVERED_%i' % i
-            self.w2i[reserved_vocab] = i
-            self.i2w.append(reserved_vocab)
-
-
-    def populate_vocab(self, mincount=-1):
+    def populate_vocab(self, mincount=-1, topcount=9999999999):
         mincount = max(mincount, self.model_config.min_count)
+        topcount = min(topcount, self.model_config.top_count)
 
-        for line in open(self.vocab_path, encoding='utf-8'):
+        lid = 0
+        for line in open(self.vocab_path):
             items = line.strip().split('\t')
             w = items[0]
             if len(items) > 1:
@@ -54,6 +55,10 @@ class Vocab:
             if cnt >= mincount:
                 self.w2i[w] = len(self.i2w)
                 self.i2w.append(w)
+
+            lid += 1
+            if lid >= topcount:
+                break
 
         print('Vocab Populated with size %d including %d reserved vocab for path %s.'
               % (len(self.i2w), constant.REVERED_VOCAB_SIZE, self.vocab_path))
@@ -87,11 +92,7 @@ class Vocab:
     @staticmethod
     def process_word(word, model_config):
         if word:
-            # All numeric will map to #
-            if is_numeric(word):
-                return constant.SYMBOL_NUM
-            else:
-                if model_config.lower_case:
-                    word = word.lower()
-                word = data_parse(word)
-                return word
+            if model_config.lower_case:
+                word = word.lower()
+            word = data_parse(word)
+            return word

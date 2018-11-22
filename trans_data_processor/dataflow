@@ -1,0 +1,4 @@
+1. Java: nlp.PreprocessUtils to get NER and tokenized data
+2. Generate the PPDB (because the tokenizer is lightweight supports PPDB) pppdb_features.py
+3. Generate 2nd tokenizer and do some post filter valid_output.py
+4. Vocab generator

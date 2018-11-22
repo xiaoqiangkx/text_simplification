@@ -12,15 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Implementation of beam search with penalties."""
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
-# Dependency imports
-
 from tensor2tensor.layers import common_layers
 
 import tensorflow as tf
@@ -28,7 +24,7 @@ import tensorflow as tf
 from tensorflow.python.util import nest
 
 # Assuming EOS_ID is 1
-EOS_ID = 4
+EOS_ID = 1
 # Default value for INF
 INF = 1. * 1e7
 
@@ -87,10 +83,6 @@ def get_state_shape_invariants(tensor):
   for i in range(1, len(shape) - 1):
     shape[i] = None
   return tf.TensorShape(shape)
-
-
-def log_prob_from_logits(logits, reduce_axis=-1):
-  return logits - tf.reduce_logsumexp(logits, axis=reduce_axis, keep_dims=True)
 
 
 def compute_batch_indices(batch_size, beam_size):
@@ -355,12 +347,12 @@ def beam_search(symbols_to_logits_fn,
       states = nest.map_structure(
           lambda t: _unmerge_beam_dim(t, batch_size, beam_size), flat_states)
     else:
-      flat_logits = symbols_to_logits_fn(flat_ids, i)
+      flat_logits = symbols_to_logits_fn(flat_ids)
 
     logits = tf.reshape(flat_logits, [batch_size, beam_size, -1])
 
     # Convert logits to normalized log probs
-    candidate_log_probs = log_prob_from_logits(logits)
+    candidate_log_probs = common_layers.log_prob_from_logits(logits)
 
     # Multiply the probabilities by the current probabilities of the beam.
     # (batch_size, beam_size, vocab_size) + (batch_size, beam_size, 1)
@@ -539,8 +531,8 @@ def beam_search(symbols_to_logits_fn,
   # the contents of alive for that batch item. tf.reduce_any(finished_flags, 1)
   # if 0, means that no sequence for that batch index had reached EOS. We need
   # to do the same for the scores as well.
-  # finished_seq = tf.where(
-  #     tf.reduce_any(finished_flags, 1), finished_seq, alive_seq)
-  # finished_scores = tf.where(
-  #     tf.reduce_any(finished_flags, 1), finished_scores, alive_log_probs)
+  finished_seq = tf.where(
+      tf.reduce_any(finished_flags, 1), finished_seq, alive_seq)
+  finished_scores = tf.where(
+      tf.reduce_any(finished_flags, 1), finished_scores, alive_log_probs)
   return finished_seq, finished_scores

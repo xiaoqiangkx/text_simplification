@@ -12,14 +12,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """MultiModel."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
-# Dependency imports
-
 from six.moves import range  # pylint: disable=redefined-builtin
 
 from tensor2tensor.layers import common_attention
@@ -107,6 +103,7 @@ def prepare_decoder(targets, target_space_emb):
 
 @registry.register_model
 class MultiModel(t2t_model.T2TModel):
+  """Model to train on multiple tasks simultaneously."""
 
   @property
   def use_body_sharded(self):

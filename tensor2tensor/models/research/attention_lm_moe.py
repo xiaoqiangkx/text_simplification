@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Self-attention based language model.
 
 Like transformer.py, but no encoder
@@ -26,9 +25,6 @@ from __future__ import division
 from __future__ import print_function
 
 import functools
-
-# Dependency imports
-
 from six.moves import range  # pylint: disable=redefined-builtin
 
 from tensor2tensor.layers import common_attention
@@ -454,7 +450,7 @@ def restore_pad(x, ref_x, pad_remover, mode):
   x = tf.squeeze(x, axis=0)
   if mode != ModeKeys.PREDICT:
     x = pad_remover.restore(x)
-  x = expert_utils.reshape_like(x, ref_x)
+  x = common_layers.reshape_like(x, ref_x)
   return x
 
 

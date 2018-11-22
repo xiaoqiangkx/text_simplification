@@ -187,9 +187,11 @@ class DefaultConfig():
 
     fetch_mode = None
     tune_mode = None
-    tune_style = args.tune_style
+    tune_style = args.tune_style # PPDB_score:add_score:len_score:
     if tune_style is not None:
-        tune_style = [float(v) for v in tune_style.split(':')][0]
+        tune_style = [float(v) for v in tune_style.split(':')]
+    # assert len(tune_style) == 3
+
 
 class DefaultTrainConfig(DefaultConfig):
     beam_search_size = 0
@@ -413,36 +415,57 @@ class WikiTransDefaultConfig(DefaultConfig):
     save_model_secs = 600
     lower_case = args.lower_case
 
-    subword_vocab_size = 8000
+    subword_vocab_size = args.subword_vocab_size
     model_eval_freq = args.model_eval_freq
     tune_style = args.tune_style
     tune_mode = args.tune_mode
+    if tune_mode is not None:
+        tune_mode = tune_mode.split(':')
     if tune_style is not None:
-        tune_style = [float(v) for v in tune_style.split(':')][0]
+        tune_style = [float(v) for v in tune_style.split(':')]
 
-    subword_vocab_complex = '/zfs1/hdaqing/saz31/dataset/vocab/comp.subvocab'
-    subword_vocab_simple = '/zfs1/hdaqing/saz31/dataset/vocab/simp.subvocab'
-    subword_vocab_all = ''
-    max_complex_sentence = 210
-    max_simple_sentence = 200
+    # if subword_vocab_size == 30000:
+    #     train_dataset = '/zfs1/hdaqing/saz31/dataset/tf_example/ppdbxu/train.tfrecords.*'
+    #     subword_vocab_complex = '/zfs1/hdaqing/saz31/dataset/vocab/comp30k.subvocab'
+    #     subword_vocab_simple = '/zfs1/hdaqing/saz31/dataset/vocab/simp30k.subvocab'
+    #     subword_vocab_all = ''
+    #     max_complex_sentence = 180
+    #     max_simple_sentence = 170
+    # elif subword_vocab_size == 0:
+    #     train_dataset = '/zfs1/hdaqing/saz31/dataset/trans_tf_example/ppdb_0_0k/train.tfrecords.*'
+    #     vocab_complex = '/zfs1/hdaqing/saz31/dataset/vocab/comp.vocab'
+    #     vocab_simple = '/zfs1/hdaqing/saz31/dataset/vocab/simp.vocab'
+    #     subword_vocab_all = ''
+    #     max_complex_sentence = 95
+    #     max_simple_sentence = 85
 
     replace_unk_by_attn = False
-    replace_unk_by_emb = False
+    replace_unk_by_emb = True
     replace_unk_by_cnt = False
     dmode = args.dmode
 
     if fetch_mode == 'tf_example_dataset':
         print('Use Tf Example Dataset.')
-        train_dataset = '/zfs1/hdaqing/saz31/dataset/trans_tf_example/ppdb_0/train.tfrecords.*'
+
+        train_dataset = '/zfs1/hdaqing/saz31/dataset/tf_example/ppdbxu/train.tfrecords.*'
+        subword_vocab_complex = '/zfs1/hdaqing/saz31/dataset/vocab/comp30k.subvocab'
+        subword_vocab_simple = '/zfs1/hdaqing/saz31/dataset/vocab/simp30k.subvocab'
+        subword_vocab_all = ''
+        max_complex_sentence = 180
+        max_simple_sentence = 170
+
         if dmode == 'alter':
-            train_dataset2 = '/zfs1/hdaqing/saz31/dataset/trans_tf_example/wikilarge/train.tfrecords'
+            if subword_vocab_size == 30000:
+                train_dataset2 = '/zfs1/hdaqing/saz31/dataset/tf_example/ppdbxu/wiki.tfrecords.*'
+            else:
+                raise NotImplementedError('')
+        elif dmode == 'wk':
+            if subword_vocab_size == 30000:
+                train_dataset = '/zfs1/hdaqing/saz31/dataset/tf_example/ppdbxu/wiki.tfrecords..*'
+            else:
+                raise NotImplementedError('')
         else:
             train_dataset2 = None
-
-
-        # train_dataset = '/Users/sanqiangzhao/git/train.tfrecords.*'
-        # subword_vocab_complex = '/Users/sanqiangzhao/git/comp.subvocab'
-        # subword_vocab_simple = '/Users/sanqiangzhao/git/simp.subvocab'
 
 
 class WikiTransTrainConfig(WikiTransDefaultConfig):
@@ -456,19 +479,19 @@ class WikiTransEvalConfig(WikiTransDefaultConfig):
     resultdir = get_path('../' + output_folder + '/result/eightref_val', environment)
 
     beam_search_size = 1
-    val_dataset_simple_folder = get_path('../text_simplification_data/val_0930/', 'sys')
-    val_dataset_simple_file = 'words_comps'
-    val_dataset_complex = get_path('../text_simplification_data/val_0930/words_comps', 'sys')
-    # wiki.full.aner.ori.valid.dst is uppercase whereas tune.8turkers.tok.simp is lowercase
+    val_dataset_simple_folder = get_path('../text_simplification_data/val2/nsimp/', 'sys')
+    val_dataset_simple_file = 'tune.8turkers.tok.simp'
+    val_dataset_complex = get_path('../text_simplification_data/val2/ncomp/tune.8turkers.tok.norm', 'sys')
+    val_dataset_complex_features = get_path('../text_simplification_data/val2/ncomp/tune.8turkers.tok.norm.features', 'sys')
     val_dataset_complex_rawlines_file = get_path(
-        '../text_simplification_data/val_0930/lower.norm.ori', 'sys')
-    val_dataset_simple_rawlines_file_references = 'lower.ref.ori.'
-    val_dataset_simple_rawlines_file = 'lower.norm.ori'
+        '../text_simplification_data/val2/ncomp/tune.8turkers.tok.norm.ori', 'sys')
+    val_dataset_simple_rawlines_file_references = 'tune.8turkers.tok.turk.'
+    val_dataset_simple_rawlines_file = 'tune.8turkers.tok.simp.ori'
 
-    val_dataset_simple_raw_file = 'lower.norm.ori'
+    val_dataset_simple_raw_file = 'tune.8turkers.tok.simp.ori'
     val_dataset_complex_raw = get_path(
-        '../text_simplification_data/val_0930/lower.norm.ori', 'sys')
-    val_mapper = get_path('../text_simplification_data/val_0930/mapper_comp_strs')
+        '../text_simplification_data/val2/ncomp/tune.8turkers.tok.norm.ori', 'sys')
+    val_mapper = get_path('../text_simplification_data/val2/nmap/tune.8turkers.tok.map')
     num_refs = 8
 
 
@@ -480,16 +503,17 @@ class WikiTransTestConfig(WikiTransDefaultConfig):
     output_folder = args.output_folder
     resultdir = get_path('../' + output_folder + '/result/eightref_test', environment)
 
-    val_dataset_simple_folder = get_path('../text_simplification_data/test_0930/')
-    # use the original dress
-    val_dataset_simple_file = 'words_comps'
-    val_dataset_complex = get_path('../text_simplification_data/test_0930/words_comps')
+    val_dataset_simple_folder = get_path('../text_simplification_data/test2/nsimp/')
+    val_dataset_simple_file = 'test.8turkers.tok.simp'
+    val_dataset_complex = get_path('../text_simplification_data/test2/ncomp/test.8turkers.tok.norm')
+    val_dataset_complex_features = get_path('../text_simplification_data/test2/ncomp/test.8turkers.tok.norm.features', 'sys')
     val_dataset_complex_rawlines_file = get_path(
-        '../text_simplification_data/test_0930/lower.norm.ori')
-    val_dataset_simple_rawlines_file_references = 'lower.ref.ori.'
-    val_dataset_simple_rawlines_file = 'lower.norm.ori'
-    val_mapper = get_path('../text_simplification_data/test_0930/mapper_comp_strs')
+        '../text_simplification_data/test2/ncomp/test.8turkers.tok.norm.ori')
+    val_dataset_simple_rawlines_file_references = 'test.8turkers.tok.turk.'
+    val_dataset_simple_rawlines_file = 'test.8turkers.tok.simp.ori'
+    val_mapper = get_path('../text_simplification_data/test2/nmap/test.8turkers.tok.map')
     num_refs = 8
+
 
 class WikiTransDummyConfig(WikiTransDefaultConfig):
     data_base = 'data_trans'

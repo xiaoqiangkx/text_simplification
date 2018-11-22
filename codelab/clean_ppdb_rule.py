@@ -1,3 +1,4 @@
+"""Derpecated generate ppdb rules for eval"""
 import operator
 
 f = open('/Users/zhaosanqiang916/git/text_simplification_data/test/eval_dummy_complex_dataset.rules.v3.sing.tmp')

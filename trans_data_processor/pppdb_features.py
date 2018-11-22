@@ -8,11 +8,19 @@ from multiprocessing import Pool
 from os.path import exists
 from os import mkdir
 
+is_trans = True
 
-PATH_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/'
-NPATH_PPDB_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/ppdb2/'
-NPATH_PPDB_RULE_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/ppdb_rule2/'
-NPATH_META = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/meta2/'
+if is_trans:
+    PATH_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/'
+    NPATH_PPDB_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/ppdb_addxu/'
+    NPATH_PPDB_RULE_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/ppdb_rule_addxu/'
+    NPATH_META = '/zfs1/hdaqing/saz31/dataset/tmp_trans/ner/meta_addxu/'
+else:
+    PATH_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_wikilarge/ner/'
+    NPATH_PPDB_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_wikilarge/ner/ppdb_addxu/'
+    NPATH_PPDB_RULE_PREFIX = '/zfs1/hdaqing/saz31/dataset/tmp_wikilarge/ner/ppdb_rule_addxu/'
+    NPATH_META = '/zfs1/hdaqing/saz31/dataset/tmp_wikilarge/ner/meta_addxu/'
+print(PATH_PREFIX)
 
 
 def sequence_contain_(seq, targets):
@@ -66,7 +74,7 @@ def get_score(line_src, line_dst, mapper):
         if wid + 1 < len(line_src):
             bigram = line_src[wid] + ' ' + line_src[wid + 1]
             if bigram in mapper and sequence_contain_(line_dst, (line_src[wid], line_src[wid+1])) == -1:
-                res = get_best_targets_(bigram, line_dst, wid/len(line_src), line_src)
+                res = get_best_targets_(bigram, line_dst, wid/len(line_src), line_src, ignore_decay=True)
                 if res:
                     rule.append(res[0])
                     score += res[1]
@@ -75,7 +83,7 @@ def get_score(line_src, line_dst, mapper):
         if wid + 2 < len(line_src):
             trigram = line_src[wid] + ' ' + line_src[wid + 1] + ' ' + line_src[wid + 2]
             if trigram in mapper and sequence_contain_(line_dst, (line_src[wid], line_src[wid+1], line_src[wid+2])) == -1:
-                res = get_best_targets_(trigram, line_dst, wid/len(line_src), line_src)
+                res = get_best_targets_(trigram, line_dst, wid/len(line_src), line_src, ignore_decay=True)
                 if res:
                     rule.append(res[0])
                     score += res[1]
@@ -118,7 +126,11 @@ def populate_file(path_comp, path_simp):
     scores = []
     rules = []
     metas = []
-    for line_comp, line_simp in zip(lines_comp, lines_simp):
+
+    ids = range(len(lines_comp))
+    assert abs(len(lines_comp) - len(lines_simp)) <= 1, \
+        'incorrect lines for file %s with lines %s, %s with lines %s and ids %s' % (path_comp, str(len(lines_comp)), path_simp, str(len(lines_simp)), str(len(ids)))
+    for id, line_comp, line_simp in zip(ids, lines_comp, lines_simp):
         s_time = datetime.now()
         line_comp = line_comp.strip().lower()
         line_simp = line_simp.strip().lower()
@@ -127,7 +139,7 @@ def populate_file(path_comp, path_simp):
         rules.append(rule)
         metas.append(get_meta(line_comp, line_simp, mapper))
         time_span = datetime.now() - s_time
-        print('Done id:%s with time span %s' % (id, time_span))
+
     return scores, rules, metas
 
 
@@ -135,7 +147,6 @@ mapper = populate_ppdb()
 
 
 def generate_score_trans(id):
-    print('Start id:%s' % id)
 
     path_ppdb = NPATH_PPDB_PREFIX + 'shard%s' % id
     path_ppdb_rule = NPATH_PPDB_RULE_PREFIX + 'shard%s' % id
@@ -147,6 +158,7 @@ def generate_score_trans(id):
     path_simp = PATH_PREFIX + '/nsimp/shard%s' % id
     if not exists(path_comp) or not exists(path_simp):
         return
+    print('Start id:%s' % id)
 
     f_ppdb = open(path_ppdb, 'w')
     f_ppdb_rule = open(path_ppdb_rule, 'w')
@@ -163,17 +175,18 @@ def generate_score_trans(id):
     print('Done id:%s with time span %s' % (id, time_span))
 
 
-def generate_score_wikilarge():
-    path_comp = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.src'
-    path_simp = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.dst'
-    npath_base = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/'
-    scores, rules, metas = populate_file(path_comp, path_simp)
-    path_ppdb = npath_base + 'ppdb'
-    open(path_ppdb, 'w').write('\n'.join(scores))
-    path_ppdb_rule = npath_base + 'ppdb_rule'
-    open(path_ppdb_rule, 'w').write('\n'.join(rules))
-    path_meta = npath_base + 'meta'
-    open(path_meta, 'w').write('\n'.join(metas))
+# Deprecated: move wikilarge process into multiprocessor so only change the path
+# def generate_score_wikilarge():
+#     path_comp = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/ncomp/wiki.full.aner.ori.train.src'
+#     path_simp = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/nsimp/wiki.full.aner.ori.train.dst'
+#     npath_base = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/ppdbxu/'
+#     scores, rules, metas = populate_file(path_comp, path_simp)
+#     path_ppdb = npath_base + 'ppdb'
+#     open(path_ppdb, 'w').write('\n'.join(scores))
+#     path_ppdb_rule = npath_base + 'ppdb_rule'
+#     open(path_ppdb_rule, 'w').write('\n'.join(rules))
+#     path_meta = npath_base + 'meta'
+#     open(path_meta, 'w').write('\n'.join(metas))
 
 
 if __name__ == '__main__':

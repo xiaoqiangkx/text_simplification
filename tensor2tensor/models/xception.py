@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Xception."""
 
 from __future__ import absolute_import
@@ -20,9 +19,6 @@ from __future__ import division
 from __future__ import print_function
 
 import math
-
-# Dependency imports
-
 from six.moves import range  # pylint: disable=redefined-builtin
 
 from tensor2tensor.layers import common_hparams
@@ -74,9 +70,11 @@ def xception_internal(inputs, hparams):
 
 
 def xception_entry(inputs, hidden_dim):
+  """Xception entry flow."""
   with tf.variable_scope("xception_entry"):
 
     def xnet_resblock(x, filters, res_relu, name):
+      """Resblock."""
       with tf.variable_scope(name):
         y = common_layers.separable_conv_block(
             x,
@@ -112,6 +110,7 @@ def xception_entry(inputs, hidden_dim):
 
 
 def xception_exit(inputs):
+  """Xception exit flow."""
   with tf.variable_scope("xception_exit"):
     x = inputs
     x_shape = x.get_shape().as_list()

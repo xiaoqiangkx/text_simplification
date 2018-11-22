@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Script to continuously average last N checkpoints in a given directory."""
 from __future__ import absolute_import
 from __future__ import division
@@ -21,9 +20,6 @@ from __future__ import print_function
 from collections import deque
 import os
 import shutil
-
-# Dependency imports
-
 import numpy as np
 import six
 from six.moves import zip  # pylint: disable=redefined-builtin
@@ -111,4 +107,5 @@ def main(_):
       avg_values[name] -= reader.get_tensor(name) / FLAGS.n
 
 if __name__ == "__main__":
+  tf.logging.set_verbosity(tf.logging.INFO)
   tf.app.run()

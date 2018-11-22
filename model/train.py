@@ -206,14 +206,16 @@ def train(model_config=None):
     # Intialize tf example dataset reader
     if model_config.fetch_mode == 'tf_example_dataset':
         sess.run(data.training_init_op)
+        print('Init dataset interator.')
         if model_config.dmode == 'alter':
             sess.run(data.training_init_op2)
+            print('Init dataset2 interator.')
 
     while True:
         fetches = [graph.train_op, graph.loss, graph.global_step,
-                   graph.perplexity, graph.ops, graph.increment_global_step]
+                   graph.perplexity, graph.ops, graph.increment_global_step, graph.loss_style]
         if model_config.fetch_mode:
-            _, loss, step, perplexity, _, _ = sess.run(fetches)
+            _, loss, step, perplexity, _, _, loss_style = sess.run(fetches)
         else:
             input_feed = get_graph_train_data(
                 data,
@@ -227,6 +229,8 @@ def train(model_config=None):
             time_span = end_time - start_time
             start_time = end_time
             print('Perplexity:\t%f at step %d using %s.' % (perplexity, step, time_span))
+            if 'pred' in model_config.tune_mode:
+                print('Loss:%s\tLoss_tyle:%s' % (loss, loss_style))
             perplexitys.clear()
             if step / model_config.model_print_freq == 1:
                 print_cpu_usage()

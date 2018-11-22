@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """A simple invertible tokenizer.
 
 Converts from a unicode string to a list of tokens
@@ -47,9 +46,6 @@ from __future__ import print_function
 import collections
 import sys
 import unicodedata
-
-# Dependency imports
-
 import six
 from six.moves import range  # pylint: disable=redefined-builtin
 import tensorflow as tf

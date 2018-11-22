@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # coding=utf-8
 """Tests for tensor2tensor.data_generators.tokenizer."""
 
@@ -22,9 +21,6 @@ from __future__ import print_function
 
 import os
 import random
-
-# Dependency imports
-
 import six
 from six.moves import range  # pylint: disable=redefined-builtin
 from tensor2tensor.data_generators import tokenizer

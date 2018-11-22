@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Tests for visualization library.
 
     IF ANY OF THESE TESTS BREAK PLEASE UPDATE THE CODE IN THE VIZ NOTEBOOK
@@ -44,7 +43,7 @@ def get_data_dir():
 
 problem_name = 'translate_ende_wmt32k'
 model_name = 'transformer'
-hparams_set = 'transformer_base_single_gpu'
+hparams_set = 'transformer_tiny'
 
 
 class VisualizationTest(tf.test.TestCase):

@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Data generators for SquaAD (https://rajpurkar.github.io/SQuAD-explorer/).
 """
 
@@ -22,9 +21,6 @@ from __future__ import print_function
 
 import json
 import os
-
-# Dependency imports
-
 from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import problem
 from tensor2tensor.data_generators import text_problems
@@ -115,11 +111,34 @@ class SquadConcat(Squad):
         [example['inputs'], sep, example['context']], 0)
     return example
 
-  def generate_data(self, data_dir, tmp_dir, task_id=-1):
-    tf.logging.warn('Use Squad to generate data for SquadConcat.')
-
   def hparams(self, defaults, unused_model_hparams):
     (super(SquadConcat, self)
      .hparams(defaults, unused_model_hparams))
     p = defaults
     del p.input_modality['context']
+
+
+@registry.register_problem
+class SquadConcatPositioned(SquadConcat):
+  """SquadConcat with targets in format of answer position + answer length."""
+
+  def generate_targets(self, targets, context):
+    targets = targets[:-1]  # skip last terminal symbol.
+    targets_new = []
+    i = 0
+    while i < len(context) - len(targets):
+      if context[i: i + len(targets)] == targets:
+        # emit answer's position and length.
+        targets_new.append(i)
+        targets_new.append(len(targets))
+      i += 1
+    return targets_new
+
+  def generate_encoded_samples(self, data_dir, tmp_dir, dataset_split):
+    samples = (super(SquadConcatPositioned, self)
+               .generate_encoded_samples(data_dir, tmp_dir, dataset_split))
+    for sample in samples:
+      sample['targets'] = self.generate_targets(sample['targets'],
+                                                sample['context'])
+      if sample['targets']:
+        yield sample

@@ -1,3 +1,5 @@
+"""Deprecated: because we use stanford NLP for ner
+Multi process for processing the trans data"""
 import spacy
 from collections import defaultdict
 from datetime import datetime
@@ -122,17 +124,25 @@ def process_trans(id):
 
 
 def generate_score_wikilarge():
-    # path_comp = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.src'
-    # path_simp = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.dst'
-    # npath_base = '/Users/sanqiangzhao/git/text_simplification_data/train/wikilarge/'
-
-    path_comp = '/Users/sanqiangzhao/git/text_simplification_data/val_0930/norm.ori'
-    npath_base = '/Users/sanqiangzhao/git/text_simplification_data/val_0930/'
-
-    words_comps, _, mapper_comp_strs, _ = preprocess_file(
-        path_comp, path_comp, is_test=True)
+    # for train
+    path_comp = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.src'
+    path_simp = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/wiki.full.aner.ori.train.dst'
+    npath_base = '/Users/sanqiangzhao/git/ts/text_simplification_data/train/wikilarge/'
+    words_comps, words_simps, mapper_comp_strs, _ = preprocess_file(
+        path_comp, path_simp, is_test=False)
     open(npath_base + '/words_comps', 'w').write('\n'.join(words_comps))
+    open(npath_base + '/words_simps', 'w').write('\n'.join(words_simps))
     open(npath_base + '/mapper_comp_strs', 'w').write('\n'.join(mapper_comp_strs))
+
+
+    # For eval
+    # path_comp = '/Users/sanqiangzhao/git/ts/text_simplification_data/val_0930/norm.ori'
+    # npath_base = '/Users/sanqiangzhao/git/ts/text_simplification_data/val_0930/'
+    #
+    # words_comps, _, mapper_comp_strs, _ = preprocess_file(
+    #     path_comp, path_comp, is_test=True)
+    # open(npath_base + '/words_comps', 'w').write('\n'.join(words_comps))
+    # open(npath_base + '/mapper_comp_strs', 'w').write('\n'.join(mapper_comp_strs))
 
 
 

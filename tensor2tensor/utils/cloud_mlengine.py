@@ -12,12 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Launch on GCP's ML Engine."""
 
 import datetime
 import os
 import shutil
+import subprocess as sp
 import sys
 import tempfile
 
@@ -26,7 +26,6 @@ from oauth2client.client import GoogleCredentials
 
 from tensor2tensor.data_generators import text_encoder
 from tensor2tensor.layers import common_hparams
-from tensor2tensor.utils import cloud_tpu as cloud
 from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir as usr_dir_lib
 import tensorflow as tf
@@ -34,9 +33,75 @@ import tensorflow as tf
 FLAGS = tf.flags.FLAGS
 
 CONSOLE_URL = "https://console.cloud.google.com/mlengine/jobs/"
+RUNTIME_VERSION = "1.9"
 
-# TODO(rsepassi):
-# * Enable multi-machine sync/async training
+
+class Gcloud(object):
+  """gcloud command strings."""
+  # Note these can be modified by set_versions
+  VM_VERSION = "tf-1-9"
+  TPU_VERSION = "1.9"
+
+  @classmethod
+  def set_versions(cls, vm, tpu):
+    cls.VM_VERSION = vm
+    cls.TPU_VERSION = tpu
+
+  @classmethod
+  def create_vm(cls):
+    create_vm_str = """
+    gcloud compute instances create {name} \
+      --machine-type=n1-standard-8 \
+      --image-family=%s \
+      --image-project=ml-images \
+      --scopes=https://www.googleapis.com/auth/cloud-platform
+    """ % cls.VM_VERSION
+    return create_vm_str
+
+  DELETE_VM = "gcloud compute instances delete {name} --quiet"
+
+  @classmethod
+  def create_tpu(cls):
+    create_tpu_str = """
+    gcloud beta compute tpus create \
+      {name} \
+      --range={tpu_ip}/29 \
+      --version=%s
+    """ % cls.TPU_VERSION
+    return create_tpu_str
+
+  DELETE_TPU = "gcloud beta compute tpus delete {name} --quiet"
+
+  LIST_TPU = "gcloud beta compute tpus list"
+  LIST_VM = "gcloud compute instances list"
+
+  SSH_LOCAL_PORT_FORWARD = "-L {local_port}:{host}:{remote_port}"
+  SSH_TUNNEL = """
+  gcloud compute ssh {name} -- -N
+  """
+
+  DEFAULT_PROJECT = "gcloud config get-value project"
+  DEFAULT_REGION = "gcloud config get-value compute/region"
+
+
+def shell_output(cmd_, **kwargs):
+  return text_encoder.to_unicode(sp.check_output(format_cmd(cmd_, **kwargs)))
+
+
+def shell_run(cmd_, **kwargs):
+  return sp.check_call(format_cmd(cmd_, **kwargs))
+
+
+def format_cmd(cmd_, **kwargs):
+  return cmd_.format(**kwargs).strip().split()
+
+
+def default_region():
+  return shell_output(Gcloud.DEFAULT_REGION).strip()
+
+
+def default_project():
+  return shell_output(Gcloud.DEFAULT_PROJECT).strip()
 
 
 def get_setup_file(name, packages=None):
@@ -87,23 +152,22 @@ def flags_as_args():
       continue
     if name.startswith("autotune"):
       continue
-    args.extend(["--%s" % name, str(val)])
+    args.extend(["--%s=%s" % (name, str(val))])
   return args
 
 
-def get_default_master_type(num_gpus=1, use_tpu=False):
+def get_default_master_type(num_gpus=1):
   """Returns master_type for trainingInput."""
-  if use_tpu:
-    return "standard_tpu"
-  elif num_gpus <= 0:
-    return "standard"
-  elif num_gpus == 1:
-    return "standard_p100"
-  elif num_gpus == 4:
-    return "complex_model_m_p100"
-  elif num_gpus == 8:
-    return "complex_model_l_gpu"
-  assert False
+  gpus_to_master_map = {
+      0: "standard",
+      1: "standard_p100",
+      4: "complex_model_m_p100",
+      8: "complex_model_l_gpu",
+  }
+  if num_gpus not in gpus_to_master_map:
+    raise ValueError("Num gpus must be in %s" %
+                     str(sorted(list(gpus_to_master_map.keys()))))
+  return gpus_to_master_map[num_gpus]
 
 
 def configure_job():
@@ -113,15 +177,19 @@ def configure_job():
   training_input = {
       "pythonModule": "tensor2tensor.bin.t2t_trainer",
       "args": flags_as_args(),
-      "region": text_encoder.native_to_unicode(cloud.default_region()),
-      "runtimeVersion": "1.5",
+      "region": text_encoder.native_to_unicode(default_region()),
+      "runtimeVersion": RUNTIME_VERSION,
       "pythonVersion": "3.5" if sys.version_info.major == 3 else "2.7",
       "jobDir": FLAGS.output_dir,
       "scaleTier": "CUSTOM",
       "masterType": FLAGS.cloud_mlengine_master_type or get_default_master_type(
-          num_gpus=FLAGS.worker_gpu,
-          use_tpu=FLAGS.use_tpu)
+          num_gpus=FLAGS.worker_gpu)
   }
+  if FLAGS.use_tpu:
+    training_input["masterType"] = (FLAGS.cloud_mlengine_master_type or
+                                    "standard")
+    training_input["workerType"] = "cloud_tpu"
+    training_input["workerCount"] = 1
   if FLAGS.hparams_range:
     tf.logging.info("Configuring hyperparameter tuning.")
     training_input["hyperparameters"] = configure_autotune(
@@ -141,7 +209,7 @@ def configure_job():
 def launch_job(job_spec):
   """Launch job on ML Engine."""
   project_id = "projects/{}".format(
-      text_encoder.native_to_unicode(cloud.default_project()))
+      text_encoder.native_to_unicode(default_project()))
   credentials = GoogleCredentials.get_application_default()
   cloudml = discovery.build("ml", "v1", credentials=credentials,
                             cache_discovery=False)
@@ -155,13 +223,13 @@ def _tar_and_copy(src_dir, target_dir):
   target_dir = target_dir.rstrip("/")
   tmp_dir = tempfile.gettempdir().rstrip("/")
   src_base = os.path.basename(src_dir)
-  cloud.shell_run(
+  shell_run(
       "tar -zcf {tmp_dir}/{src_base}.tar.gz -C {src_dir} .",
       src_dir=src_dir,
       src_base=src_base,
       tmp_dir=tmp_dir)
   final_destination = "%s/%s.tar.gz" % (target_dir, src_base)
-  cloud.shell_run(
+  shell_run(
       ("gsutil cp {tmp_dir}/{src_base}.tar.gz "
        "{final_destination}"),
       tmp_dir=tmp_dir,
@@ -174,7 +242,7 @@ def tar_and_copy_t2t(train_dir):
   """Tar Tensor2Tensor and cp to train_dir."""
   tf.logging.info("Tarring and pushing local Tensor2Tensor package.")
 
-  output = text_encoder.native_to_unicode(cloud.shell_output(
+  output = text_encoder.native_to_unicode(shell_output(
       "pip show tensor2tensor")).split("\n")
   assert output[1].startswith("Version")
   assert output[7].startswith("Location")
@@ -276,9 +344,7 @@ def validate_flags():
   if FLAGS.worker_gpu:
     assert FLAGS.worker_gpu in [1, 4, 8]
   if FLAGS.cloud_mlengine_master_type:
-    if FLAGS.use_tpu:
-      assert FLAGS.cloud_mlengine_master_type == "standard_tpu"
-    elif FLAGS.worker_gpu:
+    if FLAGS.worker_gpu:
       if FLAGS.worker_gpu == 1:
         assert FLAGS.cloud_mlengine_master_type in ["standard_gpu",
                                                     "standard_p100"]
@@ -294,6 +360,11 @@ def validate_flags():
                                                   "complex_model_l"]
 
 
+def confirm():
+  out = input("Confirm (Y/n)? > ")
+  return out == "Y"
+
+
 def launch():
   """Launch t2t_trainer on Cloud ML Engine."""
   validate_flags()
@@ -301,7 +372,7 @@ def launch():
   job_name = job_spec["jobId"]
   tf.logging.info("Launching job %s with ML Engine spec:\n%s", job_name,
                   job_spec)
-  assert cloud.confirm()
+  assert confirm()
   train_dir = FLAGS.output_dir
   t2t_tar = tar_and_copy_t2t(train_dir)
   configure_trainer_package(job_spec, t2t_tar)

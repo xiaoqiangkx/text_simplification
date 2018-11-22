@@ -37,7 +37,9 @@ def get_args():
     parser.add_argument('-lc', '--lower_case', default=True, type=bool,
                         help='Whether to lowercase the vocabulary?')
     parser.add_argument('-mc', '--min_count', default=5, type=int,
-                        help='Truncate the vocabulary less than equal to the count?')
+                        help='Truncate the vocabulary less than equal to the count.')
+    parser.add_argument('-tc', '--top_count', default=50000, type=int,
+                        help='Truncate the vocabulary by top count.')
     parser.add_argument('-ovoc', '--our_vocab', default=False, type=bool,
                         help='Whether to use our own vocab')
     parser.add_argument('-svoc_size', '--subword_vocab_size', default=0, type=int,

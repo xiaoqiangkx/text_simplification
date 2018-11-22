@@ -12,8 +12,10 @@ import random as rd
 from data_generator.vocab import Vocab
 from data_generator.rule import Rule
 from util import constant
+from data_generator import data_utils
 
 
+# Deprecated: use Tf.Example (TfExampleTrainDataset) instead
 class TrainData:
     """Fetching training dataset from plain data."""
 
@@ -61,41 +63,41 @@ class TrainData:
         if model_config.pretrained:
             self.init_pretrained_embedding()
 
-    def process_line(self, line, vocab, max_len, need_raw=False):
-        if self.model_config.tokenizer == 'split':
-            words = line.split()
-        elif self.model_config.tokenizer == 'nltk':
-            words = word_tokenize(line)
-        else:
-            raise Exception('Unknown tokenizer.')
-
-        words = [Vocab.process_word(word, self.model_config)
-                 for word in words]
-        if need_raw:
-            words_raw = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
-        else:
-            words_raw = None
-
-        if self.model_config.subword_vocab_size > 0:
-            words = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
-            words = vocab.encode(' '.join(words))
-        else:
-            words = [vocab.encode(word) for word in words]
-            words = ([self.vocab_simple.encode(constant.SYMBOL_START)] + words +
-                     [self.vocab_simple.encode(constant.SYMBOL_END)])
-
-        if self.model_config.subword_vocab_size > 0:
-            pad_id = vocab.encode(constant.SYMBOL_PAD)
-        else:
-            pad_id = [vocab.encode(constant.SYMBOL_PAD)]
-
-        if len(words) < max_len:
-            num_pad = max_len - len(words)
-            words.extend(num_pad * pad_id)
-        else:
-            words = words[:max_len]
-
-        return words, words_raw
+    # def process_line(self, line, vocab, max_len, need_raw=False):
+    #     if self.model_config.tokenizer == 'split':
+    #         words = line.split()
+    #     elif self.model_config.tokenizer == 'nltk':
+    #         words = word_tokenize(line)
+    #     else:
+    #         raise Exception('Unknown tokenizer.')
+    #
+    #     words = [Vocab.process_word(word, self.model_config)
+    #              for word in words]
+    #     if need_raw:
+    #         words_raw = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
+    #     else:
+    #         words_raw = None
+    #
+    #     if self.model_config.subword_vocab_size > 0:
+    #         words = [constant.SYMBOL_START] + words + [constant.SYMBOL_END]
+    #         words = vocab.encode(' '.join(words))
+    #     else:
+    #         words = [vocab.encode(word) for word in words]
+    #         words = ([self.vocab_simple.encode(constant.SYMBOL_START)] + words +
+    #                  [self.vocab_simple.encode(constant.SYMBOL_END)])
+    #
+    #     if self.model_config.subword_vocab_size > 0:
+    #         pad_id = vocab.encode(constant.SYMBOL_PAD)
+    #     else:
+    #         pad_id = [vocab.encode(constant.SYMBOL_PAD)]
+    #
+    #     if len(words) < max_len:
+    #         num_pad = max_len - len(words)
+    #         words.extend(num_pad * pad_id)
+    #     else:
+    #         words = words[:max_len]
+    #
+    #     return words, words_raw
 
     def get_size(self, data_complex_path):
         return len(open(data_complex_path, encoding='utf-8').readlines())
@@ -115,10 +117,10 @@ class TrainData:
                 i += 1
                 continue
 
-            words_complex, words_raw_comp = self.process_line(
-                line_complex, self.vocab_complex, self.model_config.max_complex_sentence, True)
-            words_simple, words_raw_simp = self.process_line(
-                line_simple, self.vocab_simple, self.model_config.max_simple_sentence, True)
+            words_complex, words_raw_comp = data_utils.process_line(
+                line_complex, self.vocab_complex, self.model_config.max_complex_sentence, self.model_config, True)
+            words_simple, words_raw_simp = data_utils.process_line(
+                line_simple, self.vocab_simple, self.model_config.max_simple_sentence, self.model_config, True)
 
             supplement = {}
             if 'rule' in self.model_config.memory:
@@ -167,10 +169,10 @@ class TrainData:
             obj = {}
             line_comp = lines_comp[line_id]
             line_simp = lines_simp[line_id]
-            words_comp, words_raw_comp = self.process_line(
-                line_comp, vocab_comp, self.model_config.max_complex_sentence, need_raw)
-            words_simp, words_raw_simp = self.process_line(
-                line_simp, vocab_simp, self.model_config.max_simple_sentence, need_raw)
+            words_comp, words_raw_comp = data_utils.process_line(
+                line_comp, vocab_comp, self.model_config.max_complex_sentence, self.model_config, need_raw)
+            words_simp, words_raw_simp = data_utils.process_line(
+                line_simp, vocab_simp, self.model_config.max_simple_sentence, self.model_config, need_raw)
             obj['words_comp'] = words_comp
             obj['words_simp'] = words_simp
             if need_raw:
@@ -260,17 +262,24 @@ class TfExampleTrainDataset():
     def __init__(self, model_config):
         self.model_config = model_config
 
-        vocab_simple_path = self.model_config.subword_vocab_simple
-        vocab_complex_path = self.model_config.subword_vocab_complex
+        if self.model_config.subword_vocab_size:
+            vocab_simple_path = self.model_config.subword_vocab_simple
+            vocab_complex_path = self.model_config.subword_vocab_complex
+        else:
+            vocab_simple_path = self.model_config.vocab_simple
+            vocab_complex_path = self.model_config.vocab_complex
         self.vocab_simple = Vocab(model_config, vocab_simple_path)
         self.vocab_complex = Vocab(model_config, vocab_complex_path)
 
         self.feature_set = {
-            'line_comp_ids': tf.FixedLenFeature([self.model_config.max_complex_sentence], tf.int64),
-            'line_simp_ids': tf.FixedLenFeature([self.model_config.max_simple_sentence], tf.int64),
+            'line_comp': tf.FixedLenFeature([], tf.string),
+            'line_simp': tf.FixedLenFeature([], tf.string),
         }
         if self.model_config.tune_style:
             self.feature_set['ppdb_score'] = tf.FixedLenFeature([], tf.float32)
+            self.feature_set['len_score'] = tf.FixedLenFeature([], tf.float32)
+            self.feature_set['add_score'] = tf.FixedLenFeature([], tf.float32)
+            self.feature_set['dsim_score'] = tf.FixedLenFeature([], tf.float32)
 
         self.dataset = self._get_dataset(glob.glob(self.model_config.train_dataset))
         self.iterator = tf.data.Iterator.from_structure(
@@ -283,7 +292,7 @@ class TfExampleTrainDataset():
             self.iterator2 = tf.data.Iterator.from_structure(
                 self.dataset2.output_types,
                 self.dataset2.output_shapes)
-            self.training_init_op2 = self.iterator.make_initializer(self.dataset)
+            self.training_init_op2 = self.iterator2.make_initializer(self.dataset)
 
     def get_data_sample(self):
         if rd.random() >= 0.5 or self.model_config.dmode != 'alter':
@@ -293,17 +302,39 @@ class TfExampleTrainDataset():
 
     def _parse(self, serialized_example):
         features = tf.parse_single_example(serialized_example, features=self.feature_set)
+
+        def process_line_pair(line_complex, line_simple):
+            words_complex, _ = data_utils.process_line(
+                line_complex, self.vocab_complex, self.model_config.max_complex_sentence, self.model_config, True)
+            words_simple, _ = data_utils.process_line(
+                line_simple, self.vocab_simple, self.model_config.max_simple_sentence, self.model_config, True)
+            return np.array(words_complex, np.int32), np.array(words_simple, np.int32)
+
+        output_complex, output_simple = tf.py_func(
+            process_line_pair,
+            [features['line_comp'], features['line_simp']],
+            [tf.int32, tf.int32])
+        output_complex.set_shape(
+            [self.model_config.max_complex_sentence])
+        output_simple.set_shape(
+            [self.model_config.max_simple_sentence])
         output =  {
-            'line_comp_ids': features['line_comp_ids'],
-            'line_simp_ids': features['line_simp_ids'],
+            'line_comp_ids': output_complex,
+            'line_simp_ids': output_simple,
         }
-        if self.model_config.tune_style:
+
+        if self.model_config.tune_style[0]:
             output['ppdb_score'] = features['ppdb_score']
+        if self.model_config.tune_style[1]:
+            output['dsim_score'] = features['dsim_score']
+        if self.model_config.tune_style[2]:
+            output['add_score'] = features['add_score']
+        if self.model_config.tune_style[3]:
+            output['len_score'] = features['len_score']
         return output
 
-
     def _get_dataset(self, path):
-        dataset = tf.data.TFRecordDataset([path]).repeat().shuffle(1000)
-        dataset = dataset.map(self._parse, num_parallel_calls=10)
+        dataset = tf.data.TFRecordDataset([path]).repeat().shuffle(10000)
+        dataset = dataset.map(self._parse, num_parallel_calls=4)
         dataset = dataset.shuffle(buffer_size=10000)
         return dataset.batch(self.model_config.batch_size)

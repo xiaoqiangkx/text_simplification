@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """BLEU metric util used during eval for MT."""
 from __future__ import absolute_import
 from __future__ import division
@@ -25,9 +24,6 @@ import re
 import sys
 import time
 import unicodedata
-
-# Dependency imports
-
 import numpy as np
 import six
 # pylint: disable=redefined-builtin
@@ -118,8 +114,16 @@ def compute_bleu(reference_corpus,
     geo_mean = math.exp(p_log_sum/max_order)
 
   if use_bp:
-    ratio = translation_length / reference_length
-    bp = math.exp(1 - 1. / ratio) if ratio < 1.0 else 1.0
+    if not reference_length:
+      bp = 1.0
+    else:
+      ratio = translation_length / reference_length
+      if ratio <= 0.0:
+        bp = 0.0
+      elif ratio >= 1.0:
+        bp = 1.0
+      else:
+        bp = math.exp(1 - 1. / ratio)
   bleu = geo_mean * bp
   return np.float32(bleu)
 
@@ -197,10 +201,11 @@ def bleu_tokenize(string):
 def bleu_wrapper(ref_filename, hyp_filename, case_sensitive=False):
   """Compute BLEU for two files (reference and hypothesis translation)."""
   ref_lines = text_encoder.native_to_unicode(
-      tf.gfile.Open(ref_filename, "r").read()).splitlines()
+      tf.gfile.Open(ref_filename, "r").read()).split("\n")
   hyp_lines = text_encoder.native_to_unicode(
-      tf.gfile.Open(hyp_filename, "r").read()).splitlines()
-  assert len(ref_lines) == len(hyp_lines)
+      tf.gfile.Open(hyp_filename, "r").read()).split("\n")
+  assert len(ref_lines) == len(hyp_lines), ("{} != {}".format(
+      len(ref_lines), len(hyp_lines)))
   if not case_sensitive:
     ref_lines = [x.lower() for x in ref_lines]
     hyp_lines = [x.lower() for x in hyp_lines]
@@ -243,7 +248,7 @@ def _read_stepfiles_list(path_prefix, path_suffix=".index", min_steps=0):
   """Return list of StepFiles sorted by step from files at path_prefix."""
   stepfiles = []
   for filename in _try_twice_tf_glob(path_prefix + "*-[0-9]*" + path_suffix):
-    basename = filename[:-len(path_suffix)] if len(path_suffix) else filename
+    basename = filename[:-len(path_suffix)] if path_suffix else filename
     try:
       steps = int(basename.rsplit("-")[-1])
     except ValueError:  # The -[0-9]* part is not an integer.

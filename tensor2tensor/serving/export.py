@@ -12,16 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Export a trained model for serving."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 import os
-
-# Dependency imports
-
 from tensor2tensor.bin import t2t_trainer
 from tensor2tensor.utils import decoding
 from tensor2tensor.utils import trainer_lib
@@ -62,14 +58,19 @@ def main(_):
   estimator = create_estimator(run_config, hparams)
 
   problem = hparams.problem
-  strategy = trainer_lib.create_export_strategy(problem, hparams)
 
-  export_dir = os.path.join(ckpt_dir, "export", strategy.name)
-  strategy.export(
+  exporter = tf.estimator.FinalExporter(
+      "exporter", lambda: problem.serving_input_fn(hparams), as_text=True)
+
+  export_dir = os.path.join(ckpt_dir, "export")
+  exporter.export(
       estimator,
       export_dir,
-      checkpoint_path=tf.train.latest_checkpoint(ckpt_dir))
+      checkpoint_path=tf.train.latest_checkpoint(ckpt_dir),
+      eval_result=None,
+      is_the_final_export=True)
 
 
 if __name__ == "__main__":
+  tf.logging.set_verbosity(tf.logging.INFO)
   tf.app.run()

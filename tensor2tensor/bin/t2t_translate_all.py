@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Translate a file with all checkpoints in a given directory.
 
 t2t-decoder will be executed with these parameters:
@@ -30,9 +29,6 @@ from __future__ import print_function
 
 import os
 import shutil
-
-# Dependency imports
-
 from tensor2tensor.utils import bleu_hook
 
 import tensorflow as tf
@@ -106,4 +102,5 @@ def main(_):
 
 
 if __name__ == "__main__":
+  tf.logging.set_verbosity(tf.logging.INFO)
   tf.app.run()

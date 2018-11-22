@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Data generator for Wikipedia title to article dataset."""
 
 from __future__ import absolute_import
@@ -21,9 +20,6 @@ from __future__ import print_function
 
 import os
 import subprocess
-
-# Dependency imports
-
 import numpy as np
 
 from tensor2tensor.data_generators import generator_utils
@@ -88,10 +84,6 @@ class LanguagemodelWikiXmlV8kL1k(text_problems.ChoppedTextProblem):
   def corpus_url(self):
     return ("https://archive.org/download/enwiki-20171201/"
             "enwiki-20171201-pages-articles.xml.bz2")
-
-  @property
-  def vocab_filename(self):
-    return "vocab.wiki_xml.%d" % self.approx_vocab_size
 
   @property
   def approx_vocab_size(self):
@@ -222,10 +214,6 @@ class LanguagemodelWikiNorefV8kL1k(LanguagemodelWikiXmlV8kL1k):
   Result is chopped arbitrarily into sequences of length 1024 tokens,
   without regard to article boundaries.
   """
-
-  @property
-  def vocab_filename(self):
-    return "vocab.wiki_noref.%d" % self.approx_vocab_size
 
   def filepath_to_unicode_strings(self, filepath):
     """Overrides the base class to clean up the xml dump before tokenizing."""

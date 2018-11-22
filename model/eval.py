@@ -91,7 +91,7 @@ def get_graph_val_data(objs,
                     cur_rule_id_input_placeholder = []
                     cur_rule_target_input_placeholder = []
                     sup = obj_data['sup']
-                    if sup:
+                    if sup and 'mem' in sup:
                         for rule_tuple in sup['mem']:
                             rule_id = rule_tuple[0]
                             rule_targets = rule_tuple[1]
@@ -109,6 +109,17 @@ def get_graph_val_data(objs,
 
                     tmp_sups['rule_id_input_placeholder'].append(cur_rule_id_input_placeholder)
                     tmp_sups['rule_target_input_placeholder'].append(cur_rule_target_input_placeholder)
+
+                if model_config.tune_style:
+                    if 'comp_add_score' not in tmp_sups:
+                        tmp_sups['comp_add_score'] = []
+                    if 'comp_length' not in tmp_sups:
+                        tmp_sups['comp_length'] = []
+
+                    sup = obj_data['sup']
+                    tmp_sups['comp_add_score'].append(sup['comp_features'][0])
+                    tmp_sups['comp_length'].append(sup['comp_features'][1])
+
             else:
                 if model_config.subword_vocab_size > 0:
                     tmp_sentence_simple.append(
@@ -130,6 +141,10 @@ def get_graph_val_data(objs,
                     tmp_sups['rule_target_input_placeholder'].append(
                         [data.vocab_simple.encode(constant.SYMBOL_PAD)] * model_config.max_cand_rules)
 
+                if model_config.tune_style:
+                    tmp_sups['comp_add_score'].append(0)
+                    tmp_sups['comp_length'].append(0)
+
         for step in range(model_config.max_simple_sentence):
             input_feed[obj['sentence_simple_input_placeholder'][step].name] = [tmp_sentence_simple[batch_idx][step]
                                                             for batch_idx in range(model_config.batch_size)]
@@ -145,6 +160,14 @@ def get_graph_val_data(objs,
                 input_feed[obj['rule_target_input_placeholder'][step].name] = [
                     tmp_sups['rule_target_input_placeholder'][batch_idx][step]
                     for batch_idx in range(model_config.batch_size)]
+
+        if model_config.tune_style:
+            input_feed[obj['comp_features']['comp_add_score'].name] = [
+                tmp_sups['comp_add_score'][batch_idx]
+                for batch_idx in range(model_config.batch_size)]
+            input_feed[obj['comp_features']['comp_length'].name] = [
+                tmp_sups['comp_length'][batch_idx]
+                for batch_idx in range(model_config.batch_size)]
 
         output_tmp_sentence_simple.append(tmp_sentence_simple)
         output_tmp_sentence_complex.append(tmp_sentence_complex)

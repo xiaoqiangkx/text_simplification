@@ -220,8 +220,8 @@ def process_line(line, mapper):
     try:
         if en.verb.infinitive(ori_words) == en.verb.infinitive(tar_words):
             return
-        elif float(len(lcs(ori_words, tar_words))) / max(len(ori_words), len(tar_words)) >= 0.7:
-            return
+        # elif float(len(lcs(ori_words, tar_words))) / max(len(ori_words), len(tar_words)) >= 0.7:
+        #     return
     except:
         pass
 
@@ -289,14 +289,14 @@ def populate_ppdb():
         if cnt % 50000 == 0:
             e_t = datetime.now()
             sp = e_t - s_t
-            print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
-    # for line in open('/zfs1/hdaqing/saz31/dataset/tmp_trans/code/XU_PPDB'):
-    #     process_line(line, mapper)
-    #     cnt += 1
-    #     if cnt % 50000 == 0:
-    #         e_t = datetime.now()
-    #         sp = e_t - s_t
-    #         print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
+            # print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
+    for line in open('/zfs1/hdaqing/saz31/dataset/tmp_trans/code/XU_PPDB'):
+        process_line(line, mapper)
+        cnt += 1
+        if cnt % 50000 == 0:
+            e_t = datetime.now()
+            sp = e_t - s_t
+            # print('Process PPDB line\t%s use\t%s' % (str(cnt), str(sp)))
     # for line in open('/zfs1/hdaqing/saz31/dataset/tmp_trans/code/ppdb-2.0-xxxl-lexical.processed'):
     #     process_line(line, mapper)
     #     cnt += 1

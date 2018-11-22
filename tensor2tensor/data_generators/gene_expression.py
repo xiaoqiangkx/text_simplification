@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Gene expression problems.
 
 Inputs are bases ACTG (with indices assigned in that order).
@@ -38,9 +37,6 @@ from __future__ import print_function
 import math
 import multiprocessing as mp
 import os
-
-# Dependency imports
-
 import h5py
 import numpy as np
 
@@ -236,6 +232,7 @@ def dataset_generator(filepath,
                       chunk_size=1,
                       start_idx=None,
                       end_idx=None):
+  """Generate example dicts."""
   encoder = dna_encoder.DNAEncoder(chunk_size=chunk_size)
   with h5py.File(filepath, "r") as h5_file:
     # Get input keys from h5_file

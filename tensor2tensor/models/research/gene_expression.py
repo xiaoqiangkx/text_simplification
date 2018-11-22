@@ -12,14 +12,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Models for gene expression from DNA."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
-# Dependency imports
-
 from six.moves import range  # pylint: disable=redefined-builtin
 
 from tensor2tensor.layers import common_hparams
@@ -100,6 +96,7 @@ def conv_layer(x,
                dropout_rate,
                dilation_rate,
                name="conv"):
+  """Single conv layer with relu, optional pooling, and dropout."""
   with tf.variable_scope(name):
     out = x
     out = common_layers.conv1d_block(
